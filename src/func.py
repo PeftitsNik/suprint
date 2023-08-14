@@ -452,7 +452,7 @@ class Func:
 		
 		if manipulation.get_name_printer() == const.PR_PDF: # "to PDF"
 			printer = QPdfWriter("test.pdf")
-		elif manipulation.get_name_printer() == const.PR_PDF:
+		elif manipulation.get_name_printer() == "":
 			print("no printer selected")
 		else:
 			printer = QPrinter()
