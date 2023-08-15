@@ -87,9 +87,10 @@ class MainWindow(QWidget):
 		self.button_print = ButtonPrint(self.scene, self.manipulation)
 		self.button_print.setText(internationalization["button_print"])
 		
-		self.slider = Slider(self.view)		
+		self.scale = QLabel(internationalization["scale"])
+		self.slider = Slider(self.view)	
 		
-		###### добавление разных полей #######################
+		###### добавление  к виджетам других виджетов #######################
 		
 		self.scene.add_objects(self.manipulation, self.pixmap, self.rect, self.spinbox_number_of_pages)
 		self.button_open.add_objects(self.scene, self.pixmap)		
@@ -118,6 +119,8 @@ class MainWindow(QWidget):
 		self.printer.attach(self.manipulation)
 		self.spinbox_left.attach(self.pagelayout)
 		self.spinbox_top.attach(self.pagelayout)
+		self.spinbox_right.attach(self.pagelayout) 		
+		self.spinbox_bottom.attach(self.pagelayout)
 		self.spinbox_number_of_pages.attach(self.scene)
 		self.spinbox_number_of_pages.attach(self.manipulation)
 		self.print_all.attach(self.scene)
@@ -133,7 +136,8 @@ class MainWindow(QWidget):
 		self.printer.notify()
 		self.spinbox_top.notify()
 		self.spinbox_left.notify()
-		
+		self.spinbox_right.notify()
+		self.spinbox_bottom.notify()
 		##########################################################
 		##########################################################
 		###### Страница
@@ -179,7 +183,6 @@ class MainWindow(QWidget):
 		self.layout_printers = QVBoxLayout()
 		self.layout_printers.addWidget(self.printer)
 		self.layout_printers.addWidget(self.paper)
-		#self.layout_printers.addWidget(self.dpi)
 		
 		
 		####### Группы
@@ -220,7 +223,12 @@ class MainWindow(QWidget):
 		self.layout_right.addWidget(self.button_open)
 		self.layout_right.addWidget(self.view)
 		self.layout_right.addWidget(self.button_print)
-		self.layout_right.addWidget(self.slider)
+		
+		self.scale_slider_layout = QHBoxLayout()
+		self.scale_slider_layout.addWidget(self.scale)
+		self.scale_slider_layout.addWidget(self.slider)
+		
+		self.layout_right.addLayout(self.scale_slider_layout)
 		
 		#### Итоговое размещение
 		self.layout = QHBoxLayout()#self.layout.setStretch(4,1)

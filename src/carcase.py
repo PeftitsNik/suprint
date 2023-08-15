@@ -394,7 +394,7 @@ class ButtonPrint(QPushButton):
 	@pyqtSlot()
 	def print_pix(self):
 		scene = Scene()
-		func.Func.print_pixmap_from_scene(self.scene, self.manipulation)
+		func.Func.print_pixmap_from_scene(self, self.scene, self.manipulation)
 		
 class Slider (QSlider):
 	def __init__(self, view: QGraphicsView):

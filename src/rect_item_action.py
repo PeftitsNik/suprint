@@ -13,25 +13,28 @@ class RectItemAction(QGraphicsRectItem):
 		self.qrectf = qrectf
 		self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
 		self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)		
-		pen1 = QPen()
+		pen = QPen()
 		#self.pen1.setStyle(Qt.PenStyle.DashLine)
-		pen1.setColor(QColor("red"))
+		pen.setColor(QColor("red"))
+		
+		brush = QBrush()
+		color = QColor("blue")
+		color.setAlpha(35)
+		brush.setColor(color)
+		brush.setStyle(Qt.BrushStyle.SolidPattern)
 		
 		space = 6
 		length = 6
 		width = 4
 		
 		dashes = [length, space]		
-		pen1.setDashPattern(dashes)
-		pen1.setWidth(width)
-		self.setPen(pen1)	
-		
-		#self.rect_inside = QGraphicsRectItem(self)
-		#self.rect_inside.setPen(QColor("white"))
-		#self.rect_inside.setRect(self.qrectf.x()-1, self.qrectf.y()-1, self.qrectf.width()-2, self.qrectf.height()-2)
-        
+		pen.setDashPattern(dashes)
+		pen.setWidth(width)
+		self.setPen(pen)
+		self.setBrush(brush)
+	
+					        
 	def mousePressEvent(self, event):
 		print("Click on Rect")
-		
-	
-       
+		#print(self.scenePos().x())
+

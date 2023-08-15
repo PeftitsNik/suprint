@@ -437,7 +437,7 @@ class Func:
 	################################################################
 	#################### Печать картинки ###########################
 	@staticmethod
-	def print_pixmap_from_scene(scene: QGraphicsScene, manipulation):
+	def print_pixmap_from_scene(button: QPushButton, scene: QGraphicsScene, manipulation):
 		list_coor_rect = [i.scenePos() for i in scene.items() if isinstance (i, QGraphicsRectItem) ]
 		pixmap = [i for i in scene.items() if isinstance (i, QGraphicsPixmapItem)][0].pixmap()
 		
@@ -450,8 +450,10 @@ class Func:
 		copy_pixmap = [pixmap.copy( int(coor.x()), int(coor.y()), int(scene.rectitem.rect().width()), int(scene.rectitem.rect().height()) )
 																												for coor in list_coor_rect]
 		
-		if manipulation.get_name_printer() == const.PR_PDF: # "to PDF"
-			printer = QPdfWriter("test.pdf")
+		if manipulation.get_name_printer() == const.PR_PDF: # если выбрана печать "to PDF"
+			file_name = QFileDialog.getSaveFileName(button, "Save File", ".", "PDF (*.pdf)")
+			if file_name[0] == "": pass
+			else: printer = QPdfWriter(file_name[0])
 		elif manipulation.get_name_printer() == "":
 			print("no printer selected")
 		else:
