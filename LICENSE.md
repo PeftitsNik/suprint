@@ -1,1 +1,1 @@
-License - GPL3
+License - GPL v3
