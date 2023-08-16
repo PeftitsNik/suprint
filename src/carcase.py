@@ -256,8 +256,7 @@ class RectItem(RectItemAction, Observer, Subject):
 		
 	def update_observer(self, subject: Subject):		
 		func.Func.function_for_rectitem[subject.get_name()](self, subject)
-		self.notify()
-		print(subject.get_name())
+		self.notify()		
 		
 	def notify(self): 
 		for i in self.list_observers:
