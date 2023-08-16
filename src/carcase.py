@@ -273,7 +273,7 @@ class RectItem(RectItemAction, Observer, Subject):
 class Manipulation(Observer, Subject):
 	def __init__(self):
 		self.__status_image = ["", ""] 	# 1 элемент - размер картинки (реальный, растянутый и т.п)
-									# 2 элемент - тип печать (распечатать всё, отдельные фрагменты)
+						# 2 элемент - тип печать (распечатать всё, отдельные фрагменты)
 		self.__num = 1
 		self.list_observers = []
 		self.__dpi = [0]
