@@ -128,7 +128,7 @@ class RectItemAction(QGraphicsRectItem):
 					self.delta_y = 0
 					break
 				else:  break
-			
+	
 			###########    СПРАВА     #########################
 			# self  - что двигают,  i  - неподвижный
 			#				-------------      
