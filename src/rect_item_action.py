@@ -44,6 +44,7 @@ class RectItemAction(QGraphicsRectItem):
 	
 	def mousePressEvent(self, event):
 		self.setCursor(Qt.CursorShape.SizeAllCursor)
+		#список rectitem на сцене
 		self.other_rect_on_scene = [i for i in self.scene().items() if isinstance(i, QGraphicsRectItem) ]
 					
 		self.delta_x = 0
@@ -57,20 +58,143 @@ class RectItemAction(QGraphicsRectItem):
 			if i == self: continue # если прямоугольник, который двигают, сравнивается с самим собой, то продолжаем цикл 
 			
             ###########  ПРИЛИПАНИЕ УГЛОВ ######################
-            # при приближении двух прямоугольников
+			###########    СЛЕВА     #########################
+            # при приближении двух углов
+            # прямоугольник self  - что двигают,  i  - неподвижный
+			#
+			#		-------------
+			#		|			|
+			#		|	self	|
+			#		|			|
+			#		|			|
+			#		|		----|-------
+			#		|		|	|		|
+			#		--------|---		|
+			#				|			|
+			#				|			|
+			#				|	i		|
+			#				-------------
+						
+			elif abs(i.scenePos().x() - (self.scenePos().x() + self.rect().width())) < const.BORDER\
+					and abs(i.scenePos().y() - (self.scenePos().y() + self.rect().height())) < const.BORDER:				
+				self.setPos(i.scenePos().x() - self.rect().width(), i.scenePos().y() - self.rect().height())
+				
+				self.delta_x = self.delta_x + event.pos().x() - event.lastPos().x()
+				self.delta_y = self.delta_y + event.pos().y() - event.lastPos().y()
+
+				#сли накопленное значение больше BORDER передмещаем двигаемый прямоугольник к позиции курсора
+				if abs(self.delta_x) > const.BORDER:
+					self.moveBy(self.delta_x, event.pos().y() - event.lastPos().y())
+					self.delta_x = 0
+					self.delta_y = 0
+					break
+				elif abs(self.delta_y) > const.BORDER:
+					self.moveBy(event.pos().x() - event.lastPos().x(), self.delta_y)
+					self.delta_x = 0
+					self.delta_y = 0
+					break
+				else:  break
+ 			
             # self  - что двигают,  i  - неподвижный
-            #   ------           ------
-            #  | self |    или  | self |
-            #  |     ------     |      |  ------
-            #  |   a| |    |    |      | |      |
-            #  |    | | b  |    |      | |      |
-            #   ----|-     |     ------  |      |
-            #       |  i   |             |   i  |
-            #        ------               ------
-            #
-            # Проверка границ прилипания 
-			# если  углы a и b  близко друг к другу
+            #			-------------      
+            #			|			|    
+            #			|	i		|  
+            #			|			|    
+            #		----|--------	| 
+            #		|	|		|	|
+			#		|	--------|----		    
+            #		|			|
+            #		|			|
+			#		|	self	|
+			#		-------------
+
+			elif abs(i.scenePos().x() - (self.scenePos().x() + self.rect().width())) < const.BORDER\
+					and abs(i.scenePos().y() - (self.scenePos().y() - self.rect().height())) < const.BORDER:				
+				
+				self.setPos(i.scenePos().x() - self.rect().width(), i.scenePos().y() + self.rect().height())
+				
+				self.delta_x = self.delta_x + event.pos().x() - event.lastPos().x()
+				self.delta_y = self.delta_y + event.pos().y() - event.lastPos().y()
+
+				#сли накопленное значение больше BORDER передмещаем двигаемый прямоугольник к позиции курсора
+				if abs(self.delta_x) > const.BORDER:
+					self.moveBy(self.delta_x, event.pos().y() - event.lastPos().y())
+					self.delta_x = 0
+					self.delta_y = 0
+					break
+				elif abs(self.delta_y) > const.BORDER:
+					self.moveBy(event.pos().x() - event.lastPos().x(), self.delta_y)
+					self.delta_x = 0
+					self.delta_y = 0
+					break
+				else:  break
 			
+			###########    СПРАВА     #########################
+			# self  - что двигают,  i  - неподвижный
+			#				-------------      
+            #				|			|    
+            #				|	self	|  
+            #				|			|    
+            #		-------	|---		| 
+            #		|		|	|		|
+			#		|		----|--------		    
+            #		|			|
+            #		|			|
+			#		|	i		|
+			#		-------------
+			elif abs(i.scenePos().x() + self.rect().width() - self.scenePos().x()) < const.BORDER\
+					and abs(i.scenePos().y() - (self.scenePos().y() + self.rect().height())) < const.BORDER:				
+				self.setPos(i.scenePos().x() + self.rect().width(), i.scenePos().y() - self.rect().height())
+				
+				self.delta_x = self.delta_x + event.pos().x() - event.lastPos().x()
+				self.delta_y = self.delta_y + event.pos().y() - event.lastPos().y()
+
+				#сли накопленное значение больше BORDER передмещаем двигаемый прямоугольник к позиции курсора
+				if abs(self.delta_x) > const.BORDER:
+					self.moveBy(self.delta_x, event.pos().y() - event.lastPos().y())
+					self.delta_x = 0
+					self.delta_y = 0
+					break
+				elif abs(self.delta_y) > const.BORDER:
+					self.moveBy(event.pos().x() - event.lastPos().x(), self.delta_y)
+					self.delta_x = 0
+					self.delta_y = 0
+					break
+				else:  break
 			
+			# self  - что двигают,  i  - неподвижный
+			#
+			#		-------------
+			#		|			|
+			#		|	i		|
+			#		|			|
+			#		|			|
+			#		|		----|-------
+			#		|		|	|		|
+			#		--------|---		|
+			#				|			|
+			#				|			|
+			#				|	self	|
+			#				-------------
+			elif abs(i.scenePos().x() + self.rect().width() - self.scenePos().x()) < const.BORDER\
+					and abs(i.scenePos().y() + self.rect().height()- (self.scenePos().y())) < const.BORDER:				
+				self.setPos(i.scenePos().x() + self.rect().width(), i.scenePos().y() + self.rect().height())
+				
+				self.delta_x = self.delta_x + event.pos().x() - event.lastPos().x()
+				self.delta_y = self.delta_y + event.pos().y() - event.lastPos().y()
+
+				#сли накопленное значение больше BORDER передмещаем двигаемый прямоугольник к позиции курсора
+				if abs(self.delta_x) > const.BORDER:
+					self.moveBy(self.delta_x, event.pos().y() - event.lastPos().y())
+					self.delta_x = 0
+					self.delta_y = 0
+					break
+				elif abs(self.delta_y) > const.BORDER:
+					self.moveBy(event.pos().x() - event.lastPos().x(), self.delta_y)
+					self.delta_x = 0
+					self.delta_y = 0
+					break
+				else:  break
+			else: pass
 			
 		
