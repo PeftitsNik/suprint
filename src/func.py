@@ -83,7 +83,8 @@ class CalculateDifferentValue:
 		# scene.addItem(rect)
 		# выдает ошибку 'QGraphicsScene::addItem: item has already been added to this scene'
 		# поэтому делаем так:
-		rect = RectItemAction(rectitem.rect())	
+		rect = RectItemAction()	
+		rect.setRect(rectitem.rect())
 		
 		scene.addItem(rect)	
 		rect.setZValue(1) # пряиоугольник на передний план	
@@ -104,7 +105,8 @@ class CalculateDifferentValue:
 				# scene.addItem(rect)
 		        # выдает ошибку 'QGraphicsScene::addItem: item has already been added to this scene'
 		        # поэтому делаем так:
-				rect = RectItemAction(rectitem.rect())
+				rect = RectItemAction()
+				rect.setRect(rectitem.rect())
 				rect.setZValue(1)
 				coor = CalculateDifferentValue.coord_rect(i, column, row)
 				
@@ -129,7 +131,8 @@ class CalculateDifferentValue:
 				#scene.addItem(rect)
 		        # выдает ошибку 'QGraphicsScene::addItem: item has already been added to this scene'
 		        # поэтому делаем так:
-				_rect =  RectItemAction(_r)				
+				_rect =  RectItemAction()	
+				_rect.setRect(_r)			
 				scene.addItem(_rect)
 				_rect.setZValue(1)  # пряиоугольник на передний план			
 				_rect.moveBy(j * width_rect, i * height_rect)
@@ -350,8 +353,7 @@ class Func:
 	def rectitem_from_dpi(rectitem: QGraphicsRectItem, width: float, height: float, dpi: int):
 		#перевод размеров в пикселях из миллиметров исходя из плотности печати точек на дюйм (25,4 mm)
 		if dpi == 0 or width == 0 or height == 0: pass		
-		else:
-			print(width, height, dpi)
+		else:			
 			w = width * float(dpi) / 25.4
 			h = height * float(dpi) / 25.4	
 			rectitem.setRect(0, 0, w, h)

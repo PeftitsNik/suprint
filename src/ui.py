@@ -95,6 +95,7 @@ class MainWindow(QWidget):
 		self.scene.add_objects(self.manipulation, self.pixmap, self.rect, self.spinbox_number_of_pages)
 		self.button_open.add_objects(self.scene, self.pixmap)		
 		self.rect.add_objects(self.manipulation)
+		self.rect.add_parent_scene(self.scene)
 		
 		######## atach() присоеденяем наблюдателей #############
 		
