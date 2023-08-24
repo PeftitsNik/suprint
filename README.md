@@ -15,7 +15,7 @@
 
 **Замечание для Windows:**
 
-а) если не установлен python - скачать с [официального сайта] (https://www.python.org/downloads/) и установить;
+а) если не установлен python - скачать с [официального сайта](https://www.python.org/downloads/) и установить;
 
 б) в командной строке (cmd.exe) набрать pip3 install PyQt6.
 
