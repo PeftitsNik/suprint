@@ -6,7 +6,7 @@ from src.rect_item_action import *
 import copy
 
 from src.dict_prn_ppr import *  # в нём создается словарь, содержащий значения (имя принтера - потдерживаемые страницы),
-                            # а также список потдерживаемых разрешений dpi печати 
+                        	# а также список потдерживаемых разрешений dpi печати 
 
 import src.const #импорт констант
 
@@ -67,7 +67,7 @@ class CalculateDifferentValue:
 			if  isinstance(i, QGraphicsRectItem):
 				scene.removeItem(i)
 			else: pass
-	
+
 	#проверяет значение SpinBox  и максимально возможное количество rectitem на картинке
 	def verification_num_spinbox(self, scene: QGraphicsScene):
 		__num_rect = self.num_rect_in_scene(scene, scene.rectitem)[0] * self.num_rect_in_scene(scene, scene.rectitem)[1]
@@ -76,7 +76,7 @@ class CalculateDifferentValue:
 			scene.spinbox.notify()
 		else: pass
 		
-				
+
 	# добавление одного rectitem на сцену
 	def add_one_rect(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem):
 		self.remove_all_rectitem(scene)
@@ -88,8 +88,8 @@ class CalculateDifferentValue:
 		
 		scene.addItem(rect)	
 		rect.setZValue(1) # пряиоугольник на передний план	
-		
-				
+
+
 	# последовательное размещение произвольного количества rectitem на сцене по одному
 	def add_certain_rect(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem, num: int):		
 		n_list = self.num_rect_in_scene(scene, rectitem)
