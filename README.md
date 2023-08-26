@@ -1,6 +1,12 @@
 # suprint 
 
 **Suprint** – программа для печати (или сохранения в pdf) произвольных фрагментов изображения.
+
+
+![image](https://github.com/PeftitsNik/suprint/assets/142207234/2e2a081f-e5c3-4def-b5b3-3b10dcff6382)
+
+
+
 Работа программы протестирована в Windows 10 и Slackware Linux 15.0.
 
 
