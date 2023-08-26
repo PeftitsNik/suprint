@@ -370,7 +370,7 @@ class ButtonOpenFile(QPushButton):
 		# при открытии новой картинки старая удаляется
 		#func.Func.remove_pixmap(self.scene)
 		
-		self.fileName = QFileDialog.getOpenFileName(self, "Open File", ".", "Images (*.png *.xpm *.jpg *.jpeg *.bmp *.tiff)")
+		self.fileName = QFileDialog.getOpenFileName(self, "Open File", ".", "Images (*.png *.xpm *.jpg *.jpeg *.bmp *.tiff *.webp)")
 			
 		if self.fileName[0] == "":
 			pass
