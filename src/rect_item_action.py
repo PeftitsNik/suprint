@@ -197,4 +197,5 @@ class RectItemAction(QGraphicsRectItem):
 				else:  break
 			else: pass
 			
-		
+	def mouseReleaseEvent(self, event):
+		self.setCursor(Qt.CursorShape.ArrowCursor)	
