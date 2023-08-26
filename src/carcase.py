@@ -72,6 +72,7 @@ internationalization = i18n.ru
 f_f = Fill_Forms()
 d_d = DictPrnPpr()
 
+calc_dif_value = func.CalculateDifferentValue()
 
 
 # наблюдатель
@@ -355,7 +356,7 @@ class Scene(QGraphicsScene, Observer):
 		func.Func.function_for_scene[subject.get_name()](self, subject)
 	
 	
-class ButtonOpenFile(QPushButton):	
+class ButtonOpenFile(QPushButton):
 	def __init__(self, manipulation: Manipulation):		
 		super().__init__()
 		self.manipulation = manipulation
@@ -368,7 +369,7 @@ class ButtonOpenFile(QPushButton):
 	@pyqtSlot()			
 	def open_pix(self):
 		# при открытии новой картинки старая удаляется
-		#func.Func.remove_pixmap(self.scene)
+		# func.Func.remove_pixmap(self.scene)
 		
 		self.fileName = QFileDialog.getOpenFileName(self, "Open File", ".", "Images (*.png *.xpm *.jpg *.jpeg *.bmp *.tiff *.webp)")
 			
@@ -380,6 +381,10 @@ class ButtonOpenFile(QPushButton):
 			self.scene.addPixmap(self.pixmap)
 			func.Func.manipulation_pixmap(self.scene)
 			self.manipulation.set_dpi(self.pixmap.physicalDpiX())
+
+			__list__num = calc_dif_value.num_rect_in_scene(self.scene, self.scene.rectitem)
+			__num = __list__num[0] * __list__num[1]
+			self.scene.spinbox.setMaximum(__num)
 			
 			
 class ButtonPrint(QPushButton):

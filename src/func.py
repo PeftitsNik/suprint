@@ -25,8 +25,7 @@ class CalculateDifferentValue:
 		self.pos_y = 0
 		self.qrect = None
 			
-	# количество rectitem на сцене по горизонтали и вертикали
-	
+	# количество rectitem на сцене по горизонтали и вертикали	
 	def num_rect_in_scene(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem) -> list[int]:
 		
 		if rectitem.rect().width() != 0 and rectitem.rect().height() != 0:
