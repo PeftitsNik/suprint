@@ -7,7 +7,7 @@ from src.dict_prn_ppr import *  # в нём создается словарь, �
                             # а также список потдерживаемых разрешений dpi печати 
 import src.func as func
 from src.rect_item_action import *
-
+from src.interface import *
 #
 #
 #___________________________		_______________________			________________________	
@@ -74,58 +74,14 @@ d_d = DictPrnPpr()
 
 calc_dif_value = func.CalculateDifferentValue()
 
-
-# наблюдатель
-class Observer:
-	def update_observer():
-		pass
-
-#наблюдаемое
-class Subject:
-	
-	#имя 
-	def set_name(self, name: str):
-		pass
-	
-	def get_name(self) -> str:
-		pass
-		
-	# сообщение наблюдателю	
-	def notify(self):
-		pass
-	
-	# добавление наблюдателей
-	def attach(self, observer: Observer):		
-		pass 
-			
-	# удаление наблюдателей
-	def detach(self, observer: Observer):
-		pass 
-
 class RadioButton(QRadioButton, Subject):	
 	def __init__(self, name: str, parent=None):
 		super().__init__(name)
-		self.list_observers = []
-				
-	def set_name(self, name: str):
-		self.__name = name
-	
-	def get_name(self) -> str:
-		return self.__name	
+		self.create_list_observers()
 	
 	def mousePressEvent(self, event):
 		self.setChecked(True)
 		self.notify()	
-		
-	def notify(self):
-		for i in self.list_observers:
-			i.update_observer(self)
-				
-	def attach(self, observer: Observer):		
-		self.list_observers.append(observer)
-							
-	def detach(self, observer: Observer):
-		self.list_observers.remove(observer)
 
 class RealSizeRadioButton(RadioButton):
 	def __init__(self, name: str, spinbox: QSpinBox, parent=None):
@@ -136,29 +92,12 @@ class RealSizeRadioButton(RadioButton):
 	def react_to_toggled(self, checked: bool):
 		self.spinbox.setEnabled(checked)
 
-			
-class ComboBoxPaperSize(QComboBox, Observer, Subject): # + Observer for Printer
+class ComboBoxPaperSize(QComboBox, Observer, Subject):
 	def __init__(self, parent=None):
 		super().__init__()
-		f_f.fill_combobox_paper(self)
-		self.list_observers = []
+		f_f.fill_combobox_paper(self)		
 		self.currentTextChanged[str].connect(self.notify)
-				
-	def set_name(self, name: str):
-		self.__name = name
-	
-	def get_name(self) -> str:
-		return self.__name
-			
-	def notify(self):
-		for i in self.list_observers:
-			i.update_observer(self)			
-							
-	def attach(self, observer: Observer):		
-		self.list_observers.append(observer)
-							
-	def detach(self, observer: Observer):
-		self.list_observers.remove(observer)
+		self.create_list_observers()
 		
 	def update_observer(self, subject: Subject):
 		func.Func.function_for_combobox_printer[subject.get_name()](self, subject)
@@ -166,51 +105,18 @@ class ComboBoxPaperSize(QComboBox, Observer, Subject): # + Observer for Printer
 class ComboBoxPrinter(QComboBox, Subject):
 	def __init__(self, parent=None):
 		super().__init__()
-		f_f.fill_combobox_printer(self)
-		self.list_observers = []
+		f_f.fill_combobox_printer(self)		
 		self.currentTextChanged[str].connect(self.notify)
-				
-	def set_name(self, name: str):
-		self.__name = name
-	
-	def get_name(self) -> str:
-		return self.__name		
-	
-	def notify(self):
-		for i in self.list_observers:
-			i.update_observer(self)
-										
-	def attach(self, observer: Observer):		
-		self.list_observers.append(observer)
-							
-	def detach(self, observer: Observer):
-		self.list_observers.remove(observer)
+		self.create_list_observers()
 		
 class SpinBoxField (QSpinBox, Subject, Observer):
 	def __init__(self):
 		super().__init__()
-		self.list_observers = []
-		self.valueChanged.connect(self.notify)
-		#self.setSuffix(" mm")
+		self.create_list_observers()
+		self.valueChanged.connect(self.notify)		
 		self.setValue(1)
 		self.setFixedWidth(50)
-						
-	def set_name(self, name: str):
-		self.__name = name
-	
-	def get_name(self) -> str:
-		return self.__name	
-	
-	def notify(self):		
-		for i in self.list_observers:
-			i.update_observer(self)
-				
-	def attach(self, observer: Observer):
-		self.list_observers.append(observer)
-							
-	def detach(self, observer: Observer):
-		self.list_observers.remove(observer)
-	
+
 	def update_observer(self, subject: Subject):		
 		func.Func.function_for_widgets_manipulations[subject.get_name()](self, subject)	
 	
@@ -219,64 +125,33 @@ class PageLayout(QPageLayout, Observer, Subject):
 	def __init__(self):
 		super().__init__()
 		self.setUnits(QPageLayout.Unit.Millimeter)
-		self.list_observers = []		
+		self.create_list_observers()	
 		
-	def set_name(self, name: str):
-		self.__name = name
-	
-	def get_name(self) -> str:
-		return self.__name
-	
 	def update_observer(self, subject: Subject):		
 		func.Func.function_for_pagelayout[subject.get_name()](self, subject)
-		self.notify()
-				
-	def notify(self): 
-		for i in self.list_observers:
-			i.update_observer(self) 
-				
-	def attach(self, observer: Observer):		
-		self.list_observers.append(observer)
-							
-	def detach(self, observer: Observer):
-		self.list_observers.remove(observer)
+		self.notify()				
 
 class RectItem(RectItemAction, Observer, Subject):
 	def __init__(self):
 		super().__init__()			
-		self.list_observers = []	
+		self.create_list_observers()	
 	
 	def add_objects(self, manipulation):
 		self.manipulation = manipulation
 	
-	def set_name(self, name: str):
-		self.__name = name
-	
-	def get_name(self) -> str:
-		return self.__name
-		
 	def update_observer(self, subject: Subject):		
 		func.Func.function_for_rectitem[subject.get_name()](self, subject)
 		self.notify()
-				
-	def notify(self): 
-		for i in self.list_observers:
-			i.update_observer(self) 
-				
-	def attach(self, observer: Observer):		
-		self.list_observers.append(observer)
-							
-	def detach(self, observer: Observer):
-		self.list_observers.remove(observer)
-
+			
+	
 #  в Manipulation хранятся состояния различных виджетов и классов
 class Manipulation(Observer, Subject):
 	def __init__(self):
 		self.__status_image = ["", ""] 	# 1 элемент - размер картинки (реальный, растянутый и т.п)
 									# 2 элемент - тип печать (распечатать всё, отдельные фрагменты)
-		self.__num = 1
-		self.list_observers = []
+		self.__num = 1		
 		self.__dpi = [0]
+		self.create_list_observers()
 							
 	def set_status_image(self, status1: str, status2: str): # состояние картинки: растянутая, нормальная, маштаб и т.д
 		self.__status_image = [status1, status2]
@@ -313,27 +188,11 @@ class Manipulation(Observer, Subject):
 		self.printer = printer
 		
 	def get_name_printer(self) -> str:
-		return self.printer
+		return self.printer	
 	
-	def set_name(self, name: str):
-		self.__name = name
-	
-	def get_name(self) -> str:
-		return self.__name
-		
 	def update_observer(self, subject: Subject):		
 		func.Func.function_for_manipulation[subject.get_name()](self, subject)
 		#self.notify()	
-	
-	def notify(self):		
-		for i in self.list_observers:
-			i.update_observer(self)			
-			
-	def attach(self, observer: Observer):		
-		self.list_observers.append(observer)
-							
-	def detach(self, observer: Observer):
-		self.list_observers.remove(observer)
 		
 class Scene(QGraphicsScene, Observer):
 	def __init__(self):
@@ -345,12 +204,6 @@ class Scene(QGraphicsScene, Observer):
 		self.pixmap = pixmap
 		self.rectitem = rectitem	
 		self.spinbox = spinbox
-				
-	def set_name(self, name: str):
-		self.__name = name
-	
-	def get_name(self) -> str:
-		return self.__name
 		
 	def update_observer(self, subject: Subject):				
 		func.Func.function_for_scene[subject.get_name()](self, subject)

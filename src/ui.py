@@ -232,7 +232,7 @@ class MainWindow(QWidget):
 		self.layout_right.addLayout(self.scale_slider_layout)
 		
 		#### Итоговое размещение
-		self.layout = QHBoxLayout()#self.layout.setStretch(4,1)
+		self.layout = QHBoxLayout() #self.layout.setStretch(4,1)
 		self.layout.addLayout(self.layout_left)
 		self.layout.addLayout(self.layout_right, stretch = 1)
 		
@@ -240,3 +240,4 @@ class MainWindow(QWidget):
 		self.setLayout(self.layout)
 		self.show()
 		self.setMinimumWidth(500)
+		
