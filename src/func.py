@@ -1,3 +1,5 @@
+#13/11/2023 попытка избавится от Manipulation
+#15/11/2023
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
@@ -24,7 +26,8 @@ class CalculateDifferentValue:
 		self.pos_x = 0
 		self.pos_y = 0
 		self.qrect = None
-			
+
+
 	# количество rectitem на сцене по горизонтали и вертикали	
 	def num_rect_in_scene(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem) -> list[int]:
 		
@@ -68,11 +71,11 @@ class CalculateDifferentValue:
 			else: pass
 
 	#проверяет значение SpinBox  и максимально возможное количество rectitem на картинке
-	def verification_num_spinbox(self, scene: QGraphicsScene):
-		__num_rect = self.num_rect_in_scene(scene, scene.rectitem)[0] * self.num_rect_in_scene(scene, scene.rectitem)[1]
-		if  __num_rect < scene.spinbox.value():
-			scene.spinbox.setValue(__num_rect)
-			scene.spinbox.notify()
+	def verification_num_spinbox(self, scene: QGraphicsScene):		
+		__num_rect = self.num_rect_in_scene(scene, scene.window.rect)[0] * self.num_rect_in_scene(scene, scene.window.rect)[1]
+		scene.window.spinbox_number_of_pages.maxValue(__num_rect)
+		if  __num_rect < scene.window.spinbox_number_of_pages.value():
+			scene.window.spinbox_number_of_pages.setValue(__num_rect)			
 		else: pass
 		
 
@@ -86,7 +89,9 @@ class CalculateDifferentValue:
 		rect.setRect(rectitem.rect())
 		
 		scene.addItem(rect)	
-		rect.setZValue(1) # пряиоугольник на передний план	
+		rect.setZValue(1) # прямоугольник на передний план
+
+		scene.window.spinbox_number_of_pages.setValue(1)
 
 
 	# последовательное размещение произвольного количества rectitem на сцене по одному
@@ -94,25 +99,28 @@ class CalculateDifferentValue:
 		n_list = self.num_rect_in_scene(scene, rectitem)
 		column = n_list[0]# возможное количество страниц по ширине(количество колонок)
 		row = n_list[1] # возможное количество страниц по высоте(количество строк)
+		#####max_num = column * row # max возможное количество rectitem
 		
-		width_rect = rectitem.rect().width()
-		height_rect = rectitem.rect().height()
+		_r = rectitem.rect()
 		
-		if (num - len( self.list_rect(scene)) ) != 0: 
-			self.remove_all_rectitem(scene)
-			for i in range(num):
-				# scene.addItem(rect)
-		        # выдает ошибку 'QGraphicsScene::addItem: item has already been added to this scene'
-		        # поэтому делаем так:
-				rect = RectItemAction()
-				rect.setRect(rectitem.rect())
-				rect.setZValue(1)
-				coor = CalculateDifferentValue.coord_rect(i, column, row)
+		width_rect = _r.width()
+		height_rect = _r.height()
+		
+		###if (num - len(self.list_rect(scene))) != 0:
+		self.remove_all_rectitem(scene)
+		for i in range(num):
+			# scene.addItem(rect)
+		    # выдает ошибку 'QGraphicsScene::addItem: item has already been added to this scene'
+		    # поэтому делаем так:
+			_rect = RectItemAction()
+			_rect.setRect(_r)
+			_rect.setZValue(1)
+			coor = CalculateDifferentValue.coord_rect(i, column, row)
 				
-				rect.moveBy(self.pos_x + width_rect * coor[0],
+			_rect.moveBy(self.pos_x + width_rect * coor[0],
 							self.pos_y + height_rect * coor[1])               
-				scene.addItem(rect)
-		else: pass		
+			scene.addItem(_rect)
+		###else: pass		
 				
 	# добавление rectitem на сцену, которые полностью покрывают рисунок
 	def add_all_rect (self, scene: QGraphicsScene, rectitem: QGraphicsRectItem):
@@ -136,12 +144,10 @@ class CalculateDifferentValue:
 				_rect.setZValue(1)  # пряиоугольник на передний план			
 				_rect.moveBy(j * width_rect, i * height_rect)
 	
-			
 				
 calc = CalculateDifferentValue()
 
 class Func:
-	
 	
 	######################################################################################
 	# в названиях функций первое имя виджета - наблюдатель, второе имя - источник
@@ -150,7 +156,7 @@ class Func:
 	#######################################################################################	
 	################# методы определяющие формат страницы для QPageLayout #################
 	def function_pagelayout_portrait (*args):
-		args[0].setOrientation(QPageLayout.Orientation.Portrait)
+		args[0].setOrientation(QPageLayout.Orientation.Portrait)		
 						
 	def function_pagelayout_landscape(*args):
 		args[0].setOrientation(QPageLayout.Orientation.Landscape)
@@ -160,18 +166,18 @@ class Func:
 		else:
 			args[0].setPageSize(QPageSize(p.dict_support_pages()[args[1].currentText()]))
 						
-	def function_pagelayout_left(*args):		
+	def function_pagelayout_left(*args):
 		args[0].setLeftMargin(args[1].value())
 							
-	def function_pagelayout_top(*args):		
+	def function_pagelayout_top(*args):
 		args[0].setTopMargin(args[1].value())
 							
-	def function_pagelayout_right(*args):	
+	def function_pagelayout_right(*args):
 		args[0].setRightMargin(args[1].value())
 					
 	def function_pagelayout_bottom(*args):	
 		args[0].setBottomMargin(args[1].value())
-				
+
 	
 	function_for_pagelayout = {
 		"portrait": function_pagelayout_portrait,
@@ -196,14 +202,22 @@ class Func:
 		}
 	
 	###################################################################################################
-	################# методы изменентя содержимого Scene ##############################################
+	################# методы изменения содержимого Scene ##############################################
 		
 	def function_scene_rectitem(*args):
+		# установка макс. возможного количества rectitem (setMaximum spinbox)
+		__num = calc.num_rect_in_scene(args[0], args[0].window.rect)[0] * calc.num_rect_in_scene(args[0], args[0].window.rect)[1]
+		args[0].window.spinbox_number_of_pages.setMaximum( __num )
+		##################################
+		
 		Func.manipulation_pixmap(args[0])
+		
 		if len (calc.list_rect(args[0])) > 1:
-			if args[0].manipulation.get_status_image()[1] == "print_all":
+			if args[0].window.print_all.isChecked():
 				calc.add_all_rect(args[0], args[1])
-			else: calc.add_certain_rect(args[0], args[1], len (calc.list_rect(args[0])))
+			else:
+				calc.add_certain_rect(args[0], args[1], len (calc.list_rect(args[0])))			
+			#else: calc.add_certain_rect(args[0], args[1], args[0].window.spinbox_number_of_pages.value())
 		else:
 			calc.add_one_rect(args[0], args[1])
 								
@@ -211,39 +225,50 @@ class Func:
 		if args[0].pixmap.isNull(): pass			
 		else: 
 			Func.stretch_pixmap(args[0])	
-			calc.add_one_rect(args[0], args[0].rectitem)	
+			#calc.add_one_rect(args[0], args[0].rectitem)
+			calc.add_one_rect(args[0], args[0].window.rect)	
 	
-	def function_scene_pixmap_realsize(*args):
+	def function_scene_pixmap_realsize(*args):##########16.11 - 18-15!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		if args[0].pixmap.isNull(): pass			
 		else:
-			Func.realsize_pixmap(args[0])		
-			calc.add_certain_rect(args[0], args[0].rectitem, args[0].spinbox.value())
-		
+			Func.realsize_pixmap(args[0])
+			#calc.verification_num_spinbox(args[0])
+			#calc.add_certain_rect(args[0], args[0].rectitem, args[0].spinbox.value())
+			calc.add_certain_rect(args[0], args[0].window.rect, args[0].window.spinbox_number_of_pages.value())
+			#calc.add_certain_rect(args[0], args[0].window.rect, len (calc.list_rect(args[0])))
+			#args[0].window.spinbox_number_of_pages.setValue(len (calc.list_rect(args[0])))			
+			
 	def function_scene_pixmap_in_width(*args):
 		if args[0].pixmap.isNull(): pass			
 		else:
 			Func.in_width_pixmap(args[0])
-			calc.add_one_rect(args[0], args[0].rectitem)
+			#calc.add_one_rect(args[0], args[0].rectitem)
+			calc.add_one_rect(args[0], args[0].window.rect)
 		
 	def function_scene_pixmap_in_height(*args):
 		if args[0].pixmap.isNull(): pass			
 		else:
 			Func.in_height_pixmap(args[0])
-			calc.add_one_rect(args[0], args[0].rectitem)
+			#calc.add_one_rect(args[0], args[0].rectitem)
+			calc.add_one_rect(args[0], args[0].window.rect)
 		
 	def function_scene_pixmap_stretch_proportion(*args):
 		if args[0].pixmap.isNull(): pass			
 		else:
 			Func.stretch_proportion_pixmap(args[0])
-			calc.add_one_rect(args[0], args[0].rectitem)
+			#calc.add_one_rect(args[0], args[0].rectitem)
+			calc.add_one_rect(args[0], args[0].window.rect)
 			
 	def function_scene_spinbox_number_of_pages(*args):
-		calc.add_certain_rect(args[0], args[0].rectitem, args[1].value())
-	
+		#calc.add_certain_rect(args[0], args[0].rectitem, args[1].value())
+		calc.add_certain_rect(args[0], args[0].window.rect, args[1].value())
+
 	def function_scene_print_all(*args):
 		Func.realsize_pixmap(args[0])		
-		calc.add_all_rect(args[0], args[0].rectitem)
-		args[0].spinbox.setValue( len(calc.list_rect(args[0])) )
+		#calc.add_all_rect(args[0], args[0].rectitem)
+		#args[0].spinbox.setValue( len(calc.list_rect(args[0])) )
+		calc.add_all_rect(args[0], args[0].window.rect)		
+
 		
 	function_for_scene = {
 		"rectitem": function_scene_rectitem,
@@ -269,7 +294,7 @@ class Func:
 	
 	def return_size_rectitem(scene: QGraphicsScene) -> list[int]:
 		#первый элемент - ширина rectitem, второй - высота
-		return int(scene.rectitem.rect().width()), int(scene.rectitem.rect().height())
+		return int(scene.window.rect.rect().width()), int(scene.window.rect.rect().height())
 	
 	def stretch_pixmap(scene: QGraphicsScene):		
 		Func.remove_pixmap(scene)
@@ -290,60 +315,45 @@ class Func:
 	def stretch_proportion_pixmap(scene: QGraphicsScene):
 		Func.remove_pixmap(scene)		
 		#  проверяем на наличие нуля в размерах
-		if scene.pixmap.width() == 0 or scene.pixmap.height() == 0 or scene.rectitem.rect().width() == 0 or scene.rectitem.rect().height() == 0:
+		if scene.pixmap.width() == 0 or scene.pixmap.height() == 0 or scene.window.rect.rect().width() == 0 or scene.window.rect.rect().height() == 0:
 			pass
 		
 		else: #сравнение отношение ширины к высоте у pixmap и rectitem
 		
-			if (scene.pixmap.width() / scene.pixmap.height()) > (scene.rectitem.rect().width() / scene.rectitem.rect().height()):
+			if (scene.pixmap.width() / scene.pixmap.height()) > (scene.window.rect.rect().width() / scene.window.rect.rect().height()):
 				scene.addPixmap(scene.pixmap.scaledToWidth(Func.return_size_rectitem(scene)[0],	mode = Qt.TransformationMode.FastTransformation))
 		
-			elif (scene.pixmap.width() / scene.pixmap.height()) < (scene.rectitem.rect().width() / scene.rectitem.rect().height()):
+			elif (scene.pixmap.width() / scene.pixmap.height()) < (scene.window.rect.rect().width() / scene.window.rect.rect().height()):
 				scene.addPixmap(scene.pixmap.scaledToHeight(Func.return_size_rectitem(scene)[1], mode = Qt.TransformationMode.FastTransformation))
 		
 			else: scene.addPixmap(scene.pixmap.scaledToHeight(Func.return_size_rectitem(scene)[1], mode = Qt.TransformationMode.FastTransformation)) 
-					
 				
 	def realsize_pixmap(scene: QGraphicsScene):
 		Func.remove_pixmap(scene)
 		scene.addPixmap(scene.pixmap)
 			
 	def manipulation_pixmap(scene: QGraphicsScene):	#  вызывается при изменении rectitem и pixmap
-		if scene.manipulation.get_status_image()[0] == "stretch":
+		
+		if scene.window.stretch.isChecked():			
 			Func.stretch_pixmap(scene)
-									
-		elif scene.manipulation.get_status_image()[0] == "realsize":				
+		
+		elif scene.window.realsize.isChecked():
 			Func.realsize_pixmap(scene)
-						
-		elif scene.manipulation.get_status_image()[0] == "in_width":
+			####__list__num = cal.num_rect_in_scene(self.window.scene, self.window.rect)
+			####__num = __list__num[0] * __list__num[1]
+			####scene.window.spinbox_number_of_pages.setMaximum(__num)
+
+		elif scene.window.in_width.isChecked():
 			Func.in_width_pixmap(scene)
 			
-		elif scene.manipulation.get_status_image()[0] == "in_height":
+		elif scene.window.in_height.isChecked():
 			Func.in_height_pixmap(scene)
 			
-		elif scene.manipulation.get_status_image()[0] == "stretch_proportion":
+		elif scene.window.stretch_proportion.isChecked():
 			Func.stretch_proportion_pixmap(scene)
-				
-		else: pass
-		
-		if scene.manipulation.get_status_image()[0] == "realsize" and scene.manipulation.get_status_image()[1] == "print_all":
-			calc.add_all_rect(scene, scene.rectitem)
-		
-		elif scene.manipulation.get_status_image()[0] == "realsize" and scene.manipulation.get_status_image()[1] == "number_of_pages":
-			
-			__num = calc.num_rect_in_scene(scene, scene.rectitem)[0] * calc.num_rect_in_scene(scene, scene.rectitem)[1]
-			
-			if __num == 1:
-				calc.remove_all_rectitem(scene)
-				calc.add_one_rect(scene, scene.rectitem)
-				scene.spinbox.setValue(1)
-				
-			elif __num > 1:				
-				calc.remove_all_rectitem(scene)
-				#scene.spinbox.setValue(__num) ############################### если в спинбоксе число rectitem больше чем вмещается на картинку
-				scene.spinbox.notify()
-				
-			else: pass
+
+		elif scene.window.print_all.isChecked():
+			calc.add_all_rect(scene, scene.window.rect)		
 												
 		else: pass
 	
@@ -374,7 +384,7 @@ class Func:
 		# высота = полная высота минус верхнее и нижнее поле в mm
 		height_mm = args[1].fullRect().height() - args[1].margins().top() - args[1].margins().bottom()
 		
-		# добавление оригинаоьного rectItem  без пересчета dpi
+		# добавление оригинального rectItem  без пересчета dpi
 		args[0].manipulation.set_orig_rect(QRectF(0,0, width_mm, height_mm))
 		
 		Func.rectitem_from_dpi(args[0], width_mm, height_mm, args[0].manipulation.get_dpi()[0])
@@ -394,46 +404,46 @@ class Func:
 	
 	
 	################# методы изменентя содержимого Manipulation #####################################
-	def function_manipulation_stretch(*args):
-		args[0].set_status_image(args[1].get_name(), "")
+	#def function_manipulation_stretch(*args):
+	#	args[0].set_status_image(args[1].get_name(), "")
 						
-	def function_manipulation_realsize(*args):
-		args[0].set_status_image(args[1].get_name(), "")
+	#def function_manipulation_realsize(*args):
+	#	args[0].set_status_image(args[1].get_name(), "")
 		
-	def function_manipulation_in_width(*args):
-		args[0].set_status_image(args[1].get_name(), "")
+	#def function_manipulation_in_width(*args):
+	#	args[0].set_status_image(args[1].get_name(), "")
 		
-	def function_manipulation_in_height(*args):
-		args[0].set_status_image(args[1].get_name(), "")
+	#def function_manipulation_in_height(*args):
+	#	args[0].set_status_image(args[1].get_name(), "")
 		
-	def function_manipulation_stretch_proportion(*args):
-		args[0].set_status_image(args[1].get_name(), "")	
+	#def function_manipulation_stretch_proportion(*args):
+	#	args[0].set_status_image(args[1].get_name(), "")	
 							
-	def function_manipulation_print_all(*args):
-		args[0].set_status_image("realsize", args[1].get_name())
+	#def function_manipulation_print_all(*args):
+	#	args[0].set_status_image("realsize", args[1].get_name())
 		
-	def function_manipulation_number_of_pages(*args):
-		args[0].set_status_image("realsize", args[1].get_name())
+	#def function_manipulation_number_of_pages(*args):
+	#	args[0].set_status_image("realsize", args[1].get_name())
 	
-	def function_manipulation_printer(*args):
-		args[0].set_dpi(*p.list_prn_dpi(args[1].currentText()))
-		args[0].set_name_printer(args[1].currentText())
+	#def function_manipulation_printer(*args):
+	#	args[0].set_dpi(*p.list_prn_dpi(args[1].currentText()))		
+	#	args[0].set_name_printer(args[1].currentText())
 		
 			
-	def function_manipulation_pagelayout(*args):
-		args[0].set_pagelayout(args[1])
+	#def function_manipulation_pagelayout(*args):
+	#	args[0].set_pagelayout(args[1])
 																		
-	function_for_manipulation = {
-		"stretch": function_manipulation_stretch,
-		"realsize": function_manipulation_realsize,
-		"print_all": function_manipulation_print_all,
-		"in_width": function_manipulation_in_width,
-		"in_height": function_manipulation_in_height,
-		"stretch_proportion": function_manipulation_stretch_proportion,
-		"number_of_pages": function_manipulation_number_of_pages,
-		"printer": function_manipulation_printer,
-		"pagelayout": function_manipulation_pagelayout
-		}
+	#function_for_manipulation = {
+		#"stretch": function_manipulation_stretch,
+		#"realsize": function_manipulation_realsize,
+		#"print_all": function_manipulation_print_all,
+		#"in_width": function_manipulation_in_width,
+		#"in_height": function_manipulation_in_height,
+		#"stretch_proportion": function_manipulation_stretch_proportion,
+		#"number_of_pages": function_manipulation_number_of_pages,
+		#"printer": function_manipulation_printer,
+		#"pagelayout": function_manipulation_pagelayout
+		#}
 
 	################################################################
 	#################### Печать картинки ###########################
@@ -448,22 +458,26 @@ class Func:
 		#print("logicalDpiY", pixmap.logicalDpiY())
 		
 		#список из частей картинки для печати
-		copy_pixmap = [pixmap.copy( int(coor.x()), int(coor.y()), int(scene.rectitem.rect().width()), int(scene.rectitem.rect().height()) )
+		copy_pixmap = [pixmap.copy( int(coor.x()), int(coor.y()), int(scene.window.rect.rect().width()), int(scene.window.rect.rect().height()) )
 																												for coor in list_coor_rect]
 		
-		if manipulation.get_name_printer() == const.PR_PDF: # если выбрана печать "to PDF"
+		#if manipulation.get_name_printer() == const.PR_PDF: # если выбрана печать "to PDF"
+		if scene.window.printer.currentText() == const.PR_PDF:
 			file_name = QFileDialog.getSaveFileName(button, "Save File", ".", "PDF (*.pdf)")
 			if file_name[0] == "": pass
 			else: printer = QPdfWriter(file_name[0])
-		elif manipulation.get_name_printer() == "":
+		#elif manipulation.get_name_printer() == "":
+		elif scene.window.printer.currentText() == "":
 			print("no printer selected")
 		else:
 			printer = QPrinter()
-			printer.setPrinterName(manipulation.get_name_printer())
+			#printer.setPrinterName(Move-assigns other to this QPageLayout instance, transferring the ownership of the managed pointer to this instance.get_name_printer())
+			printer.setPrinterName(scene.window.printer.currentText())
 		
 		printer.setResolution(int(manipulation.get_dpi()[0]))
-				
-		printer.setPageLayout(manipulation.get_pagelayout())
+		#printer.setResolution(int(p.list_prn_dpi(scene.window.printer.currentText())[0]))
+		#printer.setPageLayout(manipulation.get_pagelayout())
+		printer.setPageLayout(scene.window.pagelayout)
 		#printer.setOutputFileName("test.pdf")
 		painter = QPainter()
 		painter.begin(printer)
