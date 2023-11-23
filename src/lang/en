@@ -1,0 +1,27 @@
+paper: Page
+landscape: landscape
+realsize: real size
+##############################
+fields: Fields
+left: left
+top: top
+right: right
+bottom: bottom
+portrait: portrait
+###############################
+image: Image
+num_fragment: number of fragments
+stretch: stretch
+in_width: fit in width
+in_height: fit in height
+stretch_proportion: stretch proportionally
+print_all: print all
+################################
+printers: Printers and paper
+button_open: Open file
+button_print: Print
+################################
+settings: Settings
+scale: scale
+language: language	
+

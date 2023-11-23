@@ -1,26 +1,27 @@
-ru = {	
-		"page": "Страница",
-		"landscape": "альбомная", 
-		"realsize": "реальный размер",
+i18n = {
+		"page": "",
+		"landscape": "",
+		"portrait": "",
+		"realsize":  "",
 		##############################
-		"fields": "Поля",
-		"left": "слева",
-		"top": "вверху",
-		"right": "справа",
-		"bottom": "снизу",
-		"portrait": "портретная",
+		"fields": "",
+		"left": "",
+		"top": "",
+		"right": "",
+		"bottom": "",	
 		###############################
-		"image": "Изображение",
-		"num_fragment": "число фрагментов",		
-		"stretch": "растянуть на весь лист",		
-		"in_width": "вместить по ширине",
-		"in_height": "вместить по высоте",
-		"stretch_proportion": "пропорционально растянуть",
-		"print_all": "распечатать всё",
+		"image": "",
+		"num_fragment": "",		
+		"stretch": "",
+		"in_width": "",
+		"in_height": "",
+		"stretch_proportion": "",
+		"print_all": "",
 		################################
-		"printers": "Принтеры и бумага",
-		"button_open": "Открыть файл",
-		"button_print": "Печать",
+		"printers": "",
+		"button_open": "",
+		"button_print": "",
 		################################
-		"scale": "масштаб"			
-		}
+		"scale": "",
+		"language": ""	
+	}
