@@ -4,6 +4,7 @@
 
 Для pdf  файлов поддерживаются размеры А0 - А4.
 
+
 ![image](https://github.com/PeftitsNik/suprint/assets/142207234/776660f5-a263-4dcc-b2d6-cb2db9f8acf9)
 
 
