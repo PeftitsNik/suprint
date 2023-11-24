@@ -189,30 +189,35 @@ class Func:
 			calc.add_one_rect(args[0], args[1])
 								
 	def function_scene_pixmap_stretch(*args):
+		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
 		if args[0].carcase.pixmap.isNull(): pass			
 		else: 
 			Func.stretch_pixmap(args[0])	
 			calc.add_one_rect(args[0], args[0].carcase.rect)
 				
 	def function_scene_pixmap_realsize(*args):
+		args[0].carcase.spinbox_number_of_pages.setEnabled(True)
 		if args[0].carcase.pixmap.isNull(): pass			
 		else:
 			Func.realsize_pixmap(args[0])
 			calc.add_certain_rect(args[0], args[0].carcase.rect, args[0].carcase.spinbox_number_of_pages.value())
 						
 	def function_scene_pixmap_in_width(*args):
+		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
 		if args[0].carcase.pixmap.isNull(): pass			
 		else:
 			Func.in_width_pixmap(args[0])
 			calc.add_one_rect(args[0], args[0].carcase.rect)
 		
 	def function_scene_pixmap_in_height(*args):
+		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
 		if args[0].carcase.pixmap.isNull(): pass			
 		else:
 			Func.in_height_pixmap(args[0])
 			calc.add_one_rect(args[0], args[0].carcase.rect)
 		
 	def function_scene_pixmap_stretch_proportion(*args):
+		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
 		if args[0].carcase.pixmap.isNull(): pass			
 		else:
 			Func.stretch_proportion_pixmap(args[0])
@@ -222,6 +227,7 @@ class Func:
 		calc.add_certain_rect(args[0], args[0].carcase.rect, args[1].value())
 
 	def function_scene_print_all(*args):
+		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
 		Func.realsize_pixmap(args[0])		
 		calc.add_all_rect(args[0], args[0].carcase.rect)		
 

@@ -45,7 +45,7 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 		self.setCursor(Qt.CursorShape.SizeAllCursor)
 		#список rectitem на сцене
 		self.other_rect_on_scene = [i for i in self.scene().items() if isinstance(i, QGraphicsRectItem) ]
-					
+							
 		self.delta_x = 0
 		self.delta_y = 0
 
@@ -53,7 +53,7 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 		self.moveBy(event.pos().x() - event.lastPos().x(), event.pos().y() - event.lastPos().y())
 
 		for i in self.other_rect_on_scene:          
-			
+		
 			if i == self: continue # если прямоугольник, который двигают, сравнивается с самим собой, то продолжаем цикл 
 			
             ###########  ПРИЛИПАНИЕ УГЛОВ ######################
@@ -73,7 +73,8 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 			#				|			|
 			#				|	i		|
 			#				-------------
-						
+
+			
 			elif abs(i.scenePos().x() - (self.scenePos().x() + self.rect().width())) < const.BORDER\
 					and abs(i.scenePos().y() - (self.scenePos().y() + self.rect().height())) < const.BORDER:				
 				self.setPos(i.scenePos().x() - self.rect().width(), i.scenePos().y() - self.rect().height())
@@ -93,7 +94,7 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 					self.delta_y = 0
 					break
 				else:  break
- 			
+				
             # self  - что двигают,  i  - неподвижный
             #			-------------      
             #			|			|    
