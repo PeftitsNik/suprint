@@ -23,5 +23,6 @@ i18n = {
 		"button_print": "",
 		################################
 		"scale": "",
-		"language": ""	
+		"language": "",
+		"label_dd": ""
 	}

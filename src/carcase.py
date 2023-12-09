@@ -196,7 +196,11 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.button_open = self.elements.Button(self)
 		self.button_open.set_name("button_open")
 		self.list_element_with_text.append(self.button_open)
-				
+		
+		self.label_dd = self.elements.LabelDD(self)
+		self.label_dd.set_name("label_dd")
+		self.list_element_with_text.append(self.label_dd)
+		
 		self.button_print = self.elements.Button(self)
 		self.button_print.set_name("button_print")
 		self.list_element_with_text.append(self.button_print)
@@ -271,6 +275,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.list_element_with_text.append(self.group_settings)
 		
 		
+		
 		#####################################################
 		self.rect.add_parent_scene(self.scene)
 		
@@ -298,6 +303,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.print_all.attach(self.scene)
 		
 		self.button_open.attach(self.manipulation)
+		self.label_dd.attach(self.manipulation)
 		self.button_print.attach(self.button_print)
 						
 		self.manipulation.attach(self.rect)
@@ -314,5 +320,4 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.spinbox_left.notify()
 		self.spinbox_right.notify()
 		self.spinbox_bottom.notify()
-	
 		

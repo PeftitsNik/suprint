@@ -6,6 +6,7 @@ from PyQt6.QtPrintSupport import *
 from src.interface import *
 from src.rect_item_appearance_and_action import *
 from src.load_setting import *
+from src.label_d_d import *
 import  src.func as func
 
 import os
@@ -53,7 +54,14 @@ class Elements:
 		
 		def update_observer(self, subject: Subject):
 			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
-						
+	
+	
+	class LabelDD(LabelDragDrop, Element_Interface, Subject):
+		def __init__(self, carcase: Carcase_Interfase):
+			super().__init__()	
+			self.carcase = carcase		
+			self.create_list_observers()
+					
 		
 	class RectItem(RectItemAppearanceAndAction, Element_Interface, Observer, Subject):
 		def __init__(self, carcase: Carcase_Interfase):
@@ -89,8 +97,7 @@ class Elements:
 		
 		def set_dpi(self, *dpi):
 			self.__dpi = dpi
-			#self.notify()
-					
+								
 		def get_dpi(self) -> list[int]:
 			return self.__dpi
 		

@@ -23,5 +23,6 @@ button_print: Печать
 ################################
 settings: Настройки
 scale: масштаб
-language: язык	
+language: язык
+label_dd: Или перетащите сюда файл
 

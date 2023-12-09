@@ -81,8 +81,14 @@ class UI():
 		self.layout_left.setStretch(5,1)
 		
 		##### Правая часть
+		self.layout_right_horizontal = QHBoxLayout()
+		self.layout_right_horizontal.addWidget(self.carcase.button_open)
+		self.layout_right_horizontal.addWidget(self.carcase.label_dd)
+		self.layout_right_horizontal.setStretch(0,0)
+		self.layout_right_horizontal.setStretch(1,1)		
+		
 		self.layout_right = QVBoxLayout()
-		self.layout_right.addWidget(self.carcase.button_open)
+		self.layout_right.addLayout(self.layout_right_horizontal)
 		self.layout_right.addWidget(self.carcase.view)
 		self.layout_right.addWidget(self.carcase.button_print)
 		

@@ -23,5 +23,6 @@ button_print: Print
 ################################
 settings: Settings
 scale: scale
-language: language	
+language: language
+label_dd: Or drop here file
 

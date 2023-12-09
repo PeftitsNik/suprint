@@ -251,6 +251,21 @@ class Func:
 			args[1].carcase.scene.addPixmap(args[1].carcase.pixmap)
 			Func.manipulation_pixmap(args[1].carcase.scene)			
 			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX())
+			
+			
+	def function_manipulation_label_dd(*args):
+		
+		fileName = args[1].get_name_file()
+			
+		if fileName == "" or fileName == None:
+			pass
+		else :
+			args[1].carcase.pixmap.load(fileName)
+			Func.remove_pixmap(args[1].carcase.scene)	
+			args[1].carcase.scene.addPixmap(args[1].carcase.pixmap)
+			Func.manipulation_pixmap(args[1].carcase.scene)			
+			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX())	
+	
 	
 	
 	#####################################################################################################
@@ -514,7 +529,6 @@ class Func:
 		painter.end()	
 		
 	
-		
 
 	function_for_element = {
 		"portrait": 	{"pagelayout": function_pagelayout_portrait},
@@ -538,9 +552,7 @@ class Func:
 		"choise_papers": {"pagelayout": function_pagelayout_papersize},	
 		"choice_language": {"carcase": function_for_combobox_lang},
 		"button_open": 	{"manipulation": function_manipulation_button_open},
+		"label_dd":		{"manipulation": function_manipulation_label_dd},
 		"button_print":	{"button_print": print_pixmap_from_scene},
 		"slider": 		{"view": function_for_view_slider, "lcd": function_for_lcd_slider}
 		}
-
-
-
