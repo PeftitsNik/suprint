@@ -6,8 +6,14 @@ class UI():
 		self.carcase = carcase	
 		self.create_ui()
 
-	def create_ui(self):		
+	def create_ui(self):
+
+		icon_open = QIcon(QPixmap(".icons/open.svg"))
+		self.carcase.button_open.setIcon(icon_open)   ###setStyleSheet("image: url(open.png);")
 		
+		icon_print = QIcon(QPixmap(".icons/print.svg"))
+		self.carcase.button_print.setIcon(icon_print)
+
 		self.window = QWidget()
 		##########################################################
 		##########################################################
@@ -114,6 +120,6 @@ class UI():
 		self.window.show()
 		self.window.setMinimumWidth(500)
 		self.window.setWindowTitle("Suprint")
-		self.window.setWindowIcon(QIcon("suprint.png"))
+		self.window.setWindowIcon(QIcon(".icons/suprint.svg"))
 		
 
