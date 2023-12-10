@@ -241,7 +241,7 @@ class Func:
 		#
 				
 		fileName = QFileDialog.getOpenFileName(parent = None, caption = "Open File", 
-				directory = ".", filter = "Images (*.png *.PNG *.xpm *.XPM *.jpg *.JPG *.jpeg *.JPEG *.bmp *.BMP *.tiff *.TIFF *.webp *.WEBP)")
+				directory = ".", filter = "Images (*.png *.PNG *.xpm *.XPM *.jpg *.JPG *.jpeg *.JPEG *.bmp *.BMP *.tiff *.TIFF *.webp *.WEBP *.svg *.SVG)")
 			
 		if fileName[0] == "":
 			pass
