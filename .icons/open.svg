@@ -3,50 +3,24 @@
 
 <svg
    height="48"
-   viewBox="0 0 36.000002 36"
-   width="48"
+   viewBox="0 0 36.000005 36"
+   width="48.000004"
    version="1.1"
    id="a0bb76de-9742-11ee-bc84-283926b60966"
-   sodipodi:docname="open2.svg"
-   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
      id="defs3" />
-  <sodipodi:namedview
-     id="namedview3"
-     pagecolor="#ffffff"
-     bordercolor="#111111"
-     borderopacity="1"
-     inkscape:showpageshadow="0"
-     inkscape:pageopacity="0"
-     inkscape:pagecheckerboard="1"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="pt"
-     showgrid="false"
-     showguides="false"
-     inkscape:zoom="5.4363726"
-     inkscape:cx="46.538385"
-     inkscape:cy="5.0585201"
-     inkscape:window-width="1920"
-     inkscape:window-height="1000"
-     inkscape:window-x="-11"
-     inkscape:window-y="-11"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="a0bb76de-9742-11ee-bc84-283926b60966" />
   <path
      style="opacity:1;fill:#ffcc00;stroke:#2d2c2b;stroke-width:0.796108;stroke-dasharray:none;stroke-opacity:1"
      d="M 1.6254725,14.265725 H 24.243146 L 24.009371,34.346138 1.8008053,34.157053 Z"
      id="path5" />
   <path
-     style="fill:#f4eed7;fill-rule:evenodd;stroke:#2d2c2b;stroke-width:0.75;stroke-miterlimit:10.433;stroke-dasharray:none;fill-opacity:1"
+     style="fill:#f4eed7;fill-opacity:1;fill-rule:evenodd;stroke:#2d2c2b;stroke-width:0.75;stroke-miterlimit:10.433;stroke-dasharray:none"
      d="M 19.301023,18.84061 8.5351812,18.79581 C 9.0673212,11.59413 17.104293,6.996731 21.260874,6.1433455 L 18.143916,2.6518688 c 6.425469,0.2374252 9.074034,0.9520696 15.460122,3.322283 -5.606844,2.6311097 -6.80825,3.5403865 -10.010123,6.3616052 L 22.23955,8.1238136 C 15.68223,10.263978 15.785518,14.123337 19.301023,18.84061 Z"
-     id="path3"
-     sodipodi:nodetypes="cccccccc" />
+     id="path3" />
   <path
-     style="opacity:1;fill:#aa8800;stroke:#2d2c2b;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+     style="opacity:1;fill:#aa8800;fill-opacity:1;stroke:#2d2c2b;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1"
      d="M 1.8365056,34.402851 12.992878,21.943138 35.129929,21.976674 24.237092,34.637354 Z"
      id="path4" />
 </svg>

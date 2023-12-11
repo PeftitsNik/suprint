@@ -14,6 +14,8 @@ class UI():
 		icon_print = QIcon(QPixmap(".icons/print.svg"))
 		self.carcase.button_print.setIcon(icon_print)
 
+		self.image_fields = QPixmap(".icons/fields.png")
+
 		self.window = QWidget()
 		##########################################################
 		##########################################################
@@ -38,7 +40,7 @@ class UI():
 		self.layout_image.addWidget(self.carcase.print_all)
 		
 		##### Поля страницы
-		self.layout_fields_spinbox = QVBoxLayout()
+		self.layout_fields_spinbox = QVBoxLayout()		
 		self.layout_fields_spinbox.addWidget(self.carcase.spinbox_left)
 		self.layout_fields_spinbox.addWidget(self.carcase.spinbox_top)
 		self.layout_fields_spinbox.addWidget(self.carcase.spinbox_right)
@@ -53,6 +55,13 @@ class UI():
 		self.layout_fields = QHBoxLayout()
 		self.layout_fields.addLayout(self.layout_fields_spinbox)
 		self.layout_fields.addLayout(self.layout_fields_label)
+		self.label_plus_image = QLabel()
+		self.label_plus_image.setPixmap(self.image_fields)
+		#self.label_plus_image.setScaledContents(True)
+		self.layout_fields.addWidget(self.label_plus_image)
+		self.layout_fields.setStretch(0,0)
+		self.layout_fields.setStretch(1,0)
+		self.layout_fields.setStretch(2,0)
 		
 		self.layout_printers = QVBoxLayout()
 			

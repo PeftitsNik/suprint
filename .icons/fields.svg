@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created by sK1 2.0rc5 (https://sk1project.net/) -->
+
+<svg
+   height="100.99496"
+   viewBox="0 0 59.372311 75.746217"
+   width="79.163078"
+   version="1.1"
+   id="a0bb76de-9742-11ee-bc84-283926b60966"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs3" />
+  <rect
+     style="opacity:1;fill:#d5e5ff;fill-opacity:1;stroke:none;stroke-width:0.968345;stroke-dasharray:0.968345, 2.90504;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect8"
+     width="58.682968"
+     height="75.237534"
+     x="2.1721635e-15"
+     y="0.50868458" />
+  <rect
+     style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.46833;stroke-opacity:1"
+     id="rect7"
+     width="37.399902"
+     height="54.150669"
+     x="10.700707"
+     y="10.98381" />
+  <path
+     style="opacity:0.773885;fill:none;stroke:#2d2c2b;stroke-width:1.125;stroke-dasharray:1.125, 3.37501;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 2.2392626,10.153392 H 58.904006 l 0.468303,-0.115434"
+     id="path4" />
+  <path
+     style="opacity:0.773885;fill:none;stroke:#2d2c2b;stroke-width:1.125;stroke-dasharray:1.125, 3.375;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 0.7679845,65.805151 H 57.860394 l 0.471838,-0.115438"
+     id="path4-3" />
+  <path
+     style="opacity:0.773885;fill:#373748;stroke:#2d2c2b;stroke-width:1.125;stroke-dasharray:1.125, 3.37501;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 9.9492198,-4.3021634e-7 V 74.310615"
+     id="path6" />
+  <text
+     xml:space="preserve"
+     style="font-size:7.5px;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';opacity:1;fill:#1c1c24;stroke-width:0.908058"
+     x="9.4986191"
+     y="92.232567"
+     id="text2"
+     transform="scale(1.2708675,0.78686409)"><tspan
+       id="tspan2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.5px;font-family:Monospace;-inkscape-font-specification:Monospace;fill:#000080;stroke-width:0.908058"
+       x="9.4986191"
+       y="92.232567">bottom</tspan></text>
+  <path
+     style="opacity:0.773885;fill:#373748;stroke:#2d2c2b;stroke-width:1.125;stroke-dasharray:1.125, 3.37501;stroke-dashoffset:0;stroke-opacity:1"
+     d="M 48.728852,1.4167206 V 75.381032"
+     id="path7" />
+  <text
+     xml:space="preserve"
+     style="font-size:7.5px;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';letter-spacing:0px;word-spacing:0px;opacity:1;fill:#d5e5ff;stroke-width:0.75;stroke-dasharray:0.75, 2.25"
+     x="21.752735"
+     y="8.3147087"
+     id="text1"><tspan
+       id="tspan1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.5px;font-family:Monospace;-inkscape-font-specification:Monospace;letter-spacing:0px;word-spacing:0px;fill:#000080;stroke-width:0.75"
+       x="21.752735"
+       y="8.3147087">top</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:7.5px;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';opacity:1;fill:#000080;stroke-width:0.75;stroke-dasharray:0.75, 2.25;stroke-dashoffset:0"
+     x="-46.323254"
+     y="7.4147391"
+     id="text3"
+     transform="rotate(-90)"><tspan
+       id="tspan3"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.5px;font-family:Monospace;-inkscape-font-specification:Monospace;stroke-width:0.75;stroke-dasharray:0.75, 2.25;stroke-dashoffset:0"
+       x="-46.323254"
+       y="7.4147391">left</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:7.5px;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';opacity:1;fill:#000080;stroke-width:0.75;stroke-dasharray:0.75, 2.25"
+     x="26.105391"
+     y="-51.467598"
+     id="text4"
+     transform="rotate(90)"><tspan
+       id="tspan4"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.5px;font-family:Monospace;-inkscape-font-specification:Monospace;stroke-width:0.75"
+       x="26.105391"
+       y="-51.467598">right</tspan></text>
+</svg>
