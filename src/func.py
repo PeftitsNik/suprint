@@ -144,7 +144,14 @@ class Func:
 				args[0].addItem(key)
 		else: pass
 
+	###################################################################
+	########### Функции для смены картинки в label_plus_image #########
+	def function_label_plus_image_portrait (*args):		
+		args[0].setPixmap(QPixmap(".icons/fields_p.png"))
 
+	def function_label_plus_image_landscape (*args):
+		args[0].setPixmap(QPixmap(".icons/fields_l.png"))
+	
 	###################################################################
 	######## функции определяющие формат страницы для QPageLayout #####
 	def function_pagelayout_portrait (*args):
@@ -531,8 +538,8 @@ class Func:
 	
 
 	function_for_element = {
-		"portrait": 	{"pagelayout": function_pagelayout_portrait},
-		"landscape": 	{"pagelayout": function_pagelayout_landscape},		
+		"portrait": 	{"pagelayout": function_pagelayout_portrait, "label_plus_image": function_label_plus_image_portrait},
+		"landscape": 	{"pagelayout": function_pagelayout_landscape, "label_plus_image": function_label_plus_image_landscape},
 		"left": 		{"pagelayout": function_pagelayout_left},
 		"top": 			{"pagelayout": function_pagelayout_top},
 		"right": 		{"pagelayout": function_pagelayout_right},

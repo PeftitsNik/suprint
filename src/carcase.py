@@ -192,6 +192,9 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.label_bottom = self.elements.Label()
 		self.label_bottom.set_name("bottom")
 		self.list_element_with_text.append(self.label_bottom)
+
+		self.label_plus_image = self.elements.Label_Plus_Image_Fields(self)
+		self.label_plus_image.set_name("label_plus_image")
 		
 		self.button_open = self.elements.Button(self)
 		self.button_open.set_name("button_open")
@@ -285,8 +288,9 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.rect.attach(self.scene)		
 		self.pagelayout.attach(self.rect)
 		self.portrait.attach(self.pagelayout)
+		self.portrait.attach(self.label_plus_image)
 		self.landscape.attach(self.pagelayout)
-		
+		self.landscape.attach(self.label_plus_image)
 		
 		self.realsize.attach(self.scene)
 		self.stretch.attach(self.scene)
