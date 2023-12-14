@@ -202,6 +202,8 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		
 		self.label_dd = self.elements.LabelDD(self)
 		self.label_dd.set_name("label_dd")
+		#self.label_dd.setScaledContents(True)
+		#self.label_dd.setPixmap(QPixmap(".icons/d_d.png"))
 		self.list_element_with_text.append(self.label_dd)
 		
 		self.button_print = self.elements.Button(self)

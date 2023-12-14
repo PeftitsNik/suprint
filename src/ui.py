@@ -125,7 +125,7 @@ class UI():
 
 		self.window.setLayout(self.layout)
 		self.window.show()
-		self.window.setMinimumWidth(500)
+		self.window.setMinimumWidth(800)
 		self.window.setWindowTitle("Suprint")
 		self.window.setWindowIcon(QIcon(".icons/suprint.png"))
 		
