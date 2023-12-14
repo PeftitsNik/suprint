@@ -7,7 +7,12 @@
 
 
 
-https://github.com/PeftitsNik/suprint/assets/142207234/6b5d2055-418f-4ab8-b993-d5b3bfdd1c27
+
+![output1](https://github.com/PeftitsNik/suprint/assets/142207234/403b41f9-ca12-4def-82d4-66587cb0a537)
+
+
+
+
 
 
 
