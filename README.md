@@ -5,7 +5,15 @@
 Для pdf  файлов поддерживаются размеры А0 - А4.
 
 
-![image](https://github.com/PeftitsNik/suprint/assets/142207234/776660f5-a263-4dcc-b2d6-cb2db9f8acf9)
+
+
+
+![output1](https://github.com/PeftitsNik/suprint/assets/142207234/403b41f9-ca12-4def-82d4-66587cb0a537)
+
+
+
+
+
 
 
 Работа программы протестирована в Windows 10 и Slackware Linux 15.0.
