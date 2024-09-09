@@ -327,4 +327,3 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.spinbox_left.notify()
 		self.spinbox_right.notify()
 		self.spinbox_bottom.notify()
-		

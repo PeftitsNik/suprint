@@ -98,7 +98,7 @@ class Elements:
 	
 	class Manipulation(Element_Interface, Observer, Subject):
 		def __init__(self):
-			self.__dpi = [0]
+			self.__dpi = [0, 0]
 			self.create_list_observers()
 			
 		def set_orig_rect(self, rect: QRectF):

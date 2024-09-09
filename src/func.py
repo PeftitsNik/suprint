@@ -257,7 +257,7 @@ class Func:
 			Func.remove_pixmap(args[1].carcase.scene)	
 			args[1].carcase.scene.addPixmap(args[1].carcase.pixmap)
 			Func.manipulation_pixmap(args[1].carcase.scene)			
-			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX())
+			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX(), args[1].carcase.pixmap.physicalDpiY())
 			
 			
 	def function_manipulation_label_dd(*args):
@@ -271,7 +271,7 @@ class Func:
 			Func.remove_pixmap(args[1].carcase.scene)	
 			args[1].carcase.scene.addPixmap(args[1].carcase.pixmap)
 			Func.manipulation_pixmap(args[1].carcase.scene)			
-			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX())	
+			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX(), args[1].carcase.pixmap.physicalDpiY())	
 	
 	
 	
@@ -348,12 +348,12 @@ class Func:
 	
 	#######################################################################################
 	####################### Вспомогательные функции для печати ############################
-	def rectitem_from_dpi(rectitem: QGraphicsRectItem, width: float, height: float, dpi: int):
+	def rectitem_from_dpi(rectitem: QGraphicsRectItem, width: float, height: float, dpi: dict[int]):
 		#перевод размеров в пикселях из миллиметров исходя из плотности печати точек на дюйм (25,4 mm)
-		if dpi == 0 or width == 0 or height == 0: pass		
+		if dpi[0] == 0 or dpi[1] == 0 or width == 0 or height == 0: pass		
 		else:			
-			w = width * float(dpi) / 25.4
-			h = height * float(dpi) / 25.4	
+			w = width * float(dpi[0]) / 25.4
+			h = height * float(dpi[1] ) / 25.4	
 			rectitem.setRect(0, 0, w, h)
 					
 	####################################################################################################
@@ -373,7 +373,7 @@ class Func:
 		# добавление оригинального rectItem  без пересчета dpi
 		args[0].carcase.manipulation.set_orig_rect(QRectF(0,0, width_mm, height_mm))
 		
-		Func.rectitem_from_dpi(args[0], width_mm, height_mm, args[0].carcase.manipulation.get_dpi()[0])
+		Func.rectitem_from_dpi(args[0], width_mm, height_mm, args[0].carcase.manipulation.get_dpi())
 		
 		
 	def function_rectitem_manipulation(*args):
@@ -381,7 +381,7 @@ class Func:
 		width = args[1].get_orig_rect().width() 
 		height = args[1].get_orig_rect().height()
 				
-		Func.rectitem_from_dpi(args[0], width, height, args[1].get_dpi()[0])
+		Func.rectitem_from_dpi(args[0], width, height, args[1].get_dpi())
 	
 
 	####################################################################
