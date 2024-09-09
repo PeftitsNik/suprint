@@ -155,9 +155,6 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.print_all.set_name("print_all")
 		self.list_element_with_text.append(self.print_all)
 
-		#self.paper = self.elements.ComboBox()
-		#self.paper.set_name("papersize")
-		
 		self.rect = self.elements.RectItem(self)
 		self.rect.set_name("rectitem")
 		
@@ -195,6 +192,11 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 
 		self.label_plus_image = self.elements.Label_Plus_Image_Fields(self)
 		self.label_plus_image.set_name("label_plus_image")
+		
+		self.label_language = self.elements.Label()
+		self.label_language.set_name("language")
+		self.list_element_with_text.append(self.label_language)
+		
 		
 		self.button_open = self.elements.Button(self)
 		self.button_open.set_name("button_open")
@@ -279,8 +281,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.group_settings.setTitle(self.get_dict_lang()["settings"])
 		self.list_element_with_text.append(self.group_settings)
 		
-		
-		
+				
 		#####################################################
 		self.rect.add_parent_scene(self.scene)
 		

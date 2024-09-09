@@ -5,8 +5,8 @@ from src.useful_function import *
 
 class LoadSetting:
 	
-	def __init__(self):
-		print(os.getcwd())
+	#def __init__(self):
+	#	print(os.getcwd())
 						
 	def get_i18n (self, file_name : str) -> dict:
 		return i18n | self.get_dict_setting(file_name)

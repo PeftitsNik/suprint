@@ -13,6 +13,10 @@ class UI():
 		
 		icon_print = QIcon(QPixmap(".icons/print.svg"))
 		self.carcase.button_print.setIcon(icon_print)
+		
+		icon_print1 = QIcon(QPixmap(".icons/print1.svg"))
+
+		icon_setting = QIcon(QPixmap(".icons/setting.svg"))
 
 		#self.image_fields = QPixmap(".icons/fields.png")
 
@@ -66,7 +70,8 @@ class UI():
 		self.layout_printers.addWidget(self.carcase.combobox_printers)
 		self.layout_printers.addWidget(self.carcase.combobox_papers)
 		
-		self.layout_settings = QVBoxLayout()
+		self.layout_settings = QHBoxLayout()
+		self.layout_settings.addWidget(self.carcase.label_language)
 		self.layout_settings.addWidget(self.carcase.combobox_lang)
 		
 		####### Группы
@@ -79,19 +84,26 @@ class UI():
 		self.carcase.group_settings.setLayout(self.layout_settings)
 		
 		###### Левая часть
-		self.layout_left = QVBoxLayout()
-		self.layout_left.addWidget(self.carcase.group_paper)
-		self.layout_left.addWidget(self.carcase.group_fields)
-		self.layout_left.addWidget(self.carcase.group_image)
-		self.layout_left.addWidget(self.carcase.group_printers)
-		self.layout_left.addWidget(self.carcase.group_settings)
-		self.layout_left.addSpacerItem(QSpacerItem(50,20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum))
-		self.layout_left.setStretch(0,0)
-		self.layout_left.setStretch(1,0)
-		self.layout_left.setStretch(2,0)
-		self.layout_left.setStretch(3,0)
-		self.layout_left.setStretch(4,0)
-		self.layout_left.setStretch(5,1)
+		###### Печать
+		self.layout_left_print = QVBoxLayout()
+		self.layout_left_print.addWidget(self.carcase.group_paper)
+		self.layout_left_print.addWidget(self.carcase.group_fields)
+		self.layout_left_print.addWidget(self.carcase.group_image)
+		self.layout_left_print.addWidget(self.carcase.group_printers)
+	
+		self.layout_left_print.addSpacerItem(QSpacerItem(50,20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum))
+		self.layout_left_print.setStretch(0,0)
+		self.layout_left_print.setStretch(1,0)
+		self.layout_left_print.setStretch(2,0)
+		self.layout_left_print.setStretch(3,0)
+		self.layout_left_print.setStretch(4,0)
+				
+		###### Левая часть
+		###### Настройки
+		self.layout_left_setting = QVBoxLayout()
+		self.layout_left_setting.addWidget(self.carcase.group_settings)
+		self.layout_left_setting.addStretch(1)
+		
 		
 		##### Правая часть
 		self.layout_right_horizontal = QHBoxLayout()
@@ -117,12 +129,28 @@ class UI():
 		
 		self.layout_right.addLayout(self.scale_slider_layout)		
 		
-		#### Итоговое размещение
-		self.layout = QHBoxLayout() 
-		self.layout.addLayout(self.layout_left)
-		self.layout.addLayout(self.layout_right, stretch = 1)
+		#########################################
+		self.tab_widget_print = QWidget()
+		self.tab_widget_print.setLayout(self.layout_left_print)
 		
-
+		self.tab_widget_setting = QWidget()
+		self.tab_widget_setting.setLayout(self.layout_left_setting)
+		
+		self.tab = QTabWidget()
+		self.tab.addTab(self.tab_widget_print, icon_print1, "Printer")
+		self.tab.addTab(self.tab_widget_setting, icon_setting, "Setting")
+		
+		
+		self.widget_image = QWidget()
+		self.widget_image.setLayout(self.layout_right)
+		
+				
+		#### Итоговое размещение
+		self.layout = QHBoxLayout()
+		self.layout.addWidget(self.tab, alignment=Qt.AlignmentFlag.AlignLeft)
+		self.layout.addWidget(self.widget_image)
+				
+		
 		self.window.setLayout(self.layout)
 		self.window.show()
 		self.window.setMinimumWidth(800)

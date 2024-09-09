@@ -166,4 +166,3 @@ class Elements:
 		
 		def update_observer(self, subject: Subject):
 			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
-		
