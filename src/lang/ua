@@ -21,7 +21,8 @@ printers: Принтери та папір
 button_open: Відкрити файл
 button_print: Друк
 ################################
-settings: Налаштування
+settings_lang: Налаштування мови
+settings_color_rect: Прозорість та колір області друку
 scale: масштаб
 language: мова
 label_dd: ☛  Або перетягніть сюди файл  ☚

@@ -11,7 +11,8 @@ import  src.func as func
 
 import os
 import src.const as const
-
+from src.choice_color_rect import*
+from src.brush_appearance_and_action import *
 
 
 class Elements:
@@ -67,6 +68,7 @@ class Elements:
 		def __init__(self):
 			super().__init__()
 
+
 	class Label_Plus_Image_Fields(Label, Observer):
 		def __init__(self, carcase: Carcase_Interfase):
 			super().__init__()
@@ -98,7 +100,7 @@ class Elements:
 	
 	class Manipulation(Element_Interface, Observer, Subject):
 		def __init__(self):
-			self.__dpi = [0, 0]
+			self.__dpi = [0]
 			self.create_list_observers()
 			
 		def set_orig_rect(self, rect: QRectF):
@@ -138,18 +140,26 @@ class Elements:
 	
 	class Pixmap(QPixmap, Element_Interface, Observer):
 		def __init__(self):
-			super().__init__()
-			
+			super().__init__()			
 			
 		def update_observer(self, subject: Subject):
 			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+	
+	
+	class Brush (BrushAppearanceAndAction, Element_Interface, Subject, Observer):
+		def __init__(self):
+			super().__init__()
+			self.create_list_observers()		
+			
+		def update_observer(self, subject: Subject):
+			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			self.notify()
 	
 	
 	class GroupBox(QGroupBox, Element_Interface):
 		def __init__(self):
 			super().__init__()
 			
-		
 		
 	class Slider (QSlider, Element_Interface, Subject):
 		def __init__(self, carcase: Carcase_Interfase):
@@ -166,3 +176,11 @@ class Elements:
 		
 		def update_observer(self, subject: Subject):
 			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			
+	
+	class ChoiceColorRect (ChoiceColorWidget, Element_Interface, Subject):
+		def __init__(self):
+			super().__init__()
+			self.create_list_observers()
+			self.my_signal_change_color.connect(self.notify)
+			self.my_signal_change_alpha.connect(self.notify)

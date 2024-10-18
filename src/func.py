@@ -3,7 +3,7 @@ import os
 from src.load_setting import *
 from src.dict_prn_ppr import * 
 from src.rect_item_appearance_and_action import *
-
+from src.useful_function import *
 p = DictPrnPpr()
 
 class CalculateDifferentValue:	
@@ -82,6 +82,7 @@ class CalculateDifferentValue:
 	# последовательное размещение произвольного количества rectitem на сцене по одному
 	def add_certain_rect(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem, num: int):		
 		n_list = self.num_rect_in_scene(scene, rectitem)
+		
 		column = n_list[0]# возможное количество страниц по ширине(количество колонок)
 		row = n_list[1] # возможное количество страниц по высоте(количество строк)
 				
@@ -91,6 +92,7 @@ class CalculateDifferentValue:
 		height_rect = _r.height()
 		
 		self.remove_all_rectitem(scene)
+		
 		for i in range(num):
 			# scene.addItem(rect)
 		    # выдает ошибку 'QGraphicsScene::addItem: item has already been added to this scene'
@@ -185,7 +187,7 @@ class Func:
 		__num = calc.num_rect_in_scene(args[0], args[0].carcase.rect)[0] * calc.num_rect_in_scene(args[0], args[0].carcase.rect)[1]
 		args[0].carcase.spinbox_number_of_pages.setMaximum( __num )
 				
-		Func.manipulation_pixmap(args[0])
+		Func.manipulation_pixmap(args[0])		
 		
 		if len (calc.list_rect(args[0])) > 1:
 			if args[0].carcase.print_all.isChecked():
@@ -257,7 +259,7 @@ class Func:
 			Func.remove_pixmap(args[1].carcase.scene)	
 			args[1].carcase.scene.addPixmap(args[1].carcase.pixmap)
 			Func.manipulation_pixmap(args[1].carcase.scene)			
-			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX(), args[1].carcase.pixmap.physicalDpiY())
+			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX())
 			
 			
 	def function_manipulation_label_dd(*args):
@@ -271,7 +273,7 @@ class Func:
 			Func.remove_pixmap(args[1].carcase.scene)	
 			args[1].carcase.scene.addPixmap(args[1].carcase.pixmap)
 			Func.manipulation_pixmap(args[1].carcase.scene)			
-			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX(), args[1].carcase.pixmap.physicalDpiY())	
+			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX())	
 	
 	
 	
@@ -348,12 +350,12 @@ class Func:
 	
 	#######################################################################################
 	####################### Вспомогательные функции для печати ############################
-	def rectitem_from_dpi(rectitem: QGraphicsRectItem, width: float, height: float, dpi: dict[int]):
+	def rectitem_from_dpi(rectitem: QGraphicsRectItem, width: float, height: float, dpi: int):
 		#перевод размеров в пикселях из миллиметров исходя из плотности печати точек на дюйм (25,4 mm)
-		if dpi[0] == 0 or dpi[1] == 0 or width == 0 or height == 0: pass		
+		if dpi == 0 or width == 0 or height == 0: pass		
 		else:			
-			w = width * float(dpi[0]) / 25.4
-			h = height * float(dpi[1] ) / 25.4	
+			w = width * float(dpi) / 25.4
+			h = height * float(dpi) / 25.4	
 			rectitem.setRect(0, 0, w, h)
 					
 	####################################################################################################
@@ -373,7 +375,7 @@ class Func:
 		# добавление оригинального rectItem  без пересчета dpi
 		args[0].carcase.manipulation.set_orig_rect(QRectF(0,0, width_mm, height_mm))
 		
-		Func.rectitem_from_dpi(args[0], width_mm, height_mm, args[0].carcase.manipulation.get_dpi())
+		Func.rectitem_from_dpi(args[0], width_mm, height_mm, args[0].carcase.manipulation.get_dpi()[0])
 		
 		
 	def function_rectitem_manipulation(*args):
@@ -381,7 +383,7 @@ class Func:
 		width = args[1].get_orig_rect().width() 
 		height = args[1].get_orig_rect().height()
 				
-		Func.rectitem_from_dpi(args[0], width, height, args[1].get_dpi())
+		Func.rectitem_from_dpi(args[0], width, height, args[1].get_dpi()[0])
 	
 
 	####################################################################
@@ -389,22 +391,10 @@ class Func:
 	#								Carcase			combobox_lang
 	
 	def function_for_combobox_lang (*args):
-		
-		new_setting_list = []
-		
-		if args[0].get_dict_lang() != args[1].currentText() and args[0].get_dict_lang() != "":	
+		if args[0].get_dict_lang() != args[1].currentText() and args[0].get_dict_lang() != "":			
 			# запись в файл setting выбраного в комбобоксе языка lang
-			#########################################################
-			with open(const.FILE_SETTING, encoding='utf-8', mode='r') as f:
-				for line in f:
-					if line[0:4] == "lang":
-						new_setting_list.append(f"lang: {args[1].currentText()}\n")
-					else: new_setting_list.append(line)	
-					
-			with open(const.FILE_SETTING, encoding='utf-8', mode='w') as f:	
-				f.write("".join(new_setting_list))
-			###########################################################
-				
+			read_and_write_setting(const.FILE_SETTING, "lang", args[1].currentText()) # функция из src.useful_function
+			
 			######## смена языка на виджетах
 			################################
 			os.chdir(const.DIR_SRC)
@@ -418,9 +408,41 @@ class Func:
 				if isinstance(element, QGroupBox):				
 					element.setTitle(args[0].get_dict_lang()[element.get_name()])					
 				else: element.setText(args[0].get_dict_lang()[element.get_name()])
+			
+		else: pass
+		
+				
+		#new_setting_list = []
+		
+		#if args[0].get_dict_lang() != args[1].currentText() and args[0].get_dict_lang() != "":	
+			# запись в файл setting выбраного в комбобоксе языка lang
+			#########################################################
+		#	with open(const.FILE_SETTING, encoding='utf-8', mode='r') as f:
+		#		for line in f:
+		#			if line[0:4] == "lang":
+		#				new_setting_list.append(f"lang: {args[1].currentText()}\n")
+		#			else: new_setting_list.append(line)	
+		#			
+		#	with open(const.FILE_SETTING, encoding='utf-8', mode='w') as f:	
+		#		f.write("".join(new_setting_list))
+			###########################################################
+				
+			######## смена языка на виджетах
+			################################
+			##os.chdir(const.DIR_SRC)
+			##os.chdir(const.DIR_LANG)
+			
+			##setting = LoadSetting()
+			##args[0].set_dict_lang(setting.create_dict_i18n_from_combobox(args[1].currentText()))
+			##os.chdir("../../")
+			
+			##for element in args[0].get_list_element_with_text():
+			##	if isinstance(element, QGroupBox):				
+			##		element.setTitle(args[0].get_dict_lang()[element.get_name()])					
+			##	else: element.setText(args[0].get_dict_lang()[element.get_name()])
 			################################	
 			
-		else: pass		
+		##else: pass		
 
 
 	####################################################################
@@ -536,7 +558,34 @@ class Func:
 		painter.end()	
 		
 	
-
+	#изменение brush 
+	def function_brush_choice_color_rect(*args):		
+		color = args[1].get_active_color()
+		alpha = args[1].get_current_alpha()
+		brush = args[0]
+				
+		# запись в файл setting выбраного цвета для rect и прозрачности alpha
+		read_and_write_setting(const.FILE_SETTING, "active_color_rectangle", color.name()) # функция из src.useful_function
+		read_and_write_setting(const.FILE_SETTING, "alpha", alpha)
+		
+		#смена цвета brush
+		color.setAlpha(alpha)
+		brush.setColor(color)
+	
+	#	
+	def function_rectitem_brush(*args):
+		rect =  args[0]
+		brush = args[1]
+		rect.setBrush(brush)
+		
+	#
+	def function_scene_brush(*args):
+		scene = args[0]
+		brush = args[1]
+		for i in scene.items():
+			if isinstance (i, QGraphicsRectItem):
+				i.setBrush(brush)		
+	
 	function_for_element = {
 		"portrait": 	{"pagelayout": function_pagelayout_portrait, "label_plus_image": function_label_plus_image_portrait},
 		"landscape": 	{"pagelayout": function_pagelayout_landscape, "label_plus_image": function_label_plus_image_landscape},
@@ -561,5 +610,7 @@ class Func:
 		"button_open": 	{"manipulation": function_manipulation_button_open},
 		"label_dd":		{"manipulation": function_manipulation_label_dd},
 		"button_print":	{"button_print": print_pixmap_from_scene},
-		"slider": 		{"view": function_for_view_slider, "lcd": function_for_lcd_slider}
+		"slider": 		{"view": function_for_view_slider, "lcd": function_for_lcd_slider},
+		"choice_color_rect": {"brush": function_brush_choice_color_rect},
+		"brush": {"rectitem": function_rectitem_brush, "scene": function_scene_brush}
 		}

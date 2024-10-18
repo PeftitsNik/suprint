@@ -154,9 +154,14 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.print_all = self.elements.RadioButton()
 		self.print_all.set_name("print_all")
 		self.list_element_with_text.append(self.print_all)
-
+		
+		self.brush = self.elements.Brush()
+		self.brush.set_name("brush")
+		
 		self.rect = self.elements.RectItem(self)
 		self.rect.set_name("rectitem")
+		self.rect.setBrush(self.brush)
+		
 		
 		self.spinbox_left = self.elements.SpinBox()
 		self.spinbox_left.set_name("left")
@@ -253,7 +258,10 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		for _lang in self.setting.get_available_lang():
 			if _lang != self.combobox_lang.currentText():
 				self.combobox_lang.addItem(_lang)
-			else: pass
+			else: pass		
+		
+		self.choice_color_rect = self.elements.ChoiceColorRect()
+		self.choice_color_rect.set_name("choice_color_rect")
 		
 		
 		self.group_paper = self.elements.GroupBox()	
@@ -276,10 +284,16 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.group_printers.setTitle(self.get_dict_lang()["printers"])
 		self.list_element_with_text.append(self.group_printers)
 		
-		self.group_settings = self.elements.GroupBox()
-		self.group_settings.set_name("settings")
-		self.group_settings.setTitle(self.get_dict_lang()["settings"])
-		self.list_element_with_text.append(self.group_settings)
+		self.group_settings_lang = self.elements.GroupBox()
+		self.group_settings_lang.set_name("settings_lang")
+		self.group_settings_lang.setTitle(self.get_dict_lang()["settings_lang"])
+		self.list_element_with_text.append(self.group_settings_lang)
+		
+		self.group_settings_color_rect = self.elements.GroupBox()
+		self.group_settings_color_rect.set_name("settings_color_rect")
+		self.group_settings_color_rect.setTitle(self.get_dict_lang()["settings_color_rect"])
+		self.list_element_with_text.append(self.group_settings_color_rect)
+		
 		
 				
 		#####################################################
@@ -317,6 +331,10 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.slider.attach(self.lcd)
 		self.slider.attach(self.view)
 		
+		self.choice_color_rect.attach(self.brush)
+		self.brush.attach(self.rect)
+		self.brush.attach(self.scene)
+		
 		##### notify() посылает сигнал наблюдателям при загрузке виджета ########
 		
 		self.portrait.notify() 
@@ -327,3 +345,4 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.spinbox_left.notify()
 		self.spinbox_right.notify()
 		self.spinbox_bottom.notify()
+		

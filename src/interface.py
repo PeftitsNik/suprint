@@ -1,16 +1,3 @@
-class Controller_Interface:	
-	def from_view_to_model(self, element_source):
-		pass
-
-	def from_model_to_view(self, element):
-		pass
-
-
-class Model_Interface:
-	def processing(self, element):
-		pass
-
-
 class Element_Interface:	
 	
 	def set_name(self, name: str):

@@ -1,3 +1,7 @@
 lang: en
-##########
-available_lang: en, ru, ua ### ghghghg
+
+available_lang: en, ru, ua
+
+active_color_rectangle: #008000
+
+alpha: 78

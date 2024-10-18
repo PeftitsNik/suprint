@@ -3,6 +3,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 import src.const as const
 from src.pos_f import *
+from src.brush_appearance_and_action import *
 
 class RectItemAppearanceAndAction(QGraphicsRectItem):
     
@@ -21,25 +22,17 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 		
 		self.pos_figure = PosFigure()
 	
-	def appearance_rect(self):
-		pen = QPen()		
-		pen.setColor(QColor("red"))
-		
-		brush = QBrush()
-		color = QColor("blue")
-		color.setAlpha(35)
-		brush.setColor(color)
-		brush.setStyle(Qt.BrushStyle.SolidPattern)
+	def appearance_rect(self):		
+				
+		brush = BrushAppearanceAndAction()
+		self.setBrush(brush)
 		
 		space = 6
 		length = 6
-		width = 4
-		
-		#dashes = [length, space]		
-		#pen.setDashPattern(dashes)
-		pen.setWidth(width)
-		self.setPen(pen)
-		self.setBrush(brush)
+		width = 4		
+			
+	def set_color_rect(self, color: QColor):
+		self.color = color
 	
 	def add_parent_scene(self, scene: QGraphicsScene):
 		self.scene = scene		
@@ -47,7 +40,7 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 	def mousePressEvent(self, event):
 		self.setCursor(Qt.CursorShape.SizeAllCursor)
 		#список rectitem на сцене
-		self.other_rect_on_scene = [i for i in self.scene().items() if isinstance(i, QGraphicsRectItem) ]
+		self.other_rect_on_scene = [i for i in self.scene().items() if isinstance(i, RectItemAppearanceAndAction) ]
 							
 		self.delta_x = 0
 		self.delta_y = 0

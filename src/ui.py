@@ -70,9 +70,12 @@ class UI():
 		self.layout_printers.addWidget(self.carcase.combobox_printers)
 		self.layout_printers.addWidget(self.carcase.combobox_papers)
 		
-		self.layout_settings = QHBoxLayout()
-		self.layout_settings.addWidget(self.carcase.label_language)
-		self.layout_settings.addWidget(self.carcase.combobox_lang)
+		self.layout_settings_lang = QVBoxLayout()
+		#self.layout_settings.addWidget(self.carcase.label_language)
+		self.layout_settings_lang.addWidget(self.carcase.combobox_lang)
+		
+		self.layout_settings_color_rect = QVBoxLayout()
+		self.layout_settings_color_rect.addWidget(self.carcase.choice_color_rect )
 		
 		####### Группы
 		
@@ -81,7 +84,8 @@ class UI():
 		self.carcase.group_fields.setLayout(self.layout_fields)
 		self.carcase.group_image.setLayout(self.layout_image)
 		self.carcase.group_printers.setLayout(self.layout_printers)
-		self.carcase.group_settings.setLayout(self.layout_settings)
+		self.carcase.group_settings_lang.setLayout(self.layout_settings_lang)
+		self.carcase.group_settings_color_rect.setLayout(self.layout_settings_color_rect)
 		
 		###### Левая часть
 		###### Печать
@@ -101,7 +105,8 @@ class UI():
 		###### Левая часть
 		###### Настройки
 		self.layout_left_setting = QVBoxLayout()
-		self.layout_left_setting.addWidget(self.carcase.group_settings)
+		self.layout_left_setting.addWidget(self.carcase.group_settings_lang)
+		self.layout_left_setting.addWidget(self.carcase.group_settings_color_rect)
 		self.layout_left_setting.addStretch(1)
 		
 		
@@ -156,3 +161,5 @@ class UI():
 		self.window.setMinimumWidth(800)
 		self.window.setWindowTitle("Suprint")
 		self.window.setWindowIcon(QIcon(".icons/suprint.png"))
+		
+

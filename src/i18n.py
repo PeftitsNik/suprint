@@ -22,6 +22,8 @@ i18n = {
 		"button_open": "",
 		"button_print": "",
 		################################
+		"settings_lang": "",
+		"settings_color_rect": "",
 		"scale": "",
 		"language": "",
 		"label_dd": ""
