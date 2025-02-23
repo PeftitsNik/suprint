@@ -13,8 +13,8 @@ class CalculateDifferentValue:
 		self.qrect = None
 
 
-	# количество rectitem на сцене по горизонтали и вертикали	
 	def num_rect_in_scene(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem) -> list[int]:
+		''' Количество rectitem на сцене по горизонтали и вертикали	'''
 		
 		if rectitem.rect().width() != 0 and rectitem.rect().height() != 0:
                 
@@ -32,40 +32,47 @@ class CalculateDifferentValue:
 			return 0, 0	
 		
 	
-	# список rectitem на сцене
 	def list_rect(self, scene: QGraphicsScene) -> list[QGraphicsRectItem]:
-		list = []
-		for i in scene.items():
-			if isinstance(i, QGraphicsRectItem):
-				list.append(i)
-			else: pass
-		return list
+		''' Список из rectitem на сцене '''
+		
+		return [i for i in scene.items() if isinstance(i, QGraphicsRectItem)]
+		
+		#list = []
+		#for i in scene.items():
+		#	if isinstance(i, QGraphicsRectItem):
+		#		list.append(i)
+		#	else: pass
+		#return list
 	
-	#возвращает список с координатами rectitem (номера столбца и строки)
 	@staticmethod
-	def coord_rect(num: int, total_column: int, total_row: int) -> list[int]: 
+	def coord_rect(num: int, total_column: int, total_row: int) -> list[int]:
+		'''Возвращает список с координатами rectitem (номера столбца и строки)'''
+		
 		num_column  = num % total_column
 		num_row = num // total_column		
 		return  num_column, num_row
 	
-	#удаляет все rectitem на сцене	
-	def remove_all_rectitem(self, scene: QGraphicsScene):
+	
+	@staticmethod
+	def coord_rect_x_y(scene: QGraphicsScene) -> list[QPointF]:
+		'''Возвращает список с координатами rectitem X и Y'''
+		
+		return [i.pos() for i in scene.items() if isinstance(i, QGraphicsRectItem)]
+	
+	
+	def remove_all_rectitem(self, scene: QGraphicsScene) -> None:
+		'''Удаляет все rectitem на сцене'''
+		
 		for i in scene.items():
 			if  isinstance(i, QGraphicsRectItem):
 				scene.removeItem(i)
 			else: pass
 
-	#проверяет значение SpinBox  и максимально возможное количество rectitem на картинке
-	def verification_num_spinbox(self, scene: QGraphicsScene):		
-		__num_rect = self.num_rect_in_scene(scene, scene.carcase.rect)[0] * self.num_rect_in_scene(scene, scene.carcase.rect)[1]
-		scene.carcase.spinbox_number_of_pages.maxValue(__num_rect)
-		if  __num_rect < scene.carcase.spinbox_number_of_pages.value():
-			scene.carcase.spinbox_number_of_pages.setValue(__num_rect)			
-		else: pass
+	
+	
+	def add_one_rect(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem) -> None:
+		'''Добавление одного rectitem на сцену'''
 		
-
-	# добавление одного rectitem на сцену
-	def add_one_rect(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem):
 		self.remove_all_rectitem(scene)
 		# scene.addItem(rect)
 		# выдает ошибку 'QGraphicsScene::addItem: item has already been added to this scene'
@@ -78,9 +85,10 @@ class CalculateDifferentValue:
 
 		scene.carcase.spinbox_number_of_pages.setValue(1)
 
-
-	# последовательное размещение произвольного количества rectitem на сцене по одному
-	def add_certain_rect(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem, num: int):		
+ 
+	def add_certain_rect(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem, num: int):
+		'''Последовательное размещение произвольного количества rectitem на сцене по одному'''
+		
 		n_list = self.num_rect_in_scene(scene, rectitem)
 		
 		column = n_list[0]# возможное количество страниц по ширине(количество колонок)
@@ -106,8 +114,10 @@ class CalculateDifferentValue:
 							self.pos_y + height_rect * coor[1])               
 			scene.addItem(_rect)
 						
-	# добавление rectitem на сцену, которые полностью покрывают рисунок
-	def add_all_rect (self, scene: QGraphicsScene, rectitem: QGraphicsRectItem):
+	
+	def add_all_rect (self, scene: QGraphicsScene, rectitem: QGraphicsRectItem) -> None:
+		'''добавление rectitem на сцену, которые полностью покрывают рисунок'''
+		
 		_r = rectitem.rect()	
 		width_rect = _r.width()
 		height_rect = _r.height()
@@ -183,11 +193,12 @@ class Func:
 	################# функции изменения содержимого Scene #############################################
 		
 	def function_scene_rectitem(*args):
+	
 		# установка макс. возможного количества rectitem (setMaximum spinbox)
 		__num = calc.num_rect_in_scene(args[0], args[0].carcase.rect)[0] * calc.num_rect_in_scene(args[0], args[0].carcase.rect)[1]
 		args[0].carcase.spinbox_number_of_pages.setMaximum( __num )
-				
-		Func.manipulation_pixmap(args[0])		
+			
+		#Func.manipulation_pixmap(args[0])	
 		
 		if len (calc.list_rect(args[0])) > 1:
 			if args[0].carcase.print_all.isChecked():
@@ -196,7 +207,8 @@ class Func:
 				calc.add_certain_rect(args[0], args[1], len (calc.list_rect(args[0])))
 		else:
 			calc.add_one_rect(args[0], args[1])
-								
+		
+		
 	def function_scene_pixmap_stretch(*args):
 		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
 		if args[0].carcase.pixmap.isNull(): pass			
@@ -351,7 +363,8 @@ class Func:
 	#######################################################################################
 	####################### Вспомогательные функции для печати ############################
 	def rectitem_from_dpi(rectitem: QGraphicsRectItem, width: float, height: float, dpi: int):
-		#перевод размеров в пикселях из миллиметров исходя из плотности печати точек на дюйм (25,4 mm)
+		'''Перевод размеров в пикселях из миллиметров исходя из плотности печати точек на дюйм (25,4 mm)'''
+		
 		if dpi == 0 or width == 0 or height == 0: pass		
 		else:			
 			w = width * float(dpi) / 25.4
@@ -405,44 +418,15 @@ class Func:
 			os.chdir("../../")
 			
 			for element in args[0].get_list_element_with_text():
-				if isinstance(element, QGroupBox):				
-					element.setTitle(args[0].get_dict_lang()[element.get_name()])					
+				if isinstance(element, QGroupBox):
+					element.setTitle(args[0].get_dict_lang()[element.get_name()])
+				elif isinstance(element, QTabWidget):
+					_txt = args[0].get_dict_lang()[element.get_name()].split()
+					element.setTabText(0, _txt[0])
+					element.setTabText(1, _txt[1])
 				else: element.setText(args[0].get_dict_lang()[element.get_name()])
 			
 		else: pass
-		
-				
-		#new_setting_list = []
-		
-		#if args[0].get_dict_lang() != args[1].currentText() and args[0].get_dict_lang() != "":	
-			# запись в файл setting выбраного в комбобоксе языка lang
-			#########################################################
-		#	with open(const.FILE_SETTING, encoding='utf-8', mode='r') as f:
-		#		for line in f:
-		#			if line[0:4] == "lang":
-		#				new_setting_list.append(f"lang: {args[1].currentText()}\n")
-		#			else: new_setting_list.append(line)	
-		#			
-		#	with open(const.FILE_SETTING, encoding='utf-8', mode='w') as f:	
-		#		f.write("".join(new_setting_list))
-			###########################################################
-				
-			######## смена языка на виджетах
-			################################
-			##os.chdir(const.DIR_SRC)
-			##os.chdir(const.DIR_LANG)
-			
-			##setting = LoadSetting()
-			##args[0].set_dict_lang(setting.create_dict_i18n_from_combobox(args[1].currentText()))
-			##os.chdir("../../")
-			
-			##for element in args[0].get_list_element_with_text():
-			##	if isinstance(element, QGroupBox):				
-			##		element.setTitle(args[0].get_dict_lang()[element.get_name()])					
-			##	else: element.setText(args[0].get_dict_lang()[element.get_name()])
-			################################	
-			
-		##else: pass		
 
 
 	####################################################################
@@ -461,8 +445,7 @@ class Func:
 		args[0].display(args[1].value())
 	
 	
-	def function_for_slider_scale_lcd(*args):
-		
+	def function_for_slider_scale_lcd(*args):		
 		sc = args[1].value()
 		transform = QTransform()
 		scale_x = sc / 100
@@ -486,11 +469,6 @@ class Func:
 		list_coor_rect = [i.scenePos() for i in scene.items() if isinstance (i, QGraphicsRectItem) ]
 		pixmap = [i for i in scene.items() if isinstance (i, QGraphicsPixmapItem)][0].pixmap()
 		
-		#print("physicalDpiX ", pixmap.physicalDpiX())
-		#print("physicalDpiY", pixmap.physicalDpiY())
-		#print("logicalDpiX", pixmap.logicalDpiX())
-		#print("logicalDpiY", pixmap.logicalDpiY())
-		
 		#список из частей картинки для печати
 		copy_pixmap = [pixmap.copy( int(coor.x()), int(coor.y()), int(rect.rect().width()), int(rect.rect().height()) ) for coor in list_coor_rect]
 		
@@ -513,6 +491,7 @@ class Func:
 		coor = list_coor_rect[::-1] ############################# поэтому так
 		coor_x = 0 # координата х фрагмента картинки
 		coor_y = 0 # координата у фрагмента картинки
+
 
 		# #######Возможность произвольного размещения фрагмента картинки 
 		# #################на листе при печати
@@ -572,14 +551,13 @@ class Func:
 		color.setAlpha(alpha)
 		brush.setColor(color)
 	
-	#	
 	def function_rectitem_brush(*args):
 		rect =  args[0]
 		brush = args[1]
 		rect.setBrush(brush)
 		
-	#
 	def function_scene_brush(*args):
+	
 		scene = args[0]
 		brush = args[1]
 		for i in scene.items():

@@ -29,8 +29,8 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 		
 		space = 6
 		length = 6
-		width = 4		
-			
+		width = 4
+		
 	def set_color_rect(self, color: QColor):
 		self.color = color
 	

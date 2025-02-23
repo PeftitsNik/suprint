@@ -4,10 +4,7 @@ import os
 from src.useful_function import *
 
 class LoadSetting:
-	
-	#def __init__(self):
-	#	print(os.getcwd())
-	
+
 	def get_dict_setting(self, file_name: str) -> dict[str]:
 		''' Создание словаря из файла настроек setting'''
 		

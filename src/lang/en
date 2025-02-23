@@ -21,8 +21,9 @@ printers: Printers and paper
 button_open: Open file
 button_print: Print
 ################################
-settings_lang: Settings lang
+settings_lang: Language
 settings_color_rect: Transparency and color of the print area
 scale: scale
 language: language
 label_dd: ☛  Or drop here the file  ☚
+tab_setting: Printer Setting

@@ -21,8 +21,9 @@ printers: Принтеры и бумага
 button_open: Открыть файл
 button_print: Печать
 ################################
-settings_lang: Настройки языка
+settings_lang: Язык
 settings_color_rect: Прозрачность и цвет области печати
 scale: масштаб
 language: язык
 label_dd: ☛  Или перетащите сюда файл  ☚
+tab_setting: Принтер Настройки

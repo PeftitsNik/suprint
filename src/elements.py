@@ -132,8 +132,7 @@ class Elements:
 	
 	class GraphicsView(QGraphicsView, Element_Interface, Observer):
 		def __init__(self):
-			super().__init__()
-			
+			super().__init__()			
 			
 		def update_observer(self, subject: Subject):
 			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
@@ -185,3 +184,8 @@ class Elements:
 			self.create_list_observers()
 			self.my_signal_change_color.connect(self.notify)
 			self.my_signal_change_alpha.connect(self.notify)
+
+
+	class Tab (QTabWidget, Element_Interface, Observer):
+		def __init__(self):
+			super().__init__()		

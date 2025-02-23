@@ -101,6 +101,7 @@ class UI():
 		self.layout_left_print.setStretch(2,0)
 		self.layout_left_print.setStretch(3,0)
 		self.layout_left_print.setStretch(4,0)
+		self.layout_left_print.addStretch(1)
 				
 		###### Левая часть
 		###### Настройки
@@ -139,12 +140,11 @@ class UI():
 		self.tab_widget_print.setLayout(self.layout_left_print)
 		
 		self.tab_widget_setting = QWidget()
-		self.tab_widget_setting.setLayout(self.layout_left_setting)
+		self.tab_widget_setting.setLayout(self.layout_left_setting)				
 		
-		self.tab = QTabWidget()
-		self.tab.addTab(self.tab_widget_print, icon_print1, "Printer")
-		self.tab.addTab(self.tab_widget_setting, icon_setting, "Setting")
-		
+		self.carcase.tab.addTab(self.tab_widget_print, self.carcase.icons_tab[0], self.carcase.txt_tab[0])
+		self.carcase.tab.addTab(self.tab_widget_setting, self.carcase.icons_tab[1], self.carcase.txt_tab[1])
+				
 		
 		self.widget_image = QWidget()
 		self.widget_image.setLayout(self.layout_right)
@@ -152,7 +152,7 @@ class UI():
 				
 		#### Итоговое размещение
 		self.layout = QHBoxLayout()
-		self.layout.addWidget(self.tab, alignment=Qt.AlignmentFlag.AlignLeft)
+		self.layout.addWidget(self.carcase.tab, alignment=Qt.AlignmentFlag.AlignLeft)
 		self.layout.addWidget(self.widget_image)
 				
 		

@@ -26,5 +26,7 @@ i18n = {
 		"settings_color_rect": "",
 		"scale": "",
 		"language": "",
-		"label_dd": ""
+		"label_dd": "",
+		###############################
+		"tab_setting": ""		
 	}
