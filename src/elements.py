@@ -37,11 +37,14 @@ class Elements:
 			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 		
 			
-	class SpinBox(QSpinBox, Element_Interface, Subject):
+	class SpinBox(QSpinBox, Element_Interface, Subject, Observer):
 		def __init__(self):
 			super().__init__()
 			self.create_list_observers()
 			self.valueChanged.connect(self.notify)
+			
+		def update_observer(self, subject: Subject):
+			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 		
 		
 	class Button(QPushButton, Element_Interface, Subject, Observer):

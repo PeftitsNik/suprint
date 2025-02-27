@@ -452,6 +452,20 @@ class Func:
 		scale_y = sc / 100
 		transform.scale(scale_x, scale_y)
 		args[1].carcase.view.setTransform(transform)
+		
+		
+	################################################################
+	################################################################
+	# количество экземпляров для печати (args[0] - Observer, args[1] - Subject)
+	#								sp_num_of_copies			combobox_printers
+	
+	def function_for_num_of_copies_from_printers(*args):
+		
+		if args[1].currentText () == const.PR_PDF: # если выбрана печать в PDF
+			args[0].setValue(1)
+			args[0].setDisabled(True)
+		else: args[0].setEnabled(True)
+		
 	
 	################################################################
 	#################### Печать картинки ###########################
@@ -464,8 +478,8 @@ class Func:
 		combobox_printers = args[0].carcase.combobox_printers
 		pagelayout = args[0].carcase.pagelayout
 		manipulation = args[0].carcase.manipulation
-		
-		
+		num_copies = args[0].carcase.sp_num_of_copies.value()
+				
 		list_coor_rect = [i.scenePos() for i in scene.items() if isinstance (i, QGraphicsRectItem) ]
 		pixmap = [i for i in scene.items() if isinstance (i, QGraphicsPixmapItem)][0].pixmap()
 		
@@ -481,9 +495,11 @@ class Func:
 		else:
 			printer = QPrinter()			
 			printer.setPrinterName(combobox_printers.currentText())
+			printer.setCopyCount(num_copies)
 		
-		printer.setResolution(int(manipulation.get_dpi()[0]))		
-		printer.setPageLayout(pagelayout)	
+		printer.setResolution(int(manipulation.get_dpi()[0]))
+		printer.setPageLayout(pagelayout)
+		
 		painter = QPainter()
 		painter.begin(printer)
 		
@@ -582,8 +598,8 @@ class Func:
 		"manipulation": {"number_of_pages": function_for_spinbox_manipulations_numpages},
 		"pagelayout": 	{"rectitem": function_rectitem_pagelayout},
 		"manipulation": {"rectitem": function_rectitem_manipulation},
-		"choise_printers": {"choise_papers": function_for_papers_from_printer},
-		"choise_papers": {"pagelayout": function_pagelayout_papersize},	
+		"choise_printers": {"choise_papers": function_for_papers_from_printer, "sp_number_of_copies": function_for_num_of_copies_from_printers},
+		"choise_papers": {"pagelayout": function_pagelayout_papersize},
 		"choice_language": {"carcase": function_for_combobox_lang},
 		"button_open": 	{"manipulation": function_manipulation_button_open},
 		"label_dd":		{"manipulation": function_manipulation_label_dd},

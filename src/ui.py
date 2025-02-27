@@ -66,12 +66,25 @@ class UI():
 		self.layout_fields.setStretch(2,0)
 		
 		self.layout_printers = QVBoxLayout()
-			
-		self.layout_printers.addWidget(self.carcase.combobox_printers)
-		self.layout_printers.addWidget(self.carcase.combobox_papers)
+		self.layout_printers_1 = QVBoxLayout()
+		self.layout_printers_2 = QHBoxLayout()		
+		self.layout_printers.addLayout(self.layout_printers_1)
+		self.layout_printers.addLayout(self.layout_printers_2)
 		
-		self.layout_settings_lang = QVBoxLayout()
-		#self.layout_settings.addWidget(self.carcase.label_language)
+		self.layout_printers_1.addWidget(self.carcase.combobox_printers)
+		self.layout_printers_1.addWidget(self.carcase.combobox_papers)
+		self.layout_printers_2.addWidget(self.carcase.label_num_of_copies)
+		self.layout_printers_2.addWidget(self.carcase.sp_num_of_copies)
+				
+		_f=QFontComboBox()
+		_si = _f.currentFont().pointSize()	
+		_s = f"font-size: {_si*2}px"
+		
+		label_p = QLabel("🗐🗐🗐")
+		label_p.setStyleSheet(_s)
+		self.layout_printers_2.addWidget(label_p, Qt.AlignmentFlag.AlignLeft)
+		
+		self.layout_settings_lang = QVBoxLayout()		
 		self.layout_settings_lang.addWidget(self.carcase.combobox_lang)
 		
 		self.layout_settings_color_rect = QVBoxLayout()

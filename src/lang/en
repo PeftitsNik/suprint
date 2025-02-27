@@ -18,6 +18,7 @@ stretch_proportion: stretch proportionally
 print_all: print all
 ################################
 printers: Printers and paper
+label_number_of_copies: Number of copies
 button_open: Open file
 button_print: Print
 ################################

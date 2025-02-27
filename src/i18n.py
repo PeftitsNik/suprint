@@ -19,6 +19,7 @@ i18n = {
 		"print_all": "",
 		################################
 		"printers": "",
+		"label_number_of_copies": "",
 		"button_open": "",
 		"button_print": "",
 		################################

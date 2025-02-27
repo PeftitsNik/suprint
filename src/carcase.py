@@ -161,8 +161,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.rect = self.elements.RectItem(self)
 		self.rect.set_name("rectitem")
 		self.rect.setBrush(self.brush)
-		
-		
+				
 		self.spinbox_left = self.elements.SpinBox()
 		self.spinbox_left.set_name("left")
 		
@@ -201,16 +200,13 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.label_language = self.elements.Label()
 		self.label_language.set_name("language")
 		self.list_element_with_text.append(self.label_language)
-		
-		
+				
 		self.button_open = self.elements.Button(self)
 		self.button_open.set_name("button_open")
 		self.list_element_with_text.append(self.button_open)
 		
 		self.label_dd = self.elements.LabelDD(self)
-		self.label_dd.set_name("label_dd")
-		#self.label_dd.setScaledContents(True)
-		#self.label_dd.setPixmap(QPixmap(".icons/d_d.png"))
+		self.label_dd.set_name("label_dd")		
 		self.list_element_with_text.append(self.label_dd)
 		
 		self.button_print = self.elements.Button(self)
@@ -238,8 +234,18 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.combobox_papers.set_name("choise_papers")
 		self.fill_forms_prn_ppr.fill_combobox_paper(self.combobox_papers)
 		
-		self.combobox_printers.attach(self.combobox_papers) 
+		self.combobox_printers.attach(self.combobox_papers)
 		
+		##########################################################################################
+		self.sp_num_of_copies = self.elements.SpinBox()
+		self.sp_num_of_copies.set_name("sp_number_of_copies")
+		self.sp_num_of_copies.setValue(1)
+		
+		self.label_num_of_copies = self.elements.Label()
+		self.label_num_of_copies.set_name("label_number_of_copies")
+		self.list_element_with_text.append(self.label_num_of_copies)
+		############################################################################################
+				
 		self.radiobutton_portrait = self.elements.RadioButton()
 		self.radiobutton_portrait.setText(self.get_dict_lang()["portrait"])
 		self.radiobutton_portrait.set_name("portrait")
@@ -339,6 +345,8 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.manipulation.attach(self.rect)
 		self.slider.attach(self.lcd)
 		self.slider.attach(self.view)
+		
+		self.combobox_printers.attach(self.sp_num_of_copies)
 		
 		self.choice_color_rect.attach(self.brush)
 		self.brush.attach(self.rect)
