@@ -94,7 +94,7 @@ class CalculateDifferentValue:
 		_p = [i.pos() for i in scene.items() if isinstance(i, QGraphicsRectItem)]
 		_pos = sorted(_p, key = lambda _p: (_p.y(), _p.x())) 	# создание отсортированого по координате Y списка QPoint 
 																# т.к. scene.items() возвращает беспорядочное
-																# расположение RectItem)
+																# расположение RectItem
 		
 		self.remove_all_rectitem(scene)
 		
@@ -211,6 +211,7 @@ class Func:
 				calc.add_certain_rect(args[0], args[1], len (calc.list_rect(args[0])))
 		else:
 			calc.add_one_rect(args[0], args[1])
+		Func.manipulation_pixmap(args[0])
 		
 		
 	def function_scene_pixmap_stretch(*args):
