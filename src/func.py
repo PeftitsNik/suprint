@@ -4,15 +4,18 @@ from src.load_setting import *
 from src.dict_prn_ppr import * 
 from src.rect_item_appearance_and_action import *
 from src.useful_function import *
-p = DictPrnPpr()
+
+dpp = DictPrnPpr()
+
+class Wrapper: # обертка для проверки наличия на сцене картинки
+	def check_pixmap_on_scene(func):
+		def wrapper(*args):			
+			if args[0].carcase.pixmap.isNull(): pass				
+			else: func(*args)
+		return	wrapper
 
 class CalculateDifferentValue:	
-	def __init__(self):		
-		self.pos_x = 0
-		self.pos_y = 0
-		self.qrect = None
-
-
+	
 	def num_rect_in_scene(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem) -> list[int]:
 		''' Количество rectitem на сцене по горизонтали и вертикали	'''
 		
@@ -35,14 +38,8 @@ class CalculateDifferentValue:
 	def list_rect(self, scene: QGraphicsScene) -> list[QGraphicsRectItem]:
 		''' Список из rectitem на сцене '''
 		
-		return [i for i in scene.items() if isinstance(i, QGraphicsRectItem)]
+		return [i for i in scene.items() if isinstance(i, QGraphicsRectItem)]		
 		
-		#list = []
-		#for i in scene.items():
-		#	if isinstance(i, QGraphicsRectItem):
-		#		list.append(i)
-		#	else: pass
-		#return list
 	
 	@staticmethod
 	def coord_rect(num: int, total_column: int, total_row: int) -> list[int]:
@@ -68,29 +65,24 @@ class CalculateDifferentValue:
 				scene.removeItem(i)
 			else: pass
 
-	
-	
+
 	def add_one_rect(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem) -> None:
 		'''Добавление одного rectitem на сцену'''
 		
-		self.remove_all_rectitem(scene)
-		# scene.addItem(rect)
-		# выдает ошибку 'QGraphicsScene::addItem: item has already been added to this scene'
-		# поэтому делаем так:
+		self.remove_all_rectitem(scene)		
 		rect = RectItemAppearanceAndAction()	
 		rect.setRect(rectitem.rect())
 		
 		scene.addItem(rect)	
 		rect.setZValue(1) # прямоугольник на передний план
 
-		scene.carcase.spinbox_number_of_pages.setValue(1)
+		#scene.carcase.spinbox_number_of_pages.setValue(1)
 
  
 	def add_certain_rect(self, scene: QGraphicsScene, rectitem: QGraphicsRectItem, num: int):
 		'''Последовательное размещение произвольного количества rectitem на сцене по одному'''
 		
-		n_list = self.num_rect_in_scene(scene, rectitem)
-		
+		n_list = self.num_rect_in_scene(scene, rectitem)		
 		column = n_list[0]# возможное количество страниц по ширине(количество колонок)
 		row = n_list[1] # возможное количество страниц по высоте(количество строк)
 				
@@ -99,22 +91,39 @@ class CalculateDifferentValue:
 		width_rect = _r.width()
 		height_rect = _r.height()
 		
+		_p = [i.pos() for i in scene.items() if isinstance(i, QGraphicsRectItem)]
+		_pos = sorted(_p, key = lambda _p: (_p.y(), _p.x())) 	# создание отсортированого по координате Y списка QPoint 
+																# т.к. scene.items() возвращает беспорядочное
+																# расположение RectItem)
+		
 		self.remove_all_rectitem(scene)
 		
-		for i in range(num):
-			# scene.addItem(rect)
-		    # выдает ошибку 'QGraphicsScene::addItem: item has already been added to this scene'
-		    # поэтому делаем так:
-			_rect = RectItemAppearanceAndAction()
-			_rect.setRect(_r)
-			_rect.setZValue(1)
-			coor = CalculateDifferentValue.coord_rect(i, column, row)
+		#повторяющиеся действия по размещению rectitem
+		def set_rect(_re: RectItemAppearanceAndAction, p: list[QPointF]) -> None:
+			_re.setRect(_r)
+			_re.setZValue(1)
+			scene.addItem(_re)
+			_re.setPos(p)
+		
+		if num <= len(_pos):			
+			for i in range(num):
+				_rect = RectItemAppearanceAndAction()
+				set_rect(_rect, _pos[i])
+				print(_pos[i])
+								
+		elif num > len(_pos):
+			for i in range(len(_pos)):
+				_rect = RectItemAppearanceAndAction()
+				set_rect(_rect, _pos[i])				
 				
-			_rect.moveBy(self.pos_x + width_rect * coor[0],
-							self.pos_y + height_rect * coor[1])               
-			scene.addItem(_rect)
-						
-	
+			for i in range(len(_pos), num):
+				_rect = RectItemAppearanceAndAction()				
+				coor = CalculateDifferentValue.coord_rect(i, column, row)
+				set_rect(_rect, QPointF(width_rect * coor[0], height_rect * coor[1]))						
+				
+		else: pass	
+		
+		
 	def add_all_rect (self, scene: QGraphicsScene, rectitem: QGraphicsRectItem) -> None:
 		'''добавление rectitem на сцену, которые полностью покрывают рисунок'''
 		
@@ -128,10 +137,7 @@ class CalculateDifferentValue:
 		self.remove_all_rectitem(scene) # удаляем предыдущие rectitem
 				
 		for i in range(0, num_y):	
-			for j in range(0, num_x):
-				#scene.addItem(rect)
-		        # выдает ошибку 'QGraphicsScene::addItem: item has already been added to this scene'
-		        # поэтому делаем так:
+			for j in range(0, num_x):				
 				_rect =  RectItemAppearanceAndAction()	
 				_rect.setRect(_r)			
 				scene.addItem(_rect)
@@ -152,7 +158,7 @@ class Func:
 	def function_for_papers_from_printer (*args):
 		if args[0]:
 			args[0].clear()
-			for key in p.dict_prn_ppr()[args[1].currentText()]:
+			for key in dpp.dict_prn_ppr()[args[1].currentText()]:
 				args[0].addItem(key)
 		else: pass
 
@@ -175,7 +181,7 @@ class Func:
 	def function_pagelayout_papersize(*args):
 		if args[1].currentText() == "": pass # проверяем на пустую строку, т.к. при очистке списка посылается сигнал наблюдателю
 		else:
-			args[0].setPageSize(QPageSize(p.dict_support_pages()[args[1].currentText()]))
+			args[0].setPageSize(QPageSize(dpp.dict_support_pages()[args[1].currentText()]))
 									
 	def function_pagelayout_left(*args):
 		args[0].setLeftMargin(args[1].value())
@@ -191,14 +197,12 @@ class Func:
 
 	###################################################################################################
 	################# функции изменения содержимого Scene #############################################
-		
-	def function_scene_rectitem(*args):
 	
+	@Wrapper.check_pixmap_on_scene
+	def function_scene_rectitem(*args):
 		# установка макс. возможного количества rectitem (setMaximum spinbox)
 		__num = calc.num_rect_in_scene(args[0], args[0].carcase.rect)[0] * calc.num_rect_in_scene(args[0], args[0].carcase.rect)[1]
 		args[0].carcase.spinbox_number_of_pages.setMaximum( __num )
-			
-		#Func.manipulation_pixmap(args[0])	
 		
 		if len (calc.list_rect(args[0])) > 1:
 			if args[0].carcase.print_all.isChecked():
@@ -258,8 +262,7 @@ class Func:
 	
 	def function_manipulation_button_open(*args):
 		# при открытии новой картинки старая удаляется
-		# func.Func.remove_pixmap(self.scene)
-		#
+		# func.Func.remove_pixmap(self.scene)		
 				
 		fileName = QFileDialog.getOpenFileName(parent = None, caption = "Open File", 
 				directory = ".", filter = "Images (*.png *.PNG *.xpm *.XPM *.jpg *.JPG *.jpeg *.JPEG *.bmp *.BMP *.tiff *.TIFF *.webp *.WEBP *.svg *.SVG)")
@@ -285,9 +288,8 @@ class Func:
 			Func.remove_pixmap(args[1].carcase.scene)	
 			args[1].carcase.scene.addPixmap(args[1].carcase.pixmap)
 			Func.manipulation_pixmap(args[1].carcase.scene)			
-			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX())	
-	
-	
+			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX())
+			
 	
 	#####################################################################################################
 	################ Вспомогательные функции манипулирование картинкой и rectitem #######################

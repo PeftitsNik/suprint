@@ -1,4 +1,3 @@
-
 def split_and_remove_symbol(string: str, separator: str) -> list[str]:	
 	
 	''' Разбиение строки, удаление '#' и ненужных пробелов с последующим созданием списка'''

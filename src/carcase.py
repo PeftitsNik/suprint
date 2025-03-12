@@ -145,6 +145,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.spinbox_number_of_pages = self.elements.SpinBox()
 		self.spinbox_number_of_pages.set_name("number_of_pages")
 		self.spinbox_number_of_pages.setValue(1)
+		self.spinbox_number_of_pages.setMinimum(1)
 						
 		self.realsize = self.elements.RadioButton()
 		self.realsize.set_name("realsize")

@@ -14,6 +14,6 @@ if __name__ == "__main__":
 	carcase.set_dict_lang(carcase.setting.create_dict_i18n_from_file())
 	carcase.create_carcase()
 	
-	ui = UI(carcase)	
+	ui = UI(carcase)
 
 	app.exec()
