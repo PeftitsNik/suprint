@@ -2,6 +2,6 @@ lang: en
 
 available_lang: en, ru, ua
 
-active_color_rectangle: #ffc0cb
+active_color_rectangle: #40e0d0
 
 alpha: 74

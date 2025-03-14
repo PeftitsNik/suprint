@@ -11,7 +11,8 @@ class Wrapper: # обертка для проверки наличия на сц
 	def check_pixmap_on_scene(func):
 		def wrapper(*args):			
 			if args[0].carcase.pixmap.isNull(): pass				
-			else: func(*args)
+			else:
+				func(*args)
 		return	wrapper
 
 class CalculateDifferentValue:	
@@ -94,7 +95,7 @@ class CalculateDifferentValue:
 		_p = [i.pos() for i in scene.items() if isinstance(i, QGraphicsRectItem)]
 		_pos = sorted(_p, key = lambda _p: (_p.y(), _p.x())) 	# создание отсортированого по координате Y списка QPoint 
 																# т.к. scene.items() возвращает беспорядочное
-																# расположение RectItem
+																# расположение RectItem)
 		
 		self.remove_all_rectitem(scene)
 		
@@ -108,8 +109,7 @@ class CalculateDifferentValue:
 		if num <= len(_pos):			
 			for i in range(num):
 				_rect = RectItemAppearanceAndAction()
-				set_rect(_rect, _pos[i])
-				print(_pos[i])
+				set_rect(_rect, _pos[i])				
 								
 		elif num > len(_pos):
 			for i in range(len(_pos)):
@@ -211,47 +211,51 @@ class Func:
 				calc.add_certain_rect(args[0], args[1], len (calc.list_rect(args[0])))
 		else:
 			calc.add_one_rect(args[0], args[1])
+		
 		Func.manipulation_pixmap(args[0])
 		
-		
-	def function_scene_pixmap_stretch(*args):
-		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
-		if args[0].carcase.pixmap.isNull(): pass			
-		else: 
-			Func.stretch_pixmap(args[0])	
-			calc.add_one_rect(args[0], args[0].carcase.rect)
-				
-	def function_scene_pixmap_realsize(*args):
-		args[0].carcase.spinbox_number_of_pages.setEnabled(True)
-		if args[0].carcase.pixmap.isNull(): pass			
-		else:
-			Func.realsize_pixmap(args[0])
-			calc.add_certain_rect(args[0], args[0].carcase.rect, args[0].carcase.spinbox_number_of_pages.value())
-						
-	def function_scene_pixmap_in_width(*args):
-		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
-		if args[0].carcase.pixmap.isNull(): pass			
-		else:
-			Func.in_width_pixmap(args[0])
-			calc.add_one_rect(args[0], args[0].carcase.rect)
-		
-	def function_scene_pixmap_in_height(*args):
-		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
-		if args[0].carcase.pixmap.isNull(): pass			
-		else:
-			Func.in_height_pixmap(args[0])
-			calc.add_one_rect(args[0], args[0].carcase.rect)
-		
-	def function_scene_pixmap_stretch_proportion(*args):
-		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
-		if args[0].carcase.pixmap.isNull(): pass			
-		else:
-			Func.stretch_proportion_pixmap(args[0])
-			calc.add_one_rect(args[0], args[0].carcase.rect)
+	
+	@Wrapper.check_pixmap_on_scene	
+	def function_scene_pixmap_stretch(*args):		
+		args[0].carcase.spinbox_number_of_pages.setDisabled(True)		
+		Func.stretch_pixmap(args[0])	
+		calc.add_one_rect(args[0], args[0].carcase.rect)			
 			
+	
+	@Wrapper.check_pixmap_on_scene
+	def function_scene_pixmap_realsize(*args):		
+		args[0].carcase.spinbox_number_of_pages.setEnabled(True)
+		Func.realsize_pixmap(args[0])
+		calc.add_certain_rect(args[0], args[0].carcase.rect, args[0].carcase.spinbox_number_of_pages.value())
+		
+	
+	@Wrapper.check_pixmap_on_scene
+	def function_scene_pixmap_in_width(*args):		
+		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
+		Func.in_width_pixmap(args[0])
+		calc.add_one_rect(args[0], args[0].carcase.rect)
+	
+	
+	@Wrapper.check_pixmap_on_scene
+	def function_scene_pixmap_in_height(*args):		
+		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
+		Func.in_height_pixmap(args[0])
+		calc.add_one_rect(args[0], args[0].carcase.rect)
+		
+	
+	@Wrapper.check_pixmap_on_scene
+	def function_scene_pixmap_stretch_proportion(*args):		
+		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
+		Func.stretch_proportion_pixmap(args[0])
+		calc.add_one_rect(args[0], args[0].carcase.rect)
+			
+	
+	@Wrapper.check_pixmap_on_scene	
 	def function_scene_spinbox_number_of_pages(*args):
 		calc.add_certain_rect(args[0], args[0].carcase.rect, args[1].value())
 
+	
+	@Wrapper.check_pixmap_on_scene
 	def function_scene_print_all(*args):
 		args[0].carcase.spinbox_number_of_pages.setDisabled(True)
 		Func.realsize_pixmap(args[0])		
@@ -268,8 +272,7 @@ class Func:
 		fileName = QFileDialog.getOpenFileName(parent = None, caption = "Open File", 
 				directory = ".", filter = "Images (*.png *.PNG *.xpm *.XPM *.jpg *.JPG *.jpeg *.JPEG *.bmp *.BMP *.tiff *.TIFF *.webp *.WEBP *.svg *.SVG)")
 			
-		if fileName[0] == "":
-			pass
+		if fileName[0] == "": pass
 		else :
 			args[1].carcase.pixmap.load(fileName[0])
 			Func.remove_pixmap(args[1].carcase.scene)	
@@ -282,8 +285,7 @@ class Func:
 		
 		fileName = args[1].get_name_file()
 			
-		if fileName == "" or fileName == None:
-			pass
+		if fileName == "" or fileName == None: pass
 		else :
 			args[1].carcase.pixmap.load(fileName)
 			Func.remove_pixmap(args[1].carcase.scene)	
@@ -308,8 +310,7 @@ class Func:
 	def stretch_pixmap(scene: QGraphicsScene):		
 		Func.remove_pixmap(scene)
 		scene.addPixmap(scene.carcase.pixmap.scaled(Func.return_size_rectitem(scene)[0], Func.return_size_rectitem(scene)[1],
-						transformMode = Qt.TransformationMode.FastTransformation))
-		
+						transformMode = Qt.TransformationMode.FastTransformation))	
 	
 	def in_width_pixmap(scene: QGraphicsScene):
 		Func.remove_pixmap(scene)
@@ -341,6 +342,7 @@ class Func:
 		Func.remove_pixmap(scene)
 		scene.addPixmap(scene.carcase.pixmap)
 			
+
 	def manipulation_pixmap(scene: QGraphicsScene):	#  вызывается при изменении rectitem и pixmap
 		
 		if scene.carcase.stretch.isChecked():			
