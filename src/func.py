@@ -10,7 +10,7 @@ dpp = DictPrnPpr()
 class Wrapper: # обертка для проверки наличия на сцене картинки
 	def check_pixmap_on_scene(func):
 		def wrapper(*args):			
-			if args[0].carcase.pixmap.isNull(): pass				
+			if args[0].carcase.pixmap.isNull(): pass
 			else:
 				func(*args)
 		return	wrapper
@@ -476,6 +476,7 @@ class Func:
 	#################### Печать картинки ###########################
 				#### ags[0] и args[1] это button_print
 	
+	@Wrapper.check_pixmap_on_scene
 	def print_pixmap_from_scene(*args):
 		
 		scene = args[0].carcase.scene
