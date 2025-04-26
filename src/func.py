@@ -5,15 +5,18 @@ from src.dict_prn_ppr import *
 from src.rect_item_appearance_and_action import *
 from src.useful_function import *
 
+import time
+
 dpp = DictPrnPpr()
 
-class Wrapper: # обертка для проверки наличия на сцене картинки
-	def check_pixmap_on_scene(func):
+class Wrapper: # обертка для проверкикартинки
+	def check_pixmap_on_scene(func): # на сцене 
 		def wrapper(*args):			
-			if args[0].carcase.pixmap.isNull(): pass
+			if args[0].carcase.pixmap.isNull(): pass		
 			else:
 				func(*args)
 		return	wrapper
+		
 
 class CalculateDifferentValue:	
 	
@@ -264,34 +267,29 @@ class Func:
 
 	###################################################################################################
 	####### функция изменения Manipulation и дальнейшие действия при открытии файла ###################
-	
-	def function_manipulation_button_open(*args):
-		# при открытии новой картинки старая удаляется
-		# func.Func.remove_pixmap(self.scene)		
-				
+	def check_pixmap_in_file(file_name, args0, args1):
+		''' проверка наличия картинки в открываемом файле '''
+			# при открытии новой картинки старая удаляется
+			# func.Func.remove_pixmap		
+		QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor) # изменение курсора на песочные часы
+		if args1.carcase.pixmap.load(file_name):			
+			Func.remove_pixmap(args1.carcase.scene)	
+			args1.carcase.scene.addPixmap(args1.carcase.pixmap)
+			Func.manipulation_pixmap(args1.carcase.scene)			
+			args0.set_dpi(args1.carcase.pixmap.physicalDpiX())			
+		else: pass
+		QApplication.restoreOverrideCursor() #возврат дефолтного курсора
+		
+	def function_manipulation_button_open(*args):					
 		fileName = QFileDialog.getOpenFileName(parent = None, caption = "Open File", 
 				directory = ".", filter = "Images (*.png *.PNG *.xpm *.XPM *.jpg *.JPG *.jpeg *.JPEG *.bmp *.BMP *.tiff *.TIFF *.webp *.WEBP *.svg *.SVG)")
-			
-		if fileName[0] == "": pass
-		else :
-			args[1].carcase.pixmap.load(fileName[0])
-			Func.remove_pixmap(args[1].carcase.scene)	
-			args[1].carcase.scene.addPixmap(args[1].carcase.pixmap)
-			Func.manipulation_pixmap(args[1].carcase.scene)			
-			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX())
+				
+		Func.check_pixmap_in_file(fileName[0], args[0], args[1])
 			
 			
-	def function_manipulation_label_dd(*args):
-		
-		fileName = args[1].get_name_file()
-			
-		if fileName == "" or fileName == None: pass
-		else :
-			args[1].carcase.pixmap.load(fileName)
-			Func.remove_pixmap(args[1].carcase.scene)	
-			args[1].carcase.scene.addPixmap(args[1].carcase.pixmap)
-			Func.manipulation_pixmap(args[1].carcase.scene)			
-			args[0].set_dpi(args[1].carcase.pixmap.physicalDpiX())
+	def function_manipulation_label_dd(*args):		
+		fileName = args[1].get_name_file()	
+		Func.check_pixmap_in_file(fileName, args[0], args[1])
 			
 	
 	#####################################################################################################
@@ -498,10 +496,12 @@ class Func:
 			else: printer = QPdfWriter(file_name[0])		
 		elif combobox_printers.currentText() == "":
 			print("no printer selected")
+			return
 		else:
 			printer = QPrinter()			
 			printer.setPrinterName(combobox_printers.currentText())
 			printer.setCopyCount(num_copies)
+			print(printer.supportedResolutions())		
 		
 		printer.setResolution(int(manipulation.get_dpi()[0]))
 		printer.setPageLayout(pagelayout)
@@ -515,8 +515,8 @@ class Func:
 		coor_y = 0 # координата у фрагмента картинки
 
 
-		# #######Возможность произвольного размещения фрагмента картинки 
-		# #################на листе при печати
+		# ####### Возможность произвольного размещения фрагмента картинки 
+		# ################# на листе при печати
 		# если координаты рамки (rectitem) отрицательные, то смещаем координаты
 		# фрагмента картинки на их абсолютное значение
 		#
