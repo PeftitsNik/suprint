@@ -25,7 +25,7 @@ class Elements:
 		def mousePressEvent(self, event):
 			self.setChecked(True)
 			self.notify()
-					
+		
 			
 	class ComboBox(QComboBox, Element_Interface, Subject, Observer):
 		def __init__(self):
@@ -34,7 +34,7 @@ class Elements:
 			self.currentTextChanged[str].connect(self.notify)
 		
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 		
 			
 	class SpinBox(QSpinBox, Element_Interface, Subject, Observer):
@@ -44,7 +44,7 @@ class Elements:
 			self.valueChanged.connect(self.notify)
 			
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 		
 		
 	class Button(QPushButton, Element_Interface, Subject, Observer):
@@ -57,7 +57,7 @@ class Elements:
 			self.notify()	
 		
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 	
 	
 	class LabelDD(LabelDragDrop, Element_Interface, Subject):
@@ -77,7 +77,7 @@ class Elements:
 			super().__init__()
 
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 			
 		
 	class RectItem(RectItemAppearanceAndAction, Element_Interface, Observer, Subject):
@@ -87,7 +87,7 @@ class Elements:
 			self.create_list_observers()
 			
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 			if isinstance (subject, QBrush) != True:
 				self.notify()
 	
@@ -98,7 +98,7 @@ class Elements:
 			self.create_list_observers()
 		
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 			self.notify()
 	
 	
@@ -120,7 +120,7 @@ class Elements:
 			return self.__dpi
 		
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 			self.notify()
 		
 	
@@ -130,7 +130,7 @@ class Elements:
 			self.carcase = carcase
 			
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 		
 	
 	class GraphicsView(QGraphicsView, Element_Interface, Observer):
@@ -138,7 +138,7 @@ class Elements:
 			super().__init__()			
 			
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 	
 	
 	class Pixmap(QPixmap, Element_Interface, Observer):
@@ -146,7 +146,7 @@ class Elements:
 			super().__init__()			
 			
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 	
 	
 	class Brush (BrushAppearanceAndAction, Element_Interface, Subject, Observer):
@@ -155,7 +155,7 @@ class Elements:
 			self.create_list_observers()		
 			
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 			self.notify()
 	
 	
@@ -178,7 +178,7 @@ class Elements:
 			self.display(100)
 		
 		def update_observer(self, subject: Subject):
-			func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 			
 	
 	class ChoiceColorRect (ChoiceColorWidget, Element_Interface, Subject):

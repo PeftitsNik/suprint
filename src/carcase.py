@@ -86,7 +86,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.set_name("carcase")
 		
 	def update_observer(self, subject: Subject):		
-		func.Func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+		func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 	
 	def set_dict_lang(self, dict_lang: dict):
 		self._dict_lang = dict_lang

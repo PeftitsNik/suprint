@@ -1,7 +1,7 @@
 from src.i18n import *
 import src.const as const
 import os
-from src.useful_function import *
+import src.useful_function as us_fn
 
 class LoadSetting:
 
@@ -12,7 +12,7 @@ class LoadSetting:
 		
 		with open(file_name, encoding='utf-8', mode='r') as f:			
 			for line in f: # для каждой строки из файла
-				s = split_and_remove_symbol(line, ":")
+				s = us_fn.split_and_remove_symbol(line, ":")
 				if len(s) == 0: pass
 				elif s[0] and s[1]:
 					new_dict[s[0]] = s[1]
