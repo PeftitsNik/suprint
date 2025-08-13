@@ -45,7 +45,6 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 		self.delta_x = 0
 		self.delta_y = 0
 		
-		
 
 	def mouseMoveEvent(self, event):
 		self.moveBy(event.pos().x() - event.lastPos().x(), event.pos().y() - event.lastPos().y())

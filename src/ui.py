@@ -76,13 +76,12 @@ class UI():
 		self.layout_printers_2.addWidget(self.carcase.label_num_of_copies)
 		self.layout_printers_2.addWidget(self.carcase.sp_num_of_copies)
 				
-		_f=QFontComboBox()
+		_f = QFontComboBox()
 		_si = _f.currentFont().pointSize()	
 		_s = f"font-size: {_si*2}px"
 		
-		label_p = QLabel("🗐🗐🗐")
-		label_p.setStyleSheet(_s)
-		self.layout_printers_2.addWidget(label_p, Qt.AlignmentFlag.AlignLeft)
+		self.carcase.label_p.setStyleSheet(_s)
+		self.layout_printers_2.addWidget(self.carcase.label_p, Qt.AlignmentFlag.AlignLeft)
 		
 		self.layout_settings_lang = QVBoxLayout()		
 		self.layout_settings_lang.addWidget(self.carcase.combobox_lang)

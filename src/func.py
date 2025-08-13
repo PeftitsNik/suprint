@@ -582,6 +582,10 @@ def function_scene_brush(*args):
 		if isinstance (i, QGraphicsRectItem):
 			i.setBrush(brush)		
 
+def function_number_of_copies_label_p(*args):	
+	if args[1].value() > 4: pass	
+	else: args[0].setText(const.NUM_COPIES * args[1].value())
+
 function_for_element = {
 	"portrait": 	{"pagelayout": function_pagelayout_portrait, "label_plus_image": function_label_plus_image_portrait},
 	"landscape": 	{"pagelayout": function_pagelayout_landscape, "label_plus_image": function_label_plus_image_landscape},
@@ -608,5 +612,6 @@ function_for_element = {
 	"button_print":	{"button_print": print_pixmap_from_scene},
 	"slider": 		{"view": function_for_view_slider, "lcd": function_for_lcd_slider},
 	"choice_color_rect": {"brush": function_brush_choice_color_rect},
-	"brush": {"rectitem": function_rectitem_brush, "scene": function_scene_brush}
+	"brush": {"rectitem": function_rectitem_brush, "scene": function_scene_brush},
+	"sp_number_of_copies": {"label_p": function_number_of_copies_label_p}
 	}

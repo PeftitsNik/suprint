@@ -3,6 +3,7 @@ from src.interface import *
 from src.load_setting import *
 from src.dict_prn_ppr import *
 import  src.func as func
+import src.const as const
 import os
 import locale
 
@@ -63,8 +64,8 @@ import locale
 #|Subject (наблюдаемое)	|
 #|---------------------	|		
 #|						| button_print наблюдает сам за собой для удобства доступа
-#| Button				| к методу печати из класса Func 
-#| 						|
+#| Button				| к методу печати из пакета func 
+#| 						| 
 #| 						|	
 #| 						|
 #|----------------------|
@@ -195,7 +196,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.label_bottom.set_name("bottom")
 		self.list_element_with_text.append(self.label_bottom)
 
-		self.label_plus_image = self.elements.Label_Plus_Image_Fields(self)
+		self.label_plus_image = self.elements.Label_Observer(self)
 		self.label_plus_image.set_name("label_plus_image")
 		
 		self.label_language = self.elements.Label()
@@ -224,7 +225,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		
 		self.slider = self.elements.Slider(self)	
 		self.slider.set_name("slider")
-		self.slider.setRange(10, 200)
+		self.slider.setRange(5, 200)
 		self.slider.setValue(100)
 						
 		self.combobox_printers = self.elements.ComboBox()
@@ -241,10 +242,17 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.sp_num_of_copies = self.elements.SpinBox()
 		self.sp_num_of_copies.set_name("sp_number_of_copies")
 		self.sp_num_of_copies.setValue(1)
+		self.sp_num_of_copies.setMinimum(1)
 		
 		self.label_num_of_copies = self.elements.Label()
 		self.label_num_of_copies.set_name("label_number_of_copies")
 		self.list_element_with_text.append(self.label_num_of_copies)
+		
+		self.label_p = self.elements.Label_Observer(self)
+		self.label_p.setText(const.NUM_COPIES)
+		self.label_p.set_name("label_p")
+		
+		self.sp_num_of_copies.attach(self.label_p)
 		############################################################################################
 				
 		self.radiobutton_portrait = self.elements.RadioButton()

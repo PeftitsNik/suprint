@@ -72,12 +72,20 @@ class Elements:
 			super().__init__()
 
 
-	class Label_Plus_Image_Fields(Label, Observer):
+	class Label_Observer(Label, Observer):
 		def __init__(self, carcase: Carcase_Interfase):
 			super().__init__()
 
 		def update_observer(self, subject: Subject):
 			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+			
+
+	#class Label_Plus_Image_Fields(Label, Observer):
+	#	def __init__(self, carcase: Carcase_Interfase):
+	#		super().__init__()
+
+	#	def update_observer(self, subject: Subject):
+	#		func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 			
 		
 	class RectItem(RectItemAppearanceAndAction, Element_Interface, Observer, Subject):

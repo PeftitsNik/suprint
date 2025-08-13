@@ -8,3 +8,5 @@ BORDER: Final = 20 #граница прилипания
 DIR_SRC: Final = "src"
 DIR_LANG: Final = "lang"
 FILE_SETTING: Final = "setting"
+
+NUM_COPIES: Final = "🗐"
