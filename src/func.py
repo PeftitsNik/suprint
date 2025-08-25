@@ -5,18 +5,25 @@ from src.dict_prn_ppr import *
 from src.rect_item_appearance_and_action import *
 from src.useful_function import *
 
+#эти классы определены в src.elements
+#здксь они нужны для корректной аннотации 
+class Manipulation:
+	pass
+class Button:
+	pass
 
 # создание списка поддерживаемых принтеров
 dpp = DictPrnPpr() 
 
-# обертка для проверки картинки
-class Wrapper:
+# класс различных оберток
+class Wrapper:	
+	# обертка для проверки картинки на сцене
 	def check_pixmap_on_scene(func): # на сцене 
 		def wrapper(*args):			
 			if args[0].carcase.pixmap.isNull(): pass		
 			else:
 				func(*args)
-		return	wrapper
+		return	wrapper		
 		
 #####################################################################################
 #####  Вспомогательные функции для основных функций из словаря function_for_element
@@ -79,12 +86,11 @@ def add_one_rect(scene: QGraphicsScene, rectitem: QGraphicsRectItem) -> None:
 	
 	scene.addItem(rect)	
 	rect.setZValue(1) # прямоугольник на передний план
-	
 
 def add_certain_rect(scene: QGraphicsScene, rectitem: QGraphicsRectItem, num: int):
 	'''Последовательное размещение произвольного количества rectitem на сцене по одному'''
 	
-	n_list = num_rect_in_scene(scene, rectitem)		
+	n_list = num_rect_in_scene(scene, rectitem)
 	column = n_list[0]# возможное количество страниц по ширине(количество колонок)
 	row = n_list[1] # возможное количество страниц по высоте(количество строк)
 			
@@ -107,45 +113,43 @@ def add_certain_rect(scene: QGraphicsScene, rectitem: QGraphicsRectItem, num: in
 		scene.addItem(_re)
 		_re.setPos(p)
 	
-	if num <= len(_pos):			
+	if num <= len(_pos):
 		for i in range(num):
 			_rect = RectItemAppearanceAndAction()
-			set_rect(_rect, _pos[i])				
-							
+			set_rect(_rect, _pos[i])
+		
 	elif num > len(_pos):
 		for i in range(len(_pos)):
 			_rect = RectItemAppearanceAndAction()
-			set_rect(_rect, _pos[i])				
-			
+			set_rect(_rect, _pos[i])
+		
 		for i in range(len(_pos), num):
-			_rect = RectItemAppearanceAndAction()				
+			_rect = RectItemAppearanceAndAction()
 			coor = coord_rect(i, column, row)
-			set_rect(_rect, QPointF(width_rect * coor[0], height_rect * coor[1]))						
+			set_rect(_rect, QPointF(width_rect * coor[0], height_rect * coor[1]))	
 			
-	else: pass	
-	
+	else: pass
 	
 def add_all_rect (scene: QGraphicsScene, rectitem: QGraphicsRectItem) -> None:
 	'''добавление rectitem на сцену, которые полностью покрывают рисунок'''
 	
-	_r = rectitem.rect()	
+	_r = rectitem.rect()
 	width_rect = _r.width()
 	height_rect = _r.height()
 	
 	num_x = num_rect_in_scene(scene, rectitem)[0]  # количество rectitem  по оси х (горизонтали)
 	num_y = num_rect_in_scene(scene, rectitem)[1]  # количество rectitem  по оси у (вертикали)
-			
+	
 	remove_all_rectitem(scene) # удаляем предыдущие rectitem
 			
-	for i in range(0, num_y):	
-		for j in range(0, num_x):				
-			_rect =  RectItemAppearanceAndAction()	
-			_rect.setRect(_r)			
+	for i in range(0, num_y):
+		for j in range(0, num_x):
+			_rect =  RectItemAppearanceAndAction()
+			_rect.setRect(_r)
 			scene.addItem(_rect)
-			_rect.setZValue(1)  # пряиоугольник на передний план			
+			_rect.setZValue(1)  # пряиоугольник на передний план
 			_rect.moveBy(j * width_rect, i * height_rect)
-
-				
+							
 ######################################################################################
 ########## Основные функции определяющие взаимодействие Наблюдателя и Источника
 ########## из словаря function_for_element
@@ -163,7 +167,7 @@ def function_for_papers_from_printer (*args):
 
 ###################################################################
 ########### Функции для смены картинки в label_plus_image #########
-def function_label_plus_image_portrait (*args):		
+def function_label_plus_image_portrait (*args):
 	args[0].setPixmap(QPixmap(".icons/fields_p.png"))
 
 def function_label_plus_image_landscape (*args):
@@ -172,7 +176,7 @@ def function_label_plus_image_landscape (*args):
 ###################################################################
 ######## функции определяющие формат страницы для QPageLayout #####
 def function_pagelayout_portrait (*args):
-	args[0].setOrientation(QPageLayout.Orientation.Portrait)	
+	args[0].setOrientation(QPageLayout.Orientation.Portrait)
 	
 def function_pagelayout_landscape(*args):
 	args[0].setOrientation(QPageLayout.Orientation.Landscape)
@@ -181,17 +185,17 @@ def function_pagelayout_papersize(*args):
 	if args[1].currentText() == "": pass # проверяем на пустую строку, т.к. при очистке списка посылается сигнал наблюдателю
 	else:
 		args[0].setPageSize(QPageSize(dpp.dict_support_pages()[args[1].currentText()]))
-								
+	
 def function_pagelayout_left(*args):
 	args[0].setLeftMargin(args[1].value())
-						
+	
 def function_pagelayout_top(*args):
 	args[0].setTopMargin(args[1].value())
-						
+	
 def function_pagelayout_right(*args):
 	args[0].setRightMargin(args[1].value())
-				
-def function_pagelayout_bottom(*args):	
+	
+def function_pagelayout_bottom(*args):
 	args[0].setBottomMargin(args[1].value())
 
 ###################################################################################################
@@ -263,8 +267,8 @@ def function_scene_print_all(*args):
 
 ###################################################################################################
 ####### функция изменения Manipulation и дальнейшие действия при открытии файла ###################
-def check_pixmap_in_file(file_name, args0, args1):
-	''' проверка наличия картинки в открываемом файле '''
+def check_pixmap_in_file(file_name, args0: Manipulation, args1: Button):
+	''' проверка наличия картинки в открываемом файле '''		
 		# при открытии новой картинки старая удаляется
 		# remove_pixmap		
 	QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor) # изменение курсора на песочные часы
@@ -274,16 +278,16 @@ def check_pixmap_in_file(file_name, args0, args1):
 		manipulation_pixmap(args1.carcase.scene)			
 		args0.set_dpi(args1.carcase.pixmap.physicalDpiX())			
 	else: pass
-	QApplication.restoreOverrideCursor() #возврат дефолтного курсора
+	QApplication.restoreOverrideCursor() #возврат дефолтного курсора	
 	
 def function_manipulation_button_open(*args):					
 	fileName = QFileDialog.getOpenFileName(parent = None, caption = "Open File", 
 			directory = ".", filter = "Images (*.png *.PNG *.xpm *.XPM *.jpg *.JPG *.jpeg *.JPEG *.bmp *.BMP *.tiff *.TIFF *.webp *.WEBP *.svg *.SVG)")
 			
 	check_pixmap_in_file(fileName[0], args[0], args[1])
+	
 		
-		
-def function_manipulation_label_dd(*args):		
+def function_manipulation_label_dd(*args):
 	fileName = args[1].get_name_file()	
 	check_pixmap_in_file(fileName, args[0], args[1])
 		
@@ -291,7 +295,8 @@ def function_manipulation_label_dd(*args):
 #####################################################################################################
 ################ Вспомогательные функции манипулирование картинкой и rectitem #######################
 
-def remove_pixmap(scene: QGraphicsScene): 
+def remove_pixmap(scene: QGraphicsScene):
+	'''удаление картинки со сцены'''
 	for i in scene.items():
 		if isinstance(i, QGraphicsPixmapItem):
 			scene.removeItem(i)
@@ -439,10 +444,8 @@ def function_for_view_slider(*args):
 	transform.scale(scale_x, scale_y)
 	args[0].setTransform(transform)
 
-
 def function_for_lcd_slider(*args):		
 	args[0].display(args[1].value())
-
 
 def function_for_slider_scale_lcd(*args):		
 	sc = args[1].value()
@@ -450,8 +453,7 @@ def function_for_slider_scale_lcd(*args):
 	scale_x = sc / 100
 	scale_y = sc / 100
 	transform.scale(scale_x, scale_y)
-	args[1].carcase.view.setTransform(transform)
-	
+	args[1].carcase.view.setTransform(transform)	
 	
 ################################################################
 ################################################################
@@ -485,10 +487,10 @@ def print_pixmap_from_scene(*args):
 	
 	#список из частей картинки для печати
 	copy_pixmap = [pixmap.copy( int(coor.x()), int(coor.y()), int(rect.rect().width()), int(rect.rect().height()) ) for coor in list_coor_rect]
-	
+		
 	if combobox_printers.currentText() == const.PR_PDF:
 		file_name = QFileDialog.getSaveFileName(args[0], "Save File", ".", "PDF (*.pdf)")
-		if file_name[0] == "": pass
+		if file_name[0] == "": return
 		else: printer = QPdfWriter(file_name[0])		
 	elif combobox_printers.currentText() == "":
 		print("no printer selected")
@@ -553,7 +555,6 @@ def print_pixmap_from_scene(*args):
 		else: pass
 
 	painter.end()	
-	
 
 #изменение brush 
 def function_brush_choice_color_rect(*args):		

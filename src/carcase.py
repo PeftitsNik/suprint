@@ -308,17 +308,14 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.group_settings_color_rect.set_name("settings_color_rect")
 		self.group_settings_color_rect.setTitle(self.get_dict_lang()["settings_color_rect"])
 		self.list_element_with_text.append(self.group_settings_color_rect)
-		
-		
+				
 		self.tab = self.elements.Tab()
 		self.tab.set_name("tab_setting")
 		self.list_element_with_text.append(self.tab)
-		
-		
+				
 		self.icons_tab = [QIcon(QPixmap(".icons/print1.svg")), QIcon(QPixmap(".icons/setting.svg"))]
 		self.txt_tab = (self.get_dict_lang()["tab_setting"]).split()
-		
-	
+			
 		
 		#####################################################
 		self.rect.add_parent_scene(self.scene)

@@ -14,7 +14,6 @@ import src.const as const
 from src.choice_color_rect import*
 from src.brush_appearance_and_action import *
 
-
 class Elements:
 	
 	class RadioButton(QRadioButton, Element_Interface, Subject):
@@ -80,17 +79,9 @@ class Elements:
 			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 			
 
-	#class Label_Plus_Image_Fields(Label, Observer):
-	#	def __init__(self, carcase: Carcase_Interfase):
-	#		super().__init__()
-
-	#	def update_observer(self, subject: Subject):
-	#		func.function_for_element[subject.get_name()][self.get_name()](self, subject)
-			
-		
 	class RectItem(RectItemAppearanceAndAction, Element_Interface, Observer, Subject):
 		def __init__(self, carcase: Carcase_Interfase):
-			super().__init__()	
+			RectItemAppearanceAndAction.__init__(self)	
 			self.carcase = carcase		
 			self.create_list_observers()
 			
@@ -114,7 +105,8 @@ class Elements:
 		def __init__(self):
 			self.__dpi = [0]
 			self.create_list_observers()
-			
+			self.__pixmap_in_buffer = QGuiApplication.clipboard().pixmap()
+						
 		def set_orig_rect(self, rect: QRectF):
 			self.__rect = rect
 				
@@ -135,12 +127,12 @@ class Elements:
 	class Scene(QGraphicsScene, Element_Interface, Observer):
 		def __init__(self, carcase: Carcase_Interfase):
 			super().__init__()
-			self.carcase = carcase
+			self.carcase = carcase			
 			
 		def update_observer(self, subject: Subject):
 			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
 		
-	
+		
 	class GraphicsView(QGraphicsView, Element_Interface, Observer):
 		def __init__(self):
 			super().__init__()			

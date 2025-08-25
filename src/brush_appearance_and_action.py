@@ -8,8 +8,7 @@ class BrushAppearanceAndAction(QBrush):
 	def __init__(self):
 	     
 		super().__init__()
-		self.appearance_brush()
-		
+		self.appearance_brush()		
 	
 	def appearance_brush(self):	
 		setting = LoadSetting()

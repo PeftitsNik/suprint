@@ -18,12 +18,17 @@ class RectSample (QGraphicsRectItem):
 	def __init__(self):
 		super().__init__()
 				
-	def mouseMoveEvent(self, event):		
-		self.moveBy(event.pos().x() - event.lastPos().x(), event.pos().y() - event.lastPos().y())
+	def mouseMoveEvent(self, event):
+		if event.buttons() == Qt.MouseButton.LeftButton:	
+			self.moveBy(event.pos().x() - event.lastPos().x(), event.pos().y() - event.lastPos().y())
 		
 	def mousePressEvent(self, event):
-		pass
+		if event.buttons() == Qt.MouseButton.LeftButton:
+			self.setCursor(Qt.CursorShape.SizeAllCursor)
 		
+	def mouseReleaseEvent(self, event):
+		self.setCursor(Qt.CursorShape.ArrowCursor)
+	
 	
 class RectColor (QGraphicsRectItem):
 	def __init__(self, parent = None, color: QColor = QColor("blue"), alpha: int = 255):
