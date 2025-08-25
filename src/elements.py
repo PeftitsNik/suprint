@@ -81,7 +81,7 @@ class Elements:
 
 	class RectItem(RectItemAppearanceAndAction, Element_Interface, Observer, Subject):
 		def __init__(self, carcase: Carcase_Interfase):
-			RectItemAppearanceAndAction.__init__(self)	
+			super().__init__()	
 			self.carcase = carcase		
 			self.create_list_observers()
 			
