@@ -36,13 +36,13 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 		if event.button() == Qt.MouseButton.LeftButton:
 			self.setCursor(Qt.CursorShape.SizeAllCursor)
 			#список rectitem на сцене
-			self.other_rect_on_scene = [i for i in self.scene().items() if isinstance(i, RectItemAppearanceAndAction) ]
+			self.other_rect_on_scene = [i for i in self.scene().items() if (isinstance(i, RectItemAppearanceAndAction) and i != self)]
 								
 			self.delta_x = 0
 			self.delta_y = 0			
 	
 	def mouseMoveEvent(self, event):
-		pix = [i for i in self.scene().items() if (isinstance(i, RectItemAppearanceAndAction) and i != self)]
+		pix = [i for i in self.scene().items() if isinstance(i, QGraphicsPixmapItem) ]
 		pix_height = pix[0].pixmap().size().height()
 		pix_width = pix[0].pixmap().size().width()
 				
