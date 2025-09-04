@@ -269,8 +269,7 @@ def function_scene_print_all(*args):
 ####### функция изменения Manipulation и дальнейшие действия при открытии файла ###################
 def check_pixmap_in_file(file_name, args0: Manipulation, args1: Button):
 	''' проверка наличия картинки в открываемом файле '''		
-		# при открытии новой картинки старая удаляется
-		# remove_pixmap		
+		# при открытии новой картинки старая удаляется функцией remove_pixmap		
 	QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor) # изменение курсора на песочные часы
 	if args1.carcase.pixmap.load(file_name):			
 		remove_pixmap(args1.carcase.scene)	

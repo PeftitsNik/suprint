@@ -42,7 +42,7 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 			self.delta_y = 0			
 	
 	def mouseMoveEvent(self, event):
-		pix = [i for i in self.scene().items() if isinstance(i, QGraphicsPixmapItem) ]
+		pix = [i for i in self.scene().items() if (isinstance(i, RectItemAppearanceAndAction) and i != self)]
 		pix_height = pix[0].pixmap().size().height()
 		pix_width = pix[0].pixmap().size().width()
 				
@@ -53,8 +53,6 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 			for i in self.other_rect_on_scene:          
 				pos = self.pos_figure.pos_substraction_reсt_angle(self, i, const.BORDER)
 				move = self.pos_figure.move_reсt(self, i, const.BORDER)	# сдвиг на dx, dy
-				
-				if i == self: continue # если прямоугольник, который двигают, сравнивается с самим собой, то продолжаем цикл 
 				
 				###########  ПРИЛИПАНИЕ УГЛОВ ######################
 				# при приближении двух углов
@@ -74,7 +72,7 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 				#				-------------
 		
 				
-				elif pos[0] != 0 or pos[1] != 0:
+				if pos[0] != 0 or pos[1] != 0:
 					self.moveBy(-pos[0], -pos[1]) # минус, потому что вычитаем из прямоугольника, который двигаем 
 				
 					self.delta_x = self.delta_x + event.pos().x() - event.lastPos().x()
