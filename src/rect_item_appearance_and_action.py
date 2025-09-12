@@ -2,17 +2,17 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 import src.const as const
-from src.pos_f import *
+import src.pos_f as pos_f
 from src.brush_appearance_and_action import *
 
+class DifValuePen:
+	WIDTH_PEN_ACTIVE = 10	
+	COLOR_PEN_ACTIVE = QColor("blue")
 
-class RectItemAppearanceAndAction(QGraphicsRectItem):
-    
-	def __init__(self):
-		
+class RectItemAppearanceAndAction(QGraphicsRectItem):    
+	def __init__(self):		
 		super().__init__()
-		#self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
-		self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)		
+		self.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsSelectable, True)	
 		
 		self.other_rect_on_scene: list[RectItem] = [] # список прямоугольников на сцене, заполняется при щелчке ЛКМ на прямоугольнике
 		self.delta_x = 0 # переменная, в которой накапливается значение перемещения курсора при зажатой ЛКМ, по оси Х
@@ -20,7 +20,7 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 		
 		self.appearance_rect()
 		
-		self.pos_figure = PosFigure()
+		self.pos_figure = pos_f.PosFigure()
 		
 	def appearance_rect(self):				
 		brush = BrushAppearanceAndAction()
@@ -32,7 +32,16 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 	def add_parent_scene(self, scene: QGraphicsScene):
 		self.scene = scene	
 	
-	def mousePressEvent(self, event):		
+	def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
+		super().paint(painter, option, widget) # Сначала рисуем стандартный прямоугольник
+		if QStyle.StateFlag.State_Selected in option.state: # Проверка выделения 
+			pen = QPen(DifValuePen.COLOR_PEN_ACTIVE, DifValuePen.WIDTH_PEN_ACTIVE)
+			pen.setStyle(Qt.PenStyle.DashLine)
+			painter.setPen(pen)
+			painter.drawRect(self.rect())
+
+	def mousePressEvent(self, event):
+		super().mousePressEvent(event)	
 		if event.button() == Qt.MouseButton.LeftButton:
 			self.setCursor(Qt.CursorShape.SizeAllCursor)
 			#список rectitem на сцене
