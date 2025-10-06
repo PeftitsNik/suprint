@@ -41,7 +41,7 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 			painter.drawRect(self.rect())
 
 	def mousePressEvent(self, event):
-		super().mousePressEvent(event)	
+		super().mousePressEvent(event) 	
 		if event.button() == Qt.MouseButton.LeftButton:
 			self.setCursor(Qt.CursorShape.SizeAllCursor)
 			#список rectitem на сцене

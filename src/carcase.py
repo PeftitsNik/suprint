@@ -214,6 +214,10 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.button_print = self.elements.Button(self)
 		self.button_print.set_name("button_print")
 		self.list_element_with_text.append(self.button_print)
+		
+		self.button_save_all_images = self.elements.Button(self)
+		self.button_save_all_images.set_name("button_save_all_images")
+		self.list_element_with_text.append(self.button_save_all_images)
 			
 		self.scale = self.elements.Label()
 		self.scale.set_name("scale")
@@ -347,6 +351,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.button_open.attach(self.manipulation)
 		self.label_dd.attach(self.manipulation)
 		self.button_print.attach(self.button_print)
+		self.button_save_all_images.attach(self.button_save_all_images)
 						
 		self.manipulation.attach(self.rect)
 		self.slider.attach(self.lcd)

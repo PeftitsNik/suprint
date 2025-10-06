@@ -21,6 +21,7 @@ printers: Принтеры и бумага
 label_number_of_copies: Число копий
 button_open: Открыть файл
 button_print: Печать
+button_save_all_images: Сохранить все изображения
 ################################
 settings_lang: Язык
 settings_color_rect: Прозрачность и цвет области печати

@@ -269,7 +269,8 @@ def function_scene_print_all(*args):
 ####### функция изменения Manipulation и дальнейшие действия при открытии файла ###################
 def check_pixmap_in_file(file_name, args0: Manipulation, args1: Button):
 	''' проверка наличия картинки в открываемом файле '''		
-		# при открытии новой картинки старая удаляется функцией remove_pixmap		
+		# при открытии новой картинки старая удаляется
+		# remove_pixmap		
 	QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor) # изменение курсора на песочные часы
 	if args1.carcase.pixmap.load(file_name):			
 		remove_pixmap(args1.carcase.scene)	
@@ -555,7 +556,33 @@ def print_pixmap_from_scene(*args):
 
 	painter.end()	
 
-#изменение brush 
+#### сохранение выбраных Rect как изображения
+#### ags[0] и args[1] это button_save_all_images
+def function_save_all_images(*args):
+	scene = args[0].carcase.scene
+	rect = args[0].carcase.rect				
+	list_coor_rect = [i.scenePos() for i in scene.items() if isinstance (i, QGraphicsRectItem) ]
+	pixmap = [i for i in scene.items() if isinstance (i, QGraphicsPixmapItem)][0].pixmap()	
+	
+	if (pixmap.size().width() and pixmap.size().height()):
+		#список из частей картинки для сохранения
+		copy_pixmap = [pixmap.copy( int(coor.x()), int(coor.y()), int(rect.rect().width()), int(rect.rect().height()) ) for coor in list_coor_rect]
+		save_as = QFileDialog.getSaveFileName(parent = None, caption ="Save files", directory = ".", filter = "JPG (*.jpg);; PNG (*.png)")
+		name_ = "".join(save_as[0].split(".")[0:-1]) # полный путь с именем файла без расширения
+		ext_ = save_as[0].split(".")[-1] # рвсширение
+		num = 0 # счётчик добавляет номер к имени файла
+			
+		for pix in copy_pixmap:
+			pix.save(name_ + "." + str(num) + "." + ext_, ext_.upper())
+			num = num + 1
+	else: 
+		err = QMessageBox()
+		err.setIconPixmap(QPixmap(".icons/suprint.png"))
+		#msg = err.warning(None, "Warning", "Image not loaded!")
+		e = err.information(None, "Warning", "Image not loaded!")
+		  
+
+### изменение brush 
 def function_brush_choice_color_rect(*args):		
 	color = args[1].get_active_color()
 	alpha = args[1].get_current_alpha()
@@ -587,6 +614,7 @@ def function_number_of_copies_label_p(*args):
 	else: args[0].setText(const.NUM_COPIES * args[1].value())
 
 function_for_element = {
+	# Источник		Наблюдатель
 	"portrait": 	{"pagelayout": function_pagelayout_portrait, "label_plus_image": function_label_plus_image_portrait},
 	"landscape": 	{"pagelayout": function_pagelayout_landscape, "label_plus_image": function_label_plus_image_landscape},
 	"left": 		{"pagelayout": function_pagelayout_left},
@@ -608,6 +636,7 @@ function_for_element = {
 	"choise_papers": {"pagelayout": function_pagelayout_papersize},
 	"choice_language": {"carcase": function_for_combobox_lang},
 	"button_open": 	{"manipulation": function_manipulation_button_open},
+	"button_save_all_images": {"button_save_all_images": function_save_all_images},
 	"label_dd":		{"manipulation": function_manipulation_label_dd},
 	"button_print":	{"button_print": print_pixmap_from_scene},
 	"slider": 		{"view": function_for_view_slider, "lcd": function_for_lcd_slider},

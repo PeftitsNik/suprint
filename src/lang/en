@@ -21,6 +21,7 @@ printers: Printers and paper
 label_number_of_copies: Number of copies
 button_open: Open file
 button_print: Print
+button_save_all_images: Save all images
 ################################
 settings_lang: Language
 settings_color_rect: Transparency and color of the print area

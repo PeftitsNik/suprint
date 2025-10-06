@@ -47,7 +47,7 @@ class Elements:
 		
 		
 	class Button(QPushButton, Element_Interface, Subject, Observer):
-		def __init__(self, carcase: Carcase_Interfase):
+		def __init__(self, carcase: Carcase_Interfase = None):
 			super().__init__()
 			self.carcase = carcase
 			self.create_list_observers()
@@ -57,6 +57,13 @@ class Elements:
 		
 		def update_observer(self, subject: Subject):
 			func.function_for_element[subject.get_name()][self.get_name()](self, subject)
+	
+	class ButtonClipboard(Button): ### в планах
+		def __init__(self, carcase: Carcase_Interfase = None):
+			super().__init__(carcase)
+			
+		def check_clipboard(self):
+			pass
 	
 	
 	class LabelDD(LabelDragDrop, Element_Interface, Subject):

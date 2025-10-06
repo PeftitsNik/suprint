@@ -14,6 +14,10 @@ class UI():
 		icon_print = QIcon(QPixmap(".icons/print.svg"))
 		self.carcase.button_print.setIcon(icon_print)
 		
+		icon_save = QIcon(QPixmap(".icons/save.svg"))
+		self.carcase.button_save_all_images.setIcon(icon_save)
+		
+		
 		icon_print1 = QIcon(QPixmap(".icons/print1.svg"))
 
 		icon_setting = QIcon(QPixmap(".icons/setting.svg"))
@@ -130,11 +134,16 @@ class UI():
 		self.layout_right_horizontal.setStretch(0,0)
 		self.layout_right_horizontal.setStretch(1,1)		
 		
+		self.layout_print_and_save = QHBoxLayout()
+		self.layout_print_and_save.addWidget(self.carcase.button_print)
+		self.layout_print_and_save.addWidget(self.carcase.button_save_all_images)
+		
 		self.layout_right = QVBoxLayout()
 		self.layout_right.addLayout(self.layout_right_horizontal)
 		self.layout_right.addWidget(self.carcase.view)
-		self.layout_right.addWidget(self.carcase.button_print)
+		self.layout_right.addLayout(self.layout_print_and_save)
 		
+				
 		self.scale_slider_layout = QHBoxLayout()
 		self.scale_slider_layout.addWidget(self.carcase.scale)
 		self.scale_slider_layout.addWidget(self.carcase.slider)

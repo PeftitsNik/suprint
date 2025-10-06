@@ -22,6 +22,7 @@ i18n = {
 		"label_number_of_copies": "",
 		"button_open": "",
 		"button_print": "",
+		"button_save_all_images": "",
 		################################
 		"settings_lang": "",
 		"settings_color_rect": "",
