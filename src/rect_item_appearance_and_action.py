@@ -2,53 +2,56 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 import src.const as const
-import src.pos_f as pos_f
+from src.pos_f import *
 from src.brush_appearance_and_action import *
 
 class DifValuePen:
 	WIDTH_PEN_ACTIVE = 10	
 	COLOR_PEN_ACTIVE = QColor("blue")
-
+	
 class RectItemAppearanceAndAction(QGraphicsRectItem):    
 	def __init__(self):		
 		super().__init__()
-		self.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsSelectable, True)	
-		
+		self.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsSelectable, True)		
 		self.other_rect_on_scene: list[RectItem] = [] # список прямоугольников на сцене, заполняется при щелчке ЛКМ на прямоугольнике
 		self.delta_x = 0 # переменная, в которой накапливается значение перемещения курсора при зажатой ЛКМ, по оси Х
 		self.delta_y = 0 # переменная, в которой накапливается значение перемещения курсора при зажатой ЛКМ, по оси Y        
-		
+			
 		self.appearance_rect()
 		
-		self.pos_figure = pos_f.PosFigure()
+		self.pos_figure = PosFigure()
 		
-	def appearance_rect(self):				
-		brush = BrushAppearanceAndAction()
-		self.setBrush(brush)		
+		#self.line = QGraphicsLineItem(self)
+		#self.line.setLine(0, 0, 50, 50) 
 		
+	def appearance_rect(self):		
+		BrushAppearanceAndAction()
+		self.setBrush(BrushAppearanceAndAction())	
+				
 	def set_color_rect(self, color: QColor):
 		self.color = color
 	
 	def add_parent_scene(self, scene: QGraphicsScene):
-		self.scene = scene	
-	
-	def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
-		super().paint(painter, option, widget) # Сначала рисуем стандартный прямоугольник
-		if QStyle.StateFlag.State_Selected in option.state: # Проверка выделения 
+		self.scene = scene
+		
+	def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None): ###########################################		
+		# Сначала рисуем стандартный прямоугольник
+		super().paint(painter, option, widget)
+		if QStyle.StateFlag.State_Selected in option.state:
+        # Проверка выделения 
 			pen = QPen(DifValuePen.COLOR_PEN_ACTIVE, DifValuePen.WIDTH_PEN_ACTIVE)
 			pen.setStyle(Qt.PenStyle.DashLine)
 			painter.setPen(pen)
-			painter.drawRect(self.rect())
-
+			painter.drawRect(self.rect())			
+			
 	def mousePressEvent(self, event):
-		super().mousePressEvent(event) 	
+		super().mousePressEvent(event)
 		if event.button() == Qt.MouseButton.LeftButton:
 			self.setCursor(Qt.CursorShape.SizeAllCursor)
-			#список rectitem на сцене
+			#список других rectitem на сцене
 			self.other_rect_on_scene = [i for i in self.scene().items() if (isinstance(i, RectItemAppearanceAndAction) and i != self)]
-								
 			self.delta_x = 0
-			self.delta_y = 0			
+			self.delta_y = 0
 	
 	def mouseMoveEvent(self, event):
 		pix = [i for i in self.scene().items() if isinstance(i, QGraphicsPixmapItem) ]
@@ -62,6 +65,8 @@ class RectItemAppearanceAndAction(QGraphicsRectItem):
 			for i in self.other_rect_on_scene:          
 				pos = self.pos_figure.pos_substraction_reсt_angle(self, i, const.BORDER)
 				move = self.pos_figure.move_reсt(self, i, const.BORDER)	# сдвиг на dx, dy
+				
+				#if i == self: continue # если прямоугольник, который двигают, сравнивается с самим собой, то продолжаем цикл 
 				
 				###########  ПРИЛИПАНИЕ УГЛОВ ######################
 				# при приближении двух углов

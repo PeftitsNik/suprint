@@ -19,13 +19,13 @@ print_all: распечатать всё
 ################################
 printers: Принтеры и бумага
 label_number_of_copies: Число копий
-button_open: Открыть файл
+button_open: Открыть
 button_print: Печать
-button_save_all_images: Сохранить все изображения
+button_save_all_images: Сохранить
 ################################
 settings_lang: Язык
 settings_color_rect: Прозрачность и цвет области печати
-scale: масштаб
+scale: МАСШТАБ
 language: язык
 label_dd: ☛  Или перетащите сюда файл  ☚
 tab_setting: Принтер Настройки

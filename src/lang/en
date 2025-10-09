@@ -19,13 +19,13 @@ print_all: print all
 ################################
 printers: Printers and paper
 label_number_of_copies: Number of copies
-button_open: Open file
+button_open: Open
 button_print: Print
-button_save_all_images: Save all images
+button_save_all_images: Save
 ################################
 settings_lang: Language
 settings_color_rect: Transparency and color of the print area
-scale: scale
+scale: SCALE
 language: language
 label_dd: ☛  Or drop here the file  ☚
 tab_setting: Printer Setting

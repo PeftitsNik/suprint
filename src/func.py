@@ -6,7 +6,7 @@ from src.rect_item_appearance_and_action import *
 from src.useful_function import *
 
 #эти классы определены в src.elements
-#здксь они нужны для корректной аннотации 
+#здесь они нужны для корректной аннотации 
 class Manipulation:
 	pass
 class Button:
@@ -285,12 +285,10 @@ def function_manipulation_button_open(*args):
 			directory = ".", filter = "Images (*.png *.PNG *.xpm *.XPM *.jpg *.JPG *.jpeg *.JPEG *.bmp *.BMP *.tiff *.TIFF *.webp *.WEBP *.svg *.SVG)")
 			
 	check_pixmap_in_file(fileName[0], args[0], args[1])
-	
-		
-def function_manipulation_label_dd(*args):
+
+def function_manipulation_view(*args):
 	fileName = args[1].get_name_file()	
-	check_pixmap_in_file(fileName, args[0], args[1])
-		
+	check_pixmap_in_file(fileName, args[0], args[1])	
 
 #####################################################################################################
 ################ Вспомогательные функции манипулирование картинкой и rectitem #######################
@@ -568,17 +566,20 @@ def function_save_all_images(*args):
 		#список из частей картинки для сохранения
 		copy_pixmap = [pixmap.copy( int(coor.x()), int(coor.y()), int(rect.rect().width()), int(rect.rect().height()) ) for coor in list_coor_rect]
 		save_as = QFileDialog.getSaveFileName(parent = None, caption ="Save files", directory = ".", filter = "JPG (*.jpg);; PNG (*.png)")
-		name_ = "".join(save_as[0].split(".")[0:-1]) # полный путь с именем файла без расширения
-		ext_ = save_as[0].split(".")[-1] # рвсширение
+		ext_ = save_as[1].replace(" ", "").replace("*", "").replace("(", "").replace(")", "")[-3:] # рвсширение (последние 3 символа)
+		
+		if save_as[0][-4:] == ("." + ext_): # если последние символы это точка с расширением
+			name_ = save_as[0][0:-4] # убираем точку и расширение
+		else: name_ = save_as[0]
+		
 		num = 0 # счётчик добавляет номер к имени файла
-			
-		for pix in copy_pixmap:
-			pix.save(name_ + "." + str(num) + "." + ext_, ext_.upper())
+		print(save_as[0][-4:], save_as[0][0:-4] )
+		for pix in copy_pixmap[::-1]: ## сохраняем в обратном порядке, т.е. слева направо
+			pix.save(name_ + "." + str(num) + "." + ext_, ext_)
 			num = num + 1
 	else: 
 		err = QMessageBox()
-		err.setIconPixmap(QPixmap(".icons/suprint.png"))
-		#msg = err.warning(None, "Warning", "Image not loaded!")
+		err.setIconPixmap(QPixmap(".icons/suprint.png"))		
 		e = err.information(None, "Warning", "Image not loaded!")
 		  
 
@@ -636,8 +637,8 @@ function_for_element = {
 	"choise_papers": {"pagelayout": function_pagelayout_papersize},
 	"choice_language": {"carcase": function_for_combobox_lang},
 	"button_open": 	{"manipulation": function_manipulation_button_open},
-	"button_save_all_images": {"button_save_all_images": function_save_all_images},
-	"label_dd":		{"manipulation": function_manipulation_label_dd},
+	"view":			{"manipulation": function_manipulation_view},
+	"button_save_all_images": {"button_save_all_images": function_save_all_images},	
 	"button_print":	{"button_print": print_pixmap_from_scene},
 	"slider": 		{"view": function_for_view_slider, "lcd": function_for_lcd_slider},
 	"choice_color_rect": {"brush": function_brush_choice_color_rect},

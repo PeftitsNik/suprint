@@ -34,11 +34,11 @@ class DictPrnPpr():
         
         
         
-		dict1[const.PR_PDF] = {QPageSize(QPageSize.PageSizeId.A0).name(): QPageSize(QPageSize.PageSizeId.A0), #добавляем печать в PDF
-                           QPageSize(QPageSize.PageSizeId.A1).name(): QPageSize(QPageSize.PageSizeId.A1),
-                           QPageSize(QPageSize.PageSizeId.A2).name(): QPageSize(QPageSize.PageSizeId.A2),
+		dict1[const.PR_PDF] = {QPageSize(QPageSize.PageSizeId.A4).name(): QPageSize(QPageSize.PageSizeId.A4), #добавляем печать в PDF
                            QPageSize(QPageSize.PageSizeId.A3).name(): QPageSize(QPageSize.PageSizeId.A3),
-                           QPageSize(QPageSize.PageSizeId.A4).name(): QPageSize(QPageSize.PageSizeId.A4)}
+                           QPageSize(QPageSize.PageSizeId.A2).name(): QPageSize(QPageSize.PageSizeId.A2),
+                           QPageSize(QPageSize.PageSizeId.A1).name(): QPageSize(QPageSize.PageSizeId.A1),
+                           QPageSize(QPageSize.PageSizeId.A0).name(): QPageSize(QPageSize.PageSizeId.A0)}
 		return dict1
     
     

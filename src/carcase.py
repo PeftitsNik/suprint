@@ -109,7 +109,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.scene.set_name("scene")
 		self.scene.addPixmap(self.pixmap)
 		
-		self.view = self.elements.GraphicsView()
+		self.view = self.elements.GraphicsView(self)
 		self.view.set_name("view")
 		self.view.setScene(self.scene)
 		
@@ -203,19 +203,15 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.label_language.set_name("language")
 		self.list_element_with_text.append(self.label_language)
 				
-		self.button_open = self.elements.Button(self)
+		self.button_open = self.elements.ToolButton(self)
 		self.button_open.set_name("button_open")
-		self.list_element_with_text.append(self.button_open)
+		self.list_element_with_text.append(self.button_open)		
 		
-		self.label_dd = self.elements.LabelDD(self)
-		self.label_dd.set_name("label_dd")		
-		self.list_element_with_text.append(self.label_dd)
-		
-		self.button_print = self.elements.Button(self)
+		self.button_print = self.elements.ToolButton(self)
 		self.button_print.set_name("button_print")
 		self.list_element_with_text.append(self.button_print)
 		
-		self.button_save_all_images = self.elements.Button(self)
+		self.button_save_all_images = self.elements.ToolButton(self)
 		self.button_save_all_images.set_name("button_save_all_images")
 		self.list_element_with_text.append(self.button_save_all_images)
 			
@@ -280,8 +276,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 			else: pass		
 		
 		self.choice_color_rect = self.elements.ChoiceColorRect()
-		self.choice_color_rect.set_name("choice_color_rect")
-		
+		self.choice_color_rect.set_name("choice_color_rect")		
 		
 		self.group_paper = self.elements.GroupBox()	
 		self.group_paper.set_name("paper")
@@ -348,8 +343,8 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.spinbox_number_of_pages.attach(self.scene)
 		self.print_all.attach(self.scene)
 		
-		self.button_open.attach(self.manipulation)
-		self.label_dd.attach(self.manipulation)
+		self.button_open.attach(self.manipulation)		
+		self.view.attach(self.manipulation)
 		self.button_print.attach(self.button_print)
 		self.button_save_all_images.attach(self.button_save_all_images)
 						

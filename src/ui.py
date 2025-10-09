@@ -8,23 +8,44 @@ class UI():
 
 	def create_ui(self):
 
+		_f = QFontComboBox()
+		_si = _f.currentFont().pointSize()		
+
 		icon_open = QIcon(QPixmap(".icons/open.svg"))
-		self.carcase.button_open.setIcon(icon_open)   ###setStyleSheet("image: url(open.png);")
+		self.carcase.button_open.setIcon(icon_open)
+		self.carcase.button_open.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+		self.carcase.button_open.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+		self.carcase.button_open.setStyleSheet("""
+					QToolButton {
+					text-align: bottom center;
+					qproperty-iconSize: 32px 32px;
+					} """)
 		
 		icon_print = QIcon(QPixmap(".icons/print.svg"))
 		self.carcase.button_print.setIcon(icon_print)
-		
+		self.carcase.button_print.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+		self.carcase.button_print.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+		self.carcase.button_print.setStyleSheet("""
+					QToolButton {
+					text-align: bottom center;
+					qproperty-iconSize: 32px 32px;	
+					} """)
+				
 		icon_save = QIcon(QPixmap(".icons/save.svg"))
 		self.carcase.button_save_all_images.setIcon(icon_save)
-		
-		
+		self.carcase.button_save_all_images.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+		self.carcase.button_save_all_images.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+		self.carcase.button_save_all_images.setStyleSheet("""
+					QToolButton {
+					text-align: bottom center;
+					qproperty-iconSize: 32px 32px;
+					} """)				
+				
 		icon_print1 = QIcon(QPixmap(".icons/print1.svg"))
-
 		icon_setting = QIcon(QPixmap(".icons/setting.svg"))
-
-		#self.image_fields = QPixmap(".icons/fields.png")
-
+		
 		self.window = QWidget()
+		
 		##########################################################
 		##########################################################
 		###### Страница
@@ -63,7 +84,6 @@ class UI():
 		self.layout_fields = QHBoxLayout()
 		self.layout_fields.addLayout(self.layout_fields_spinbox)
 		self.layout_fields.addLayout(self.layout_fields_label)		
-		#self.label_plus_image.setScaledContents(True)
 		self.layout_fields.addWidget(self.carcase.label_plus_image)
 		self.layout_fields.setStretch(0,0)
 		self.layout_fields.setStretch(1,0)
@@ -80,10 +100,7 @@ class UI():
 		self.layout_printers_2.addWidget(self.carcase.label_num_of_copies)
 		self.layout_printers_2.addWidget(self.carcase.sp_num_of_copies)
 				
-		_f = QFontComboBox()
-		_si = _f.currentFont().pointSize()	
-		_s = f"font-size: {_si*2}px"
-		
+		_s = f"font-size: {_si*2}px" ### _si определено выше
 		self.carcase.label_p.setStyleSheet(_s)
 		self.layout_printers_2.addWidget(self.carcase.label_p, Qt.AlignmentFlag.AlignLeft)
 		
@@ -125,37 +142,46 @@ class UI():
 		self.layout_left_setting.addWidget(self.carcase.group_settings_lang)
 		self.layout_left_setting.addWidget(self.carcase.group_settings_color_rect)
 		self.layout_left_setting.addStretch(1)
-		
-		
-		##### Правая часть
-		self.layout_right_horizontal = QHBoxLayout()
-		self.layout_right_horizontal.addWidget(self.carcase.button_open)
-		self.layout_right_horizontal.addWidget(self.carcase.label_dd)
-		self.layout_right_horizontal.setStretch(0,0)
-		self.layout_right_horizontal.setStretch(1,1)		
-		
-		self.layout_print_and_save = QHBoxLayout()
-		self.layout_print_and_save.addWidget(self.carcase.button_print)
-		self.layout_print_and_save.addWidget(self.carcase.button_save_all_images)
-		
-		self.layout_right = QVBoxLayout()
-		self.layout_right.addLayout(self.layout_right_horizontal)
-		self.layout_right.addWidget(self.carcase.view)
-		self.layout_right.addLayout(self.layout_print_and_save)
-		
 				
+		##### Центральная часть		
+		self.layout_center = QVBoxLayout()		
+		self.layout_center.addWidget(self.carcase.view)		
+						
 		self.scale_slider_layout = QHBoxLayout()
 		self.scale_slider_layout.addWidget(self.carcase.scale)
+		
+		self.carcase.scale.setAlignment(Qt.AlignmentFlag.AlignCenter)
+		self.carcase.scale.setFrameShape(QFrame.Shape.Box)
+		self.carcase.scale.setFrameShadow(QFrame.Shadow.Raised)
+		self.carcase.scale.setLineWidth(0)
+		self.carcase.scale.setMidLineWidth(1)
+		self.carcase.scale.setStyleSheet("""
+		QLabel {       
+        padding: 5px;
+		}
+		""")
+					
+	
 		self.scale_slider_layout.addWidget(self.carcase.slider)
 		self.scale_slider_layout.addWidget(self.carcase.lcd)
-		self.scale_slider_layout.addSpacerItem(QSpacerItem(10,20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum))
+		#self.scale_slider_layout.addSpacerItem(QSpacerItem(10,20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum))
 		self.scale_slider_layout.setStretch(0,0)
 		self.scale_slider_layout.setStretch(1,1)
 		self.scale_slider_layout.setStretch(2,0)
-		self.scale_slider_layout.setStretch(3,2)
-		
-		self.layout_right.addLayout(self.scale_slider_layout)		
-		
+				
+		self.layout_center.addLayout(self.scale_slider_layout)
+				
+		#### Правая часть
+		self.layout_right = QVBoxLayout()
+		self.layout_right.addWidget(self.carcase.button_open)
+		h_sep = QFrame() # линия-разделитель между кнопками
+		h_sep.setFrameShape(QFrame.Shape.HLine)
+		h_sep.setFrameShadow(QFrame.Shadow.Sunken)
+		self.layout_right.addWidget(h_sep)
+		self.layout_right.addWidget(self.carcase.button_print)
+		self.layout_right.addWidget(self.carcase.button_save_all_images)
+		self.layout_right.addStretch(1)		
+				
 		#########################################
 		self.tab_widget_print = QWidget()
 		self.tab_widget_print.setLayout(self.layout_left_print)
@@ -165,18 +191,16 @@ class UI():
 		
 		self.carcase.tab.addTab(self.tab_widget_print, self.carcase.icons_tab[0], self.carcase.txt_tab[0])
 		self.carcase.tab.addTab(self.tab_widget_setting, self.carcase.icons_tab[1], self.carcase.txt_tab[1])
-				
-		
-		self.widget_image = QWidget()
-		self.widget_image.setLayout(self.layout_right)
-		
-				
+						
 		#### Итоговое размещение
 		self.layout = QHBoxLayout()
 		self.layout.addWidget(self.carcase.tab, alignment=Qt.AlignmentFlag.AlignLeft)
-		self.layout.addWidget(self.widget_image)
+		self.layout.addLayout(self.layout_center)
+		self.layout.addLayout(self.layout_right)
+		self.layout.setStretch(0,0)
+		self.layout.setStretch(1,1)
+		self.layout.setStretch(2,0)
 				
-		
 		self.window.setLayout(self.layout)
 		self.window.show()
 		self.window.setMinimumWidth(800)
