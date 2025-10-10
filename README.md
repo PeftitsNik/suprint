@@ -8,7 +8,11 @@
 
 
 
-![output1](https://github.com/PeftitsNik/suprint/assets/142207234/403b41f9-ca12-4def-82d4-66587cb0a537)
+
+
+
+https://github.com/user-attachments/assets/bed5783c-5898-485a-a7bc-02d83cc5606c
+
 
 
 
