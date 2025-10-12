@@ -35,7 +35,7 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 
 **Зависимости:**
 
-1. python >= 3.10
+1. python >= 3.9
 2. pyqt >= 6.1
 
 **Замечание для Windows:**
