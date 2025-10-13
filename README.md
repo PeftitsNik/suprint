@@ -29,7 +29,7 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 
 **Запуск программы в Windows 10 и выше**
 
-Перейдите в папку с программой и в командной строке (cmd.exe) введите *py main.py*
+Перейдите в папку с программой и в командной строке (для Windows  это cmd.exe) введите *py main.py*
 
 либо запустите файл *win_start.bat*
 
