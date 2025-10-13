@@ -27,7 +27,7 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 Работа программы протестирована в Windows 10 и Slackware Linux 15.0.
 
 
-**Запуск программы в Windows 10 и выше**
+**Запуск программы в Windows 10 и выше:**
 
 Перейдите в папку с программой и в командной строке (для Windows  это cmd.exe) введите *py main.py*
 
