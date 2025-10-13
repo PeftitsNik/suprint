@@ -18,7 +18,7 @@ class UI():
 		self.carcase.button_open.setStyleSheet("""
 					QToolButton {
 					text-align: bottom center;
-					qproperty-iconSize: 32px 32px;
+					qproperty-iconSize: 48px 48px;
 					} """)
 		
 		icon_print = QIcon(QPixmap(".icons/print.svg"))
@@ -28,17 +28,17 @@ class UI():
 		self.carcase.button_print.setStyleSheet("""
 					QToolButton {
 					text-align: bottom center;
-					qproperty-iconSize: 32px 32px;	
+					qproperty-iconSize: 48px 48px;	
 					} """)
 				
-		icon_save = QIcon(QPixmap(".icons/save.svg"))
+		icon_save = QIcon(QPixmap(".icons/save_all.svg"))
 		self.carcase.button_save_all_images.setIcon(icon_save)
 		self.carcase.button_save_all_images.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 		self.carcase.button_save_all_images.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
 		self.carcase.button_save_all_images.setStyleSheet("""
 					QToolButton {
 					text-align: bottom center;
-					qproperty-iconSize: 32px 32px;
+					qproperty-iconSize: 48px 48px;
 					} """)				
 				
 		icon_print1 = QIcon(QPixmap(".icons/print1.svg"))
@@ -159,8 +159,7 @@ class UI():
 		QLabel {       
         padding: 5px;
 		}
-		""")
-					
+		""")					
 	
 		self.scale_slider_layout.addWidget(self.carcase.slider)
 		self.scale_slider_layout.addWidget(self.carcase.lcd)

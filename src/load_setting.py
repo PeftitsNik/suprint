@@ -15,7 +15,7 @@ class LoadSetting:
 				s = us_fn.split_and_remove_symbol(line, ":")
 				if len(s) == 0: pass
 				elif s[0] and s[1]:
-					new_dict[s[0]] = s[1]
+					new_dict[s[0]] = s[1].replace("\\n", "\n")
 				else: pass
 		
 		return new_dict					

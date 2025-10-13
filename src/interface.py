@@ -1,11 +1,14 @@
 class Element_Interface:	
 	
 	def set_name(self, name: str):
+		# присваивание имени виджету, по которому определяется функция в словаре
+		# function_for_element пакета func
 		self.__name = name
 
 	def get_name(self) -> str:
 		return self.__name		
-	
+
+
 # наблюдатель
 class Observer:
 	
@@ -15,13 +18,13 @@ class Observer:
 
 
 #наблюдаемое
-class Subject:	
+class Subject:
    
-    # инициализация списка наблюдателей   
+    # инициализация списка наблюдателей
 	def create_list_observers(self) -> list:
 		self.list_observers = []
 
-	# сообщение наблюдателю	
+	# сообщение наблюдателю
 	def notify(self):
 		for i in self.list_observers:
 			i.update_observer(self)

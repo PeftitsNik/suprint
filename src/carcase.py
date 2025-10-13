@@ -214,7 +214,7 @@ class Carcase(Carcase_Interfase, Element_Interface, Observer):
 		self.button_save_all_images = self.elements.ToolButton(self)
 		self.button_save_all_images.set_name("button_save_all_images")
 		self.list_element_with_text.append(self.button_save_all_images)
-			
+					
 		self.scale = self.elements.Label()
 		self.scale.set_name("scale")
 		self.list_element_with_text.append(self.scale)		

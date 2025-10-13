@@ -426,7 +426,11 @@ def function_for_combobox_lang (*args):
 				_txt = args[0].get_dict_lang()[element.get_name()].split()
 				element.setTabText(0, _txt[0])
 				element.setTabText(1, _txt[1])
-			else: element.setText(args[0].get_dict_lang()[element.get_name()])
+			elif isinstance(element, QToolButton):
+				txt = args[0].get_dict_lang()[element.get_name()].split("|")
+				element.setText(txt[0].strip())
+				element.setToolTip(txt[1].strip())
+			else: element.setText(args[0].get_dict_lang()[element.get_name()])			
 		
 	else: pass
 
