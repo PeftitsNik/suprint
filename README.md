@@ -26,9 +26,7 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 
 Распакуйте zip-файл в удобное место. 
 
-Перейдите в папку с программой и в командной строке (cmd.exe) введите *py main.py*
-
-либо запустите файл *win_start.bat*
+Перейдите в папку с программой и запустите файл *win_start.bat*
 
 <br>
 <br>
