@@ -15,35 +15,35 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 
 **Запуск программы в Windows 10 и выше:**
 
-Скачайте zip-файл (<> Code -> Download zip)
+Скачайте файл suprint.zip
 <br>
 <br>
 
-<img width="491" height="300" alt="скачать" src="https://github.com/user-attachments/assets/99d6d275-8bdd-4672-aeac-852a0ef6e0ae" />
+<img width="552" height="416" alt="как_скачать" src="https://github.com/user-attachments/assets/e119ab05-4921-4643-9aa9-893eee9345be" />
+
 
 <br>
 <br>
 
 Распакуйте zip-файл в удобное место. 
 
-Перейдите в папку с программой и запустите файл *win_start.bat*
+Перейдите в папку с программой и запустите файл *suprint*
 
 <br>
 <br>
 
-**Зависимости:**
+**Примечания для Linux:**
 
+Зависимости:
 1. python >= 3.9
 2. pyqt >= 6.1
 
 <br>
 <br>
 
-**Замечание:**
-
 а) если не установлен python - скачать с [официального сайта](https://www.python.org/downloads/) и установить;
 
-б) в командной строке (для Windows  это cmd.exe) набрать *pip3 install PyQt6.*
+б) в командной строке набрать *pip3 install PyQt6.*
 
 <br>
 <br>
