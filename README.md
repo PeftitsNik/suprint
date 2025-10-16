@@ -34,12 +34,11 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 
 **Примечания для Linux:**
 
+Для старта программы запустите файл linux_start
+
 Зависимости:
 1. python >= 3.9
 2. pyqt >= 6.1
-
-<br>
-<br>
 
 а) если не установлен python - скачать с [официального сайта](https://www.python.org/downloads/) и установить;
 
