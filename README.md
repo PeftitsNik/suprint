@@ -30,6 +30,10 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 Перейдите в папку с программой и запустите файл *suprint*
 
 <br>
+
+( Прим. Исполняемый файл для Windows собран с помощью **Nuitka**  https://nuitka.net/) 
+
+<br>
 <br>
 
 **Примечания для Linux:**
