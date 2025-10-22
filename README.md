@@ -46,7 +46,7 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 
 б) в командной строке набрать *pip3 install PyQt6.*
 
-Для старта программы в Linux запустите файл linux_start, а в Windows - win_start.bat, или в терминале в каталоге программы наберите python3 main.py
+Для старта программы в Linux запустите файл linux_start, а в Windows - win_start.bat, или в терминале (в командной строке) каталога программы наберите python3 main.py
 
 <br>
 <br>
