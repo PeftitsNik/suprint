@@ -19,7 +19,8 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 <br>
 <br>
 
-<img width="552" height="416" alt="как_скачать" src="https://github.com/user-attachments/assets/e119ab05-4921-4643-9aa9-893eee9345be" />
+<img width="565" height="299" alt="download" src="https://github.com/user-attachments/assets/12bde0dd-7faf-4ba7-a49f-f1bacd5231a5" />
+
 
 
 <br>
