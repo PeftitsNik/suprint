@@ -27,8 +27,9 @@ class LoadSetting:
 		
 		lang = self.get_dict_setting(const.FILE_SETTING)["lang"]
 		
-		os.chdir(const.DIR_SRC)
-		os.chdir(const.DIR_LANG)
+		os.chdir(const.DIR_SRC + "/" + const.DIR_LANG)
+		#os.chdir(const.DIR_SRC)
+		#os.chdir(const.DIR_LANG)
 		
 		dict_i18n = self.get_i18n(lang)
 		

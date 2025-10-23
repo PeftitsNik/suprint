@@ -13,7 +13,7 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 <br>
 <br>
 
-**Запуск программы в Windows 10 и выше:**
+**Запуск программы в Windows 10 и выше с помощью exe файла:**
 
 Скачайте файл suprint.zip
 <br>
@@ -30,19 +30,23 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 Перейдите в папку с программой и запустите файл *suprint*
 
 <br>
+
+( Прим. Исполняемый файл для Windows собран с помощью **Nuitka**  https://nuitka.net/) 
+
+<br>
 <br>
 
-**Примечания для Linux:**
-
-Для старта программы запустите файл linux_start
+**Запуск программы в Linux и Windows как скрипт Python:**
 
 Зависимости:
 1. python >= 3.9
 2. pyqt >= 6.1
 
-а) если не установлен python - скачать с [официального сайта](https://www.python.org/downloads/) и установить;
+а) если не установлен python - скачать с [официального сайта](https://www.python.org/downloads/) или установить с помощью пакетного менеджера дистрибутива;
 
 б) в командной строке набрать *pip3 install PyQt6.*
+
+Для старта программы в Linux запустите файл linux_start, а в Windows - win_start.bat, или в терминале (в командной строке) каталога программы наберите python3 main.py
 
 <br>
 <br>

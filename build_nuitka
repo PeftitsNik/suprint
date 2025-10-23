@@ -1,1 +1,1 @@
-python -m nuitka --standalone --enable-plugin=pyqt6 --include-data-dir=.icons=.icons --include-data-dir=src=src --include-data-file=setting=setting --msvc=latest main.py
+python -m nuitka --standalone --enable-plugin=pyqt6 --include-data-dir=.icons=.icons --include-data-dir=src=src --include-data-file=setting=setting --msvc=latest --output-filename=suprint --output-dir=suprint --windows-icon-from-ico=.icons/sp.ico main.py

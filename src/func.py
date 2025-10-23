@@ -19,7 +19,8 @@ dpp = DictPrnPpr()
 class Wrapper:	
 	# обертка для проверки картинки на сцене
 	def check_pixmap_on_scene(func): # на сцене 
-		def wrapper(*args):			
+		def wrapper(*args):
+			#эargs[0] то элемент, через который можно обратиться к pixmap через carcase
 			if args[0].carcase.pixmap.isNull(): pass		
 			else:
 				func(*args)
@@ -276,7 +277,10 @@ def check_pixmap_in_file(file_name, args0: Manipulation, args1: Button):
 		remove_pixmap(args1.carcase.scene)	
 		args1.carcase.scene.addPixmap(args1.carcase.pixmap)
 		manipulation_pixmap(args1.carcase.scene)			
-		args0.set_dpi(args1.carcase.pixmap.physicalDpiX())			
+		args0.set_dpi(args1.carcase.pixmap.physicalDpiX())
+		# призагрузке картинки разблокируем кнопки 
+		args1.carcase.button_print.setEnabled(True)
+		args1.carcase.button_save_all_images.setEnabled(True)
 	else: pass
 	QApplication.restoreOverrideCursor() #возврат дефолтного курсора	
 	
@@ -412,8 +416,8 @@ def function_for_combobox_lang (*args):
 		
 		######## смена языка на виджетах
 		################################
-		os.chdir(const.DIR_SRC)
-		os.chdir(const.DIR_LANG)
+		os.chdir(const.DIR_SRC + "/" + const.DIR_LANG)
+		#os.chdir(const.DIR_LANG)
 		
 		setting = LoadSetting()
 		args[0].set_dict_lang(setting.create_dict_i18n_from_combobox(args[1].currentText()))
@@ -560,32 +564,28 @@ def print_pixmap_from_scene(*args):
 
 #### сохранение выбраных Rect как изображения
 #### ags[0] и args[1] это button_save_all_images
+
+@Wrapper.check_pixmap_on_scene
 def function_save_all_images(*args):
 	scene = args[0].carcase.scene
 	rect = args[0].carcase.rect				
 	list_coor_rect = [i.scenePos() for i in scene.items() if isinstance (i, QGraphicsRectItem) ]
 	pixmap = [i for i in scene.items() if isinstance (i, QGraphicsPixmapItem)][0].pixmap()	
 	
-	if (pixmap.size().width() and pixmap.size().height()):
-		#список из частей картинки для сохранения
-		copy_pixmap = [pixmap.copy( int(coor.x()), int(coor.y()), int(rect.rect().width()), int(rect.rect().height()) ) for coor in list_coor_rect]
-		save_as = QFileDialog.getSaveFileName(parent = None, caption ="Save files", directory = ".", filter = "JPG (*.jpg);; PNG (*.png)")
-		ext_ = save_as[1].replace(" ", "").replace("*", "").replace("(", "").replace(")", "")[-3:] # рвсширение (последние 3 символа)
-		
-		if save_as[0][-4:] == ("." + ext_): # если последние символы это точка с расширением
-			name_ = save_as[0][0:-4] # убираем точку и расширение
-		else: name_ = save_as[0]
-		
-		num = 0 # счётчик добавляет номер к имени файла
-		print(save_as[0][-4:], save_as[0][0:-4] )
-		for pix in copy_pixmap[::-1]: ## сохраняем в обратном порядке, т.е. слева направо
-			pix.save(name_ + "." + str(num) + "." + ext_, ext_)
-			num = num + 1
-	else: 
-		err = QMessageBox()
-		err.setIconPixmap(QPixmap(".icons/suprint.png"))		
-		e = err.information(None, "Warning", "Image not loaded!")
-		  
+	#список из частей картинки для сохранения
+	copy_pixmap = [pixmap.copy( int(coor.x()), int(coor.y()), int(rect.rect().width()), int(rect.rect().height()) ) for coor in list_coor_rect]
+	save_as = QFileDialog.getSaveFileName(parent = None, caption ="Save files", directory = ".", filter = "JPG (*.jpg);; PNG (*.png)")
+	ext_ = save_as[1].replace(" ", "").replace("*", "").replace("(", "").replace(")", "")[-3:] # рвсширение (последние 3 символа)
+	
+	if save_as[0][-4:] == ("." + ext_): # если последние символы это точка с расширением
+		name_ = save_as[0][0:-4] # убираем точку и расширение
+	else: name_ = save_as[0]
+	
+	num = 0 # счётчик добавляет номер к имени файла
+	print(save_as[0][-4:], save_as[0][0:-4] )
+	for pix in copy_pixmap[::-1]: ## сохраняем в обратном порядке, т.е. слева направо
+		pix.save(name_ + "." + str(num) + "." + ext_, ext_)
+		num = num + 1		  
 
 ### изменение brush 
 def function_brush_choice_color_rect(*args):		

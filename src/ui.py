@@ -30,6 +30,7 @@ class UI():
 					text-align: bottom center;
 					qproperty-iconSize: 48px 48px;	
 					} """)
+		self.carcase.button_print.setDisabled(True)
 				
 		icon_save = QIcon(QPixmap(".icons/save_all.svg"))
 		self.carcase.button_save_all_images.setIcon(icon_save)
@@ -43,6 +44,7 @@ class UI():
 				
 		icon_print1 = QIcon(QPixmap(".icons/print1.svg"))
 		icon_setting = QIcon(QPixmap(".icons/setting.svg"))
+		self.carcase.button_save_all_images.setDisabled(True)
 		
 		self.window = QWidget()
 		
@@ -201,9 +203,9 @@ class UI():
 		self.layout.setStretch(2,0)
 				
 		self.window.setLayout(self.layout)
-		self.window.show()
 		self.window.setMinimumWidth(800)
 		self.window.setWindowTitle("Suprint")
-		self.window.setWindowIcon(QIcon(".icons/suprint.png"))
+		self.window.setWindowIcon(QIcon(".icons/sp.ico"))
+		self.window.show()
 		
 
