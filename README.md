@@ -32,7 +32,7 @@ https://github.com/user-attachments/assets/8cba01ce-3bb8-43b0-a4b7-02aa22575eb7
 
 <br>
 
-( Прим. Исполняемый файл для Windows собран с помощью **Nuitka**  https://nuitka.net/) 
+( P.S. Исполняемый файл для Windows собран с помощью **Nuitka**  https://nuitka.net/) 
 
 <br>
 <br>
