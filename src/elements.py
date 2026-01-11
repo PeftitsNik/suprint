@@ -148,7 +148,7 @@ class Elements:
 		def __init__(self, carcase: Carcase_Interfase = None):
 			super().__init__()
 			self.setAcceptDrops(True)
-			self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
+			#self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
 			self.carcase = carcase
 			self.create_list_observers()
 			
